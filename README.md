@@ -1,5 +1,9 @@
 # vektordata-nextapp
 
+You can access the app's development URL here:
+
+https://vektordatanextjsapp.vercel.app/
+
 ## Getting Started
 
 First, clone this repository and navigate into the project directory:
