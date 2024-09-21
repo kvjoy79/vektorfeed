@@ -1,7 +1,7 @@
 
 ```markdown
 # vektordata-nextapp
-![image](https://github.com/user-attachments/assets/7ff2198a-a60c-49b0-9d40-f860e35129d5)
+
 
 ## Getting Started
 
