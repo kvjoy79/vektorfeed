@@ -1,8 +1,6 @@
-# vektordata-nextapp
 
-You can access the app's development URL here:
-
-https://vektordatanextjsapp.vercel.app/
+```markdown
+# vektordata-reactapp
 
 ## Getting Started
 
@@ -17,24 +15,15 @@ Next, ensure you have all the necessary libraries installed. If you haven't inst
 
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
 ```
 
 Then, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run start
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+
