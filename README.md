@@ -1,7 +1,6 @@
 Here’s the link for viewing the deployed version on Vercel:
 https://vektordata-reactapp.vercel.app/
 
-https://github.com/kvjoy79/vektorfeed
 
 # vektordata-reactapp
 
