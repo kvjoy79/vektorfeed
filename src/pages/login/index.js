@@ -1,14 +1,25 @@
 // src/pages/login/index.js
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import VektordataLogo from '../../assets/svgs/vektordata-banner.svg';
 import GradientButton from '../../components/GradientButton/gradientbutton';
 import './LoginPage.css';
+import ExclamationMarkIcon from '../../assets/svgs/exclamation-mark-inside-a-circle.svg';
+import EyeIcon from '../../assets/svgs/eye-icon.svg'; 
+import EyeOffIcon from '../../assets/svgs/eye-off-icon.svg'; 
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [errorMessage, setErrorMessage] = useState(''); 
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); 
+  const navigate = useNavigate(); 
 
   const buttons = [
     { text: "Sign Up", href: "/signup" },
@@ -19,14 +30,56 @@ const LoginPage = () => {
     { text: "Login", href: "/login" },
   ];
 
+  const notifyVerifyEmail = () => {
+    toast(
+      <div>
+        <div className="flex items-center">
+          <img src={ExclamationMarkIcon} alt="Error" className="w-5 h-5 mr-2" />
+          <p className="font-bold text-xl text-red-500">Verify Your Email Address</p>
+        </div>
+        <p className="mt-1 text-gray-400">Please check your inbox and verify your email address.</p>
+
+      </div>,
+      {
+        position: 'top-right',
+        autoClose: 5000,
+        closeOnClick: true,
+        hideProgressBar: true,
+        className: 'custom-toast-container',
+      }
+    );
+  };
+  
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Logging in with', email, password);
-    alert('Logging in with: ' + email + ' and ' + password);
+    
+    // Hardcoded login check
+    if (email === 'admin@test.com' && password === 'admin') {
+      setErrorMessage('');
+      setEmailError(false);
+      setPasswordError(false);
+      // alert('Login successful!');
+      // navigate('/success');
+      // Show success toast notification
+      notifyVerifyEmail(); // Show email verification toast
+      // setTimeout(() => navigate('/success'), 3000); // Navigate after a delay
+
+    } else {
+      setErrorMessage('Email and/or password you have entered is incorrect');
+      setEmailError(true);
+      setPasswordError(true);
+    }
   };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100 relative">
+
+      {/* Toast Container for displaying notifications */}
+      <ToastContainer />
+
       {/* Button Container */}
       <div className="absolute top-4 right-4 flex flex-col items-center space-y-4">
         {buttons.map((button, index) => (
@@ -47,10 +100,18 @@ const LoginPage = () => {
 
         <h2 className="text-2xl font-extrabold text-center">LOG IN</h2>
         <p className="text-center text-sm text-gray-400 mb-8">Find faster, build smarter</p>
+        
+        {/* Error Message */}
+        {errorMessage && (
+          <p className="text-red-500 text-center mb-4 flex items-center justify-center text-sm">
+            <img src={ExclamationMarkIcon} alt="Error" className="w-5 h-5 mr-2" /> 
+            {errorMessage}
+          </p>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="text-sm font-medium text-gray-700">Email</label>
+            <label htmlFor="email" className={`text-sm font-medium ${emailError ? 'text-red-500' : 'text-gray-700'}`}>Email</label>
             <input
               type="email"
               id="email"
@@ -58,22 +119,32 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className="w-full px-4 py-2 mt-1 border rounded-md bg-gray-50 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              className={`w-full px-4 py-2 mt-1 border rounded-full bg-gray-50 ${emailError ? 'border-red-500 text-red-500' : 'border-gray-300 text-gray-700'} focus:border-blue-500 focus:ring-blue-500`}
             />
           </div>
           
-          <div>
-            <label htmlFor="password" className="text-sm font-medium text-gray-700">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-              className="w-full px-4 py-2 mt-1 border rounded-md bg-gray-50 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-            />
-          </div>
+                <div className="relative">
+        <label htmlFor="password" className={`text-sm font-medium ${passwordError ? 'text-red-500' : 'text-gray-700'}`}>
+          Password
+        </label>
+        <input
+          type={showPassword ? "text" : "password"} // Toggle type based on showPassword
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter your password"
+          required
+          className={`w-full px-4 py-2 mt-1 border rounded-full bg-gray-50 ${passwordError ? 'border-red-500 text-red-500' : 'border-gray-300 text-gray-700'} focus:border-blue-500 focus:ring-blue-500`}
+        />
+        <button
+          type="button"
+          className="absolute right-3 top-10" // Adjust positioning inside the input
+          onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+        >
+          <img src={showPassword ? EyeOffIcon : EyeIcon} alt="Toggle Password Visibility" className="w-5 h-5" />
+        </button>
+      </div>
+
           
           <div className="flex items-center justify-end">
             <a href="/forgot-password" className="text-sm text-blue-500 hover:underline">Forgot password?</a>
@@ -92,12 +163,8 @@ const LoginPage = () => {
 
         {/* more space here */}
         <div className="mt-100" />
-
       </div>
-      
     </div>
-
-    
   );
 };
 

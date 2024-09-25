@@ -1,4 +1,4 @@
-/* src/pages/signup/LinkExpiredPage.css */
+/* src/pages/signup/LoginPage.css */
 
 body {
     font-family: 'Figtree', sans-serif;
@@ -11,3 +11,11 @@ body {
   border-radius: 5px;
   margin-top: 10px;
 }
+
+.custom-toast-container {
+  width: 500px;
+  right: 200px;
+  /* margin-left: 1100px;  */
+  margin-right: auto; 
+}
+
