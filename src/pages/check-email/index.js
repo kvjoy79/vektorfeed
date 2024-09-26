@@ -1,14 +1,20 @@
 // src/pages/check-email/index.js
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import VektordataBanner from '../../assets/svgs/vektordata-banner.svg';
 import MessageSentIcon from '../../assets/svgs/message-sent-icon.svg';
 import './CheckEmailPage.css';
 import GradientButton from '../../components/GradientButton/gradientbutton';
 
-
 const CheckEmailPage = () => {
+  const navigate = useNavigate();
+
+  const handleResendEmail = () => {
+    // Navigate to the /verify-email page
+    navigate('/verify-email');
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
       {/* Logo */}
@@ -34,9 +40,8 @@ const CheckEmailPage = () => {
 
         {/* Resend Email Button */}
         <div className="flex flex-col items-center">
-
-          <GradientButton>
-          RESEND EMAIL
+          <GradientButton onClick={handleResendEmail}>
+            RESEND EMAIL
           </GradientButton>
 
           {/* more space here */}

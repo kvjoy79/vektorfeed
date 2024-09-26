@@ -1,17 +1,18 @@
-// src/pages/success/index.js
+// src/pages/reset-success/index.js
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import VektordataBanner from '../../assets/svgs/vektordata-banner.svg';
 import CongratsIcon from '../../assets/svgs/congrats-icon.svg';
-import './SuccessPage.css'
+import './ResetSuccessPage.css'
 import GradientButton from '../../components/GradientButton/gradientbutton';
 
 
-const SuccessPage = () => {
+const ResetSuccessPage = () => {
   const navigate = useNavigate(); 
+
   useEffect(() => {
-    document.title = 'Success - Vektordata';
+    document.title = 'Reset Success - Vektordata';
   }, []);
 
   const handleLoginClick = () => {
@@ -35,15 +36,12 @@ const SuccessPage = () => {
         <h1 className="mt-4 text-3xl font-bold text-gray-800">
           Congratulations!
         </h1>
-        <p className="mt-4 text-3xl font-bold text-gray-80">
-          You have successfully signed up.
-        </p>
         <p className="mt-4 text-gray-500">
-          Thank you for joining our platform. You're now part of a smarter way to search, collaborate, and build incredible products.
+          You password have been successfully reset.
         </p>
 
         <GradientButton onClick={handleLoginClick}>
-            Start Exploring
+            LOGIN
         </GradientButton>
       </div>
 
@@ -52,4 +50,4 @@ const SuccessPage = () => {
   );
 };
 
-export default SuccessPage;
+export default ResetSuccessPage;

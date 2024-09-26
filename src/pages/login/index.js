@@ -20,6 +20,7 @@ const LoginPage = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false); 
   const navigate = useNavigate(); 
+  
 
   const buttons = [
     { text: "Sign Up", href: "/signup" },
@@ -102,9 +103,16 @@ const LoginPage = () => {
         <p className="text-center text-sm text-gray-400 mb-8">Find faster, build smarter</p>
         
         {/* Error Message */}
-        {errorMessage && (
+        {/* {errorMessage && (
           <p className="text-red-500 text-center mb-4 flex items-center justify-center text-sm">
             <img src={ExclamationMarkIcon} alt="Error" className="w-5 h-5 mr-2" /> 
+            {errorMessage}
+          </p>
+        )} */}
+
+        {errorMessage && (
+          <p className="text-red-500 mb-4 flex items-center justify-center text-sm whitespace-nowrap">
+            <img src={ExclamationMarkIcon} alt="Error" className="w-5 h-5 mr-2" />
             {errorMessage}
           </p>
         )}
@@ -123,7 +131,7 @@ const LoginPage = () => {
             />
           </div>
           
-                <div className="relative">
+      <div className="relative">
         <label htmlFor="password" className={`text-sm font-medium ${passwordError ? 'text-red-500' : 'text-gray-700'}`}>
           Password
         </label>
