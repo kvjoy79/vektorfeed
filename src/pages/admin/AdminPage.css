@@ -1,0 +1,13 @@
+/* src/pages/signup/SuccessPage.css */
+
+body {
+    font-family: 'Figtree', sans-serif;
+  }
+
+.alert {
+  /* background-color: rgba(255, 0, 0, 0.1);  */
+  color: #ff0000; /* Red text */
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}

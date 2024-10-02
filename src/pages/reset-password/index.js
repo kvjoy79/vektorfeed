@@ -6,12 +6,14 @@ import './ResetPasswordPage.css';
 import VektordataBanner from '../../assets/svgs/vektordata-banner.svg';
 import GradientButton from '../../components/GradientButton/gradientbutton';
 import ExclamationMarkIcon from '../../assets/svgs/exclamation-mark-inside-a-circle.svg';
+import { API_URL, DATABASE_NAME } from '../../config/config';
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   useEffect(() => {
     document.title = 'Reset Password - Vektordata';
   }, []);
+  
 
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -45,12 +47,51 @@ const ResetPasswordPage = () => {
     setPasswordMatch(password === newPassword);
   };
 
-  const handleReset = (event) => {
+  // const handleReset = (event) => {
+  //   event.preventDefault();
+  //   if (passwordMatch && Object.values(passwordValid).every(Boolean)) {
+  //     console.log('Password reset successful');
+  //     // Navigate to reset success page
+  //     navigate('/reset-success');
+  //   } else {
+  //     setErrorMessage('Please ensure passwords match and meet the criteria.');
+  //   }
+  // };
+
+  const handleReset = async (event) => {
     event.preventDefault();
+    
     if (passwordMatch && Object.values(passwordValid).every(Boolean)) {
-      console.log('Password reset successful');
-      // Navigate to reset success page
-      navigate('/reset-success');
+      const storedEmail = localStorage.getItem('userEmail');
+  
+      // Prepare the data to send
+      const requestData = {
+        database_name: DATABASE_NAME, // Add your database name here
+        email: storedEmail, // Use the email as the username
+        new_hashpassword: newPassword // The new hashed password
+      };
+  
+      try {
+        const response = await fetch(`${API_URL}/update-emailpassword`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData),
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          console.log(data.message); // Password updated successfully
+          navigate('/reset-success'); // Navigate to success page
+        } else {
+          setErrorMessage(data.message); // Show error message
+        }
+      } catch (error) {
+        console.error('Error updating password:', error);
+        setErrorMessage('An error occurred while updating the password.');
+      }
     } else {
       setErrorMessage('Please ensure passwords match and meet the criteria.');
     }

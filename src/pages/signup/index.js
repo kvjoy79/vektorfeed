@@ -4,6 +4,7 @@ import VektordataBanner from '../../assets/svgs/vektordata-banner.svg';
 import GradientButton from '../../components/GradientButton/gradientbutton';
 import ExclamationMarkIcon from '../../assets/svgs/exclamation-mark-inside-a-circle.svg';
 import { useNavigate } from 'react-router-dom'; 
+import { API_URL, DATABASE_NAME } from '../../config/config';
 
 const SignupPage = () => {
   const navigate = useNavigate(); 
@@ -59,16 +60,58 @@ const SignupPage = () => {
     setPasswordMatch(event.target.value === password);
   };
 
-  const handleSignup = (event) => {
+  // const handleSignup = (event) => {
+  //   event.preventDefault();
+  //   if (!emailValid) {
+  //     alert("Please enter a valid business email.");
+  //     return;
+  //   }
+
+  //   if (passwordMatch && Object.values(passwordValid).every(Boolean)) {
+  //     console.log('Sign-up successful');
+  //     navigate('/check-email'); // Navigate to the check-email page
+  //   } else {
+  //     console.log('Password validation failed');
+  //   }
+  // };
+
+
+  const handleSignup = async (event) => {
     event.preventDefault();
+    
     if (!emailValid) {
       alert("Please enter a valid business email.");
       return;
     }
 
     if (passwordMatch && Object.values(passwordValid).every(Boolean)) {
-      console.log('Sign-up successful');
-      navigate('/check-email'); // Navigate to the check-email page
+      // const useremail = email.split('@')[0]; // Simple username extraction
+
+      try {
+        const response = await fetch(`${API_URL}/add-useremail`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            database_name: DATABASE_NAME,
+            email: email,
+            hashpassword: password 
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Sign-up successful', data);
+          navigate('/check-email');
+        } else {
+          const errorData = await response.json();
+          alert(errorData.message); // Show error message from server
+        }
+      } catch (error) {
+        console.error('Error during signup:', error);
+        alert('An error occurred during signup. Please try again.');
+      }
     } else {
       console.log('Password validation failed');
     }

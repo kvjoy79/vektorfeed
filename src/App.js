@@ -10,6 +10,7 @@ import LinkExpiredPage from './pages/link-expired';
 import ForgotPasswordPage from './pages/forgot-password';
 import ResetPasswordPage from './pages/reset-password'; 
 import LoginPage from './pages/login';
+import AdminPage from './pages/admin';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/link-expired" element={<LinkExpiredPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </Router>
   );

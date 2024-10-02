@@ -7,6 +7,7 @@ import './LoginPage.css';
 import ExclamationMarkIcon from '../../assets/svgs/exclamation-mark-inside-a-circle.svg';
 import EyeIcon from '../../assets/svgs/eye-icon.svg'; 
 import EyeOffIcon from '../../assets/svgs/eye-off-icon.svg'; 
+import { API_URL, DATABASE_NAME } from '../../config/config';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,7 +21,8 @@ const LoginPage = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false); 
   const navigate = useNavigate(); 
-  
+
+
 
   const buttons = [
     { text: "Sign Up", href: "/signup" },
@@ -52,24 +54,67 @@ const LoginPage = () => {
   };
   
 
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('Logging in with', email, password);
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   console.log('Logging in with', email, password);
     
-    // Hardcoded login check
-    if (email === 'admin@test.com' && password === 'admin') {
-      setErrorMessage('');
-      setEmailError(false);
-      setPasswordError(false);
-      // alert('Login successful!');
-      // navigate('/success');
-      // Show success toast notification
-      notifyVerifyEmail(); // Show email verification toast
-      // setTimeout(() => navigate('/success'), 3000); // Navigate after a delay
+  //   // Hardcoded login check
+  //   if (email === 'admin@test.com' && password === 'admin') {
+  //     setErrorMessage('');
+  //     setEmailError(false);
+  //     setPasswordError(false);
+  //     // alert('Login successful!');
+  //     // navigate('/success');
+  //     // Show success toast notification
+  //     notifyVerifyEmail(); // Show email verification toast
+  //     // setTimeout(() => navigate('/success'), 3000); // Navigate after a delay
 
-    } else {
-      setErrorMessage('Email and/or password you have entered is incorrect');
+  //   } else {
+  //     setErrorMessage('Email and/or password you have entered is incorrect');
+  //     setEmailError(true);
+  //     setPasswordError(true);
+  //   }
+  // };
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // console.log('Logging in with', email, password);
+
+    // Save email to localStorage
+    localStorage.setItem('userEmail', email);
+  
+    // Prepare the data to send
+    const requestData = {
+      database_name: DATABASE_NAME, 
+      email: email,
+      hashpassword: password
+    };
+  
+    try {
+      const response = await fetch(`${API_URL}/email-login`, { // Use the API_URL
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Handle success (you might want to navigate to a success page here)
+        notifyVerifyEmail(); // Show email verification toast
+        setTimeout(() => navigate('/admin'), 3000); // Uncomment to navigate after a delay
+      } else {
+        // Handle error
+        setErrorMessage(data.message);
+        setEmailError(true);
+        setPasswordError(true);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setErrorMessage('An error occurred while logging in.');
       setEmailError(true);
       setPasswordError(true);
     }
@@ -154,9 +199,51 @@ const LoginPage = () => {
       </div>
 
           
-          <div className="flex items-center justify-end">
-            <a href="/forgot-password" className="text-sm text-blue-500 hover:underline">Forgot password?</a>
-          </div>
+        {/* <div className="flex items-center justify-end">
+          <a href="/forgot-password" className="text-sm text-blue-500 hover:underline">Forgot password?</a>
+        </div> */}
+
+        <div className="flex items-center justify-end">
+          <a
+            href="/forgot-password"
+            className="text-sm text-blue-500 hover:underline"
+            onClick={async (e) => {
+              e.preventDefault(); // Prevent the default anchor behavior
+              const storedEmail = localStorage.getItem('userEmail');
+              if (storedEmail) {
+                const requestData = {
+                  database_name: DATABASE_NAME,
+                  email: storedEmail,
+                };
+
+                try {
+                  const response = await fetch(`${API_URL}/check-email`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData),
+                  });
+
+                  if (response.ok) {
+                    // If email exists, navigate to the forgot password page
+                    navigate('/forgot-password');
+                  } else {
+                    const data = await response.json();
+                    alert(data.message || 'Email does not exist');
+                  }
+                } catch (error) {
+                  console.error('Error checking email:', error);
+                  alert('An error occurred while checking the email.');
+                }
+              } else {
+                alert("No email found");
+              }
+            }}
+          >
+            Forgot password?
+          </a>
+        </div>
 
           <div>
             <GradientButton>
