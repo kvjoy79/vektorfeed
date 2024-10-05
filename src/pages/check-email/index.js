@@ -16,45 +16,49 @@ const CheckEmailPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      {/* Logo */}
-      <div className="mt-12">
-        {/* SVG app Icon */}
-        <img src={VektordataBanner} alt="VektordataBanner-logo" /> 
-      </div>
+    // <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+    <div className="checkemail flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
 
-      {/* Confirmation Message */}
-      <div className="mt-12 w-full max-w-lg p-8 bg-white shadow-sm rounded-lg text-center">
+        <div className="flex justify-center">
+          
+          <img src={VektordataBanner} alt="Vektordata Logo" className="w-48 logo" style={{ marginBottom: '0px' }} />
         
-        <div className="mb-6 flex justify-center">
-          {/* SVG Email Icon */}
-          <img src={MessageSentIcon} alt="MessageSentIcon" /> 
         </div>
 
-        <h2 className="text-lg font-semibold text-gray-800 mb-2">
-          Please check your email
-        </h2>
-        <p className="text-base text-gray-600 mb-6">
-          Your email address has been successfully registered. Please check your email to verify your account.
-        </p>
+        {/* Confirmation Message */}
+        <div className="mt-1 w-full max-w-lg p-8 bg-white shadow-sm rounded-lg text-center">
+          
+          <div className="mb-2 flex justify-center" style={{marginTop: '-60px'}}>
+            {/* SVG Email Icon */}
+            <img src={MessageSentIcon} alt="MessageSentIcon" /> 
+          </div>
 
-        {/* Resend Email Button */}
-        <div className="flex flex-col items-center">
-          <GradientButton onClick={handleResendEmail}>
-            RESEND EMAIL
-          </GradientButton>
-
-          {/* more space here */}
-          <div className="mt-8" />
-
-          <p className="text-xs text-gray-500 mb-4">
-            It may take several minutes for the email to arrive in your inbox. Still haven’t received it?
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">
+            Please check your email
+          </h2>
+          <p className="text-base text-gray-600 mb-6">
+            Your email address has been successfully registered. Please check your email to verify your account.
           </p>
 
-          {/* Back to Login Link */}
-          <Link to="/login" className="text-blue-500 text-sm hover:underline">
-            Go Back to login page
-          </Link>
+          {/* Resend Email Button */}
+          <div className="flex flex-col items-center">
+            <GradientButton onClick={handleResendEmail}>
+              RESEND EMAIL
+            </GradientButton>
+
+            {/* more space here */}
+            <div className="mt-8" />
+
+            <p className="text-xs text-gray-500 mb-4">
+              It may take several minutes for the email to arrive in your inbox. Still haven’t received it?
+            </p>
+
+            {/* Back to Login Link */}
+            <Link to="/login" className="text-blue-500 text-sm hover:underline">
+              Go Back to login page
+            </Link>
+          </div>
         </div>
       </div>
     </div>
