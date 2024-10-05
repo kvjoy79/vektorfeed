@@ -1,6 +1,6 @@
 // src/pages/login/index.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import VektordataLogo from '../../assets/svgs/vektordata-banner.svg';
 import GradientButton from '../../components/GradientButton/gradientbutton';
 import './LoginPage.css';
@@ -22,16 +22,20 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false); 
   const navigate = useNavigate(); 
 
+  useEffect(() => {
+    document.title = 'Vektordata - Login';
+  }, []);
 
 
-  const buttons = [
-    { text: "Sign Up", href: "/signup" },
-    { text: "Check Email", href: "/check-email" },
-    { text: "Success", href: "/success" },
-    { text: "Verify Email", href: "/verify-email" },
-    { text: "Link Expired", href: "/link-expired" },
-    { text: "Login", href: "/login" },
-  ];
+
+  // const buttons = [
+  //   { text: "Sign Up", href: "/signup" },
+  //   { text: "Check Email", href: "/check-email" },
+  //   { text: "Success", href: "/success" },
+  //   { text: "Verify Email", href: "/verify-email" },
+  //   { text: "Link Expired", href: "/link-expired" },
+  //   { text: "Login", href: "/login" },
+  // ];
 
   const notifyVerifyEmail = () => {
     toast(
@@ -127,7 +131,7 @@ const LoginPage = () => {
       <ToastContainer />
 
       {/* Button Container */}
-      <div className="absolute top-4 right-4 flex flex-col items-center space-y-4">
+      {/* <div className="absolute top-4 right-4 flex flex-col items-center space-y-4">
         {buttons.map((button, index) => (
           <button
             key={index}
@@ -137,14 +141,23 @@ const LoginPage = () => {
             {button.text}
           </button>
         ))}
-      </div>
+      </div> */}
 
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           <img src={VektordataLogo} alt="Vektordata Logo" className="w-48" />
         </div>
 
-        <h2 className="text-2xl font-extrabold text-center">LOG IN</h2>
+        <h2 className="text-2xl font-extrabold text-center">LOG IN</h2> */}
+
+        <div className="flex justify-center">
+            <img src={VektordataLogo} alt="Vektordata Logo" className="w-48 logo" style={{ marginBottom: '0px' }} />
+        </div>
+
+        {/* <h2 className="text-2xl font-extrabold text-center" style={{ marginTop: '0', marginBottom: '16px' }}>LOG IN</h2> */}
+        <h2 className="text-2xl text-center" style={{ marginTop: '0', marginBottom: '16px', fontWeight: '900' }}>
+          LOG IN
+        </h2>
         <p className="text-center text-sm text-gray-400 mb-8">Find faster, build smarter</p>
         
         {/* Error Message */}
@@ -206,7 +219,7 @@ const LoginPage = () => {
         <div className="flex items-center justify-end">
           <a
             href="/forgot-password"
-            className="text-sm text-blue-500 hover:underline"
+            className="text-sm text-blue-500 hover:underline font-black"
             onClick={async (e) => {
               e.preventDefault(); // Prevent the default anchor behavior
               const storedEmail = localStorage.getItem('userEmail');
@@ -240,6 +253,7 @@ const LoginPage = () => {
                 alert("No email found");
               }
             }}
+            
           >
             Forgot password?
           </a>
@@ -253,7 +267,7 @@ const LoginPage = () => {
         </form>
         
         <p className="text-sm text-center">
-          Don't have an account? <a href="/signup" className="text-blue-500 hover:underline">Sign up</a>
+          Don't have an account? <a href="/signup" className="text-blue-500 hover:underline font-black">Sign up</a>
         </p>
 
         {/* more space here */}

@@ -26,6 +26,7 @@ const ResetPasswordPage = () => {
   });
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const [passwordFocused, setPasswordFocused] = useState(false);
 
   const handlePasswordChange = (event) => {
     const password = event.target.value;
@@ -98,13 +99,21 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <div className="mt-12">
-        <img src={VektordataBanner} alt="VektordataBanner-logo" />
-      </div>
+    <div className="resetpassword-container flex flex-col items-center justify-center min-h-screen bg-gray-50">
 
-      <div className="w-full max-w-md p-8 bg-white shadow-md rounded-md mt-6">
-        <h2 className="text-center text-2xl font-semibold text-gray-700 mb-4">RESET PASSWORD</h2>
+      {/* <div className="w-full max-w-md p-8 bg-white shadow-md rounded-md mt-6"> */}
+      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+
+        <div className="flex justify-center">
+   
+          <img src={VektordataBanner} alt="Vektordata Logo" className="w-48 logo" style={{ marginBottom: '0px' }} />
+        
+        </div>
+
+        {/* <h2 className="text-center text-2xl font-semibold text-gray-700 mb-4">RESET PASSWORD</h2> */}
+        <h2 className="text-2xl text-center" style={{ marginTop: '0', marginBottom: '16px', fontWeight: '900' }}>
+        RESET PASSWORD
+        </h2>
 
         <form onSubmit={handleReset}>
           {/* New Password Input */}
@@ -114,17 +123,21 @@ const ResetPasswordPage = () => {
               type="password"
               value={newPassword}
               onChange={handlePasswordChange}
+              onFocus={() => setPasswordFocused(true)} 
+              onBlur={() => setPasswordFocused(false)} 
               placeholder="Enter new password"
               className={`w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500 ${!Object.values(passwordValid).every(Boolean) ? 'border-red-500 bg-red-100' : ''}`}
               required
             />
-            <div className="mt-2 text-sm">
-              <p className={passwordValid.length ? 'text-green-500' : 'text-red-500'}>{passwordValid.length ? '✔' : '✘'} Min 6 characters</p>
-              <p className={passwordValid.uppercase ? 'text-green-500' : 'text-red-500'}>{passwordValid.uppercase ? '✔' : '✘'} An uppercase letter</p>
-              <p className={passwordValid.lowercase ? 'text-green-500' : 'text-red-500'}>{passwordValid.lowercase ? '✔' : '✘'} A lowercase letter</p>
-              <p className={passwordValid.number ? 'text-green-500' : 'text-red-500'}>{passwordValid.number ? '✔' : '✘'} A number</p>
-              <p className={passwordValid.specialChar ? 'text-green-500' : 'text-red-500'}>{passwordValid.specialChar ? '✔' : '✘'} A special character</p>
-            </div>
+            {passwordFocused && ( // Show validation messages if focused
+              <div className="mt-2 text-sm">
+                <p className={passwordValid.length ? 'text-green-500' : 'text-red-500'}>{passwordValid.length ? '✔' : '✘'} Min 6 characters</p>
+                <p className={passwordValid.uppercase ? 'text-green-500' : 'text-red-500'}>{passwordValid.uppercase ? '✔' : '✘'} An uppercase letter</p>
+                <p className={passwordValid.lowercase ? 'text-green-500' : 'text-red-500'}>{passwordValid.lowercase ? '✔' : '✘'} A lowercase letter</p>
+                <p className={passwordValid.number ? 'text-green-500' : 'text-red-500'}>{passwordValid.number ? '✔' : '✘'} A number</p>
+                <p className={passwordValid.specialChar ? 'text-green-500' : 'text-red-500'}>{passwordValid.specialChar ? '✔' : '✘'} A special character</p>
+              </div>
+             )}
           </div>
 
           {/* Repeat Password Input */}
@@ -159,6 +172,9 @@ const ResetPasswordPage = () => {
             <GradientButton type="submit">RESET PASSWORD</GradientButton>
           </div>
         </form>
+        {/* more space here */}
+        <div className="mt-600" />
+
       </div>
     </div>
   );

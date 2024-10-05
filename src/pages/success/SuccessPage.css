@@ -11,3 +11,8 @@ body {
   border-radius: 5px;
   margin-top: 10px;
 }
+
+.sucess-container {
+  max-height: 100vh; 
+  overflow-y: auto; 
+}

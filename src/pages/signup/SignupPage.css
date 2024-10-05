@@ -3,4 +3,26 @@
 body {
     font-family: 'Figtree', sans-serif;
   }
-  
+
+
+.alert {
+  /* background-color: rgba(255, 0, 0, 0.1);  */
+  color: #ff0000; /* Red text */
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.custom-toast-container {
+  width: 500px;
+  right: 200px;
+  /* margin-left: 1100px;  */
+  margin-right: auto; 
+}
+
+
+.signup-container {
+  max-height: 100vh; 
+  /* overflow-y: auto;  */
+}
+
