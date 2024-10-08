@@ -33,8 +33,9 @@ const SignupPage = () => {
     const newEmail = event.target.value;
     setEmail(newEmail);
 
+  
     // Regex pattern to reject common personal email domains
-    const businessEmailPattern = /^(?!.*@(gmail\.com|yahoo\.com|hotmail\.com|outlook\.com|live\.com)).+@.+\..+$/;
+    const businessEmailPattern = /^(?!.*@(apple\.com|icloud\.com|mail\.com|protonmail\.com|aol\.com|gmail\.com|yahoo\.com|hotmail\.com|outlook\.com|live\.com)).+@.+\..+$/;
   
     const isValid = businessEmailPattern.test(newEmail); // Define isValid here
     setEmailValid(isValid);
