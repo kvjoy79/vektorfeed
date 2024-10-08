@@ -54,7 +54,7 @@ const LoginPage = () => {
         });
 
         if (response.ok) {
-          alert('Verification email has been resent!');
+          console.log('Verification email has been resent!');
         } else {
           const errorData = await response.json();
           alert(errorData.error || 'Failed to resend email.');
