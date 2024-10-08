@@ -8,7 +8,6 @@ import ExclamationMarkIcon from '../../assets/svgs/exclamation-mark-inside-a-cir
 import EyeIcon from '../../assets/svgs/eye-icon.svg'; 
 import EyeOffIcon from '../../assets/svgs/eye-off-icon.svg'; 
 import { API_URL, DATABASE_NAME } from '../../config/config';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -36,6 +35,38 @@ const LoginPage = () => {
   //   { text: "Link Expired", href: "/link-expired" },
   //   { text: "Login", href: "/login" },
   // ];
+
+  const handleResendEmail = async () => {
+    const email = localStorage.getItem('userEmail'); 
+    const verificationHash = localStorage.getItem('verification_hash');
+
+    if (email && verificationHash) {
+      try {
+        const response = await fetch(`${API_URL}/send-verification-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            recipient_email: email,
+            token: verificationHash,
+          }),
+        });
+
+        if (response.ok) {
+          alert('Verification email has been resent!');
+        } else {
+          const errorData = await response.json();
+          alert(errorData.error || 'Failed to resend email.');
+        }
+      } catch (error) {
+        console.error('Error resending email:', error);
+        alert('An error occurred. Please try again.');
+      }
+    } else {
+      alert('Email or verification hash not found in local storage.');
+    }
+  };
 
   const notifyVerifyEmail = () => {
     toast(
@@ -108,9 +139,46 @@ const LoginPage = () => {
   
       if (response.ok) {
         // Handle success (you might want to navigate to a success page here)
-        notifyVerifyEmail(); // Show email verification toast
         setTimeout(() => navigate('/admin'), 3000); // Uncomment to navigate after a delay
-      } else {
+      } 
+      else {
+        console.log("login failed");
+          // Prepare the data to send for verification
+          const email = localStorage.getItem('userEmail');
+          const verificationHash = localStorage.getItem('verification_hash');
+          const verificationRequestData = {
+            userEmail: email,
+            verification_hash: verificationHash,
+          };
+
+          // Check if email verification exists
+          const verifyResponse = await fetch(`${API_URL}/verify`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(verificationRequestData),
+          });
+      
+          const verificationData = await verifyResponse.json();
+      
+          if (verifyResponse.ok) {
+            // Handle verification errors
+            if (verificationData.error) {
+              alert(verificationData.error);
+              return;
+            } else if (verificationData.message === 'User status is inactive') {
+              console.log("User status is inactive");
+              notifyVerifyEmail(); 
+              await handleResendEmail(); 
+              return;
+            }
+          }
+
+          else {
+            console.log("something wrong");
+          }
+
         // Handle error
         setErrorMessage(data.message);
         setEmailError(true);

@@ -5,6 +5,7 @@ import GradientButton from '../../components/GradientButton/gradientbutton';
 import ExclamationMarkIcon from '../../assets/svgs/exclamation-mark-inside-a-circle.svg';
 import { useNavigate } from 'react-router-dom'; 
 import { API_URL, DATABASE_NAME } from '../../config/config';
+import { v4 as uuidv4 } from 'uuid'; 
 
 const SignupPage = () => {
   const navigate = useNavigate(); 
@@ -88,10 +89,10 @@ const SignupPage = () => {
       alert("Please enter a valid business email.");
       return;
     }
-
+  
     if (passwordMatch && Object.values(passwordValid).every(Boolean)) {
-      // const useremail = email.split('@')[0]; // Simple username extraction
-
+      const verification_hash = uuidv4(); 
+  
       try {
         const response = await fetch(`${API_URL}/add-useremail`, {
           method: 'POST',
@@ -101,14 +102,40 @@ const SignupPage = () => {
           body: JSON.stringify({
             database_name: DATABASE_NAME,
             email: email,
-            hashpassword: password 
+            hashpassword: password,
+            verification_hash: verification_hash 
           })
         });
-
+  
         if (response.ok) {
           const data = await response.json();
           console.log('Sign-up successful', data);
-          navigate('/check-email');
+          
+          // Store verification_hash in localStorage
+          localStorage.setItem('verification_hash', verification_hash);
+
+          // Store email in localStorage
+          localStorage.setItem('userEmail', email);
+  
+          // Send verification email
+          const emailResponse = await fetch(`${API_URL}/send-verification-email`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              recipient_email: email,
+              token: verification_hash // Send the verification hash as token
+            })
+          });
+  
+          if (emailResponse.ok) {
+            console.log('Verification email sent successfully');
+            navigate('/check-email');
+          } else {
+            const errorData = await emailResponse.json();
+            alert(errorData.error); // Show error message from email sending
+          }
         } else {
           const errorData = await response.json();
           alert(errorData.message); // Show error message from server
@@ -121,6 +148,8 @@ const SignupPage = () => {
       console.log('Password validation failed');
     }
   };
+  
+  
 
   return (
 

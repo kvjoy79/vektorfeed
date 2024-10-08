@@ -1,18 +1,45 @@
 // src/pages/check-email/index.js
 
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import VektordataBanner from '../../assets/svgs/vektordata-banner.svg';
 import MessageSentIcon from '../../assets/svgs/message-sent-icon.svg';
 import './CheckEmailPage.css';
 import GradientButton from '../../components/GradientButton/gradientbutton';
+import { API_URL} from '../../config/config';
 
 const CheckEmailPage = () => {
-  const navigate = useNavigate();
 
-  const handleResendEmail = () => {
-    // Navigate to the /verify-email page
-    navigate('/verify-email');
+  const handleResendEmail = async () => {
+    const email = localStorage.getItem('userEmail'); 
+    const verificationHash = localStorage.getItem('verification_hash');
+
+    if (email && verificationHash) {
+      try {
+        const response = await fetch(`${API_URL}/send-verification-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            recipient_email: email,
+            token: verificationHash,
+          }),
+        });
+
+        if (response.ok) {
+          alert('Verification email has been resent!');
+        } else {
+          const errorData = await response.json();
+          alert(errorData.error || 'Failed to resend email.');
+        }
+      } catch (error) {
+        console.error('Error resending email:', error);
+        alert('An error occurred. Please try again.');
+      }
+    } else {
+      alert('Email or verification hash not found in local storage.');
+    }
   };
 
   return (
