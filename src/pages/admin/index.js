@@ -32,7 +32,7 @@ const AdminPage = () => {
       const names = {};
       for (const id of ids) {
         try {
-          const response = await fetch(`${API_URL}/api/google/get-place-name`, {
+          const response = await fetch(`${API_URL}/google/get-place-name`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
