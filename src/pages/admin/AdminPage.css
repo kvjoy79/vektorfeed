@@ -1,13 +1,63 @@
-/* src/pages/signup/SuccessPage.css */
+.stepper-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+}
 
-body {
-    font-family: 'Figtree', sans-serif;
-  }
+.stepper-line {
+  position: absolute;
+  top: 20%; 
+  left: 5%;
+  right: 0;
+  height: 4px;
+  background-color: #d3d3d3;
+  width: 90%;
+  z-index: 0;
+}
 
-.alert {
-  /* background-color: rgba(255, 0, 0, 0.1);  */
-  color: #ff0000; /* Red text */
-  padding: 10px;
-  border-radius: 5px;
-  margin-top: 10px;
+.stepper-line-active {
+  position: absolute;
+  top: 20%; 
+  left: 5%; 
+  height: 4px;
+  background-color: #007bff;
+  z-index: 1;
+}
+
+.stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.stepper-icon {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #d3d3d3;
+  border-radius: 4px; /* Square icons */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.stepper-icon-active {
+  border-color: #007bff;
+  background-color: #007bff;
+  color: white;
+}
+
+.completed {
+  border-color: #007bff;
+}
+
+.stepper-label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #333;
 }
