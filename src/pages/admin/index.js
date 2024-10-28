@@ -14,6 +14,8 @@ const AdminPage = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [location, setLocation] = useState(''); 
+  const [placeIds, setPlaceIds] = useState([]);
+  const [placeNames, setPlaceNames] = useState({});
   // const [typingTimeout, setTypingTimeout] = useState(null); // State for timeout
   const typingTimeoutRef = useRef(null); // Use ref for timeout ID
 
@@ -25,6 +27,31 @@ const AdminPage = () => {
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current); // Clear the previous timeout
     }
+
+    const fetchPlaceNames = async (ids) => {
+      const names = {};
+      for (const id of ids) {
+        try {
+          const response = await fetch(`${API_URL}/api/google/get-place-name`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ place_id: id }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            names[id] = data.place_name; // Store the place name with place ID as key
+          } else {
+            console.error(`Error fetching place name for ID ${id}`);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+      setPlaceNames(names); // Update state with the fetched names
+    };
 
 
     const fetchTopPlaceIds = async (location) => {
@@ -46,17 +73,24 @@ const AdminPage = () => {
     
         const data = await response.json();
         console.log('Place IDs:', data.place_ids);
+
+        setPlaceIds(data.place_ids); 
+        fetchPlaceNames(data.place_ids); 
+
       } catch (error) {
         console.error('Error:', error);
       }
     };
+
     
     
     // Set a new timeout
     typingTimeoutRef.current = setTimeout(() => {
-      console.log(location); // Log the location value when user stops typing
 
-      fetchTopPlaceIds(location);
+      if (location.trim()) { // Check if location is not empty
+        console.log(location); // Log the location value when user stops typing
+        fetchTopPlaceIds(location);
+      }
       
     }, 500); // Adjust the delay as needed
 
@@ -115,7 +149,7 @@ const AdminPage = () => {
           <form onSubmit={handleNext}>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">Company</label>
-              <select
+              {/* <select
                 className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
                 required
               >
@@ -123,7 +157,20 @@ const AdminPage = () => {
                 <option value="company1">Company 1</option>
                 <option value="company2">Company 2</option>
                 <option value="company3">Company 3</option>
-              </select>
+              </select> */}
+
+            <select
+              className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
+              required
+            >
+              <option value="" disabled>Select a company</option>
+              {placeIds.map((placeId) => (
+                <option key={placeId} value={placeId}>
+                  {placeNames[placeId] || 'Loading...'} {/* Show loading until the name is fetched */}
+                </option>
+              ))}
+            </select>
+
             </div>
 
             <div className="mb-4 relative">
