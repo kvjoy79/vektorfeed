@@ -15,7 +15,8 @@ const AdminPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [location, setLocation] = useState(''); 
   const [placeIds, setPlaceIds] = useState([]);
-  const [placeNames, setPlaceNames] = useState({});
+  // const [placeNames, setPlaceNames] = useState({});
+  const [placeDetails, setPlaceDetails] = useState({});
   // const [typingTimeout, setTypingTimeout] = useState(null); // State for timeout
   const typingTimeoutRef = useRef(null); // Use ref for timeout ID
 
@@ -28,11 +29,36 @@ const AdminPage = () => {
       clearTimeout(typingTimeoutRef.current); // Clear the previous timeout
     }
 
-    const fetchPlaceNames = async (ids) => {
-      const names = {};
+    // const fetchPlaceNames = async (ids) => {
+    //   const names = {};
+    //   for (const id of ids) {
+    //     try {
+    //       const response = await fetch(`${API_URL}/google/get-place-name`, {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ place_id: id }),
+    //       });
+
+    //       if (response.ok) {
+    //         const data = await response.json();
+    //         names[id] = data.place_name; // Store the place name with place ID as key
+    //       } else {
+    //         console.error(`Error fetching place name for ID ${id}`);
+    //       }
+    //     } catch (error) {
+    //       console.error('Error:', error);
+    //     }
+    //   }
+    //   setPlaceNames(names); // Update state with the fetched names
+    // };
+
+    const fetchPlaceDetails = async (ids) => {
+      const details = {};
       for (const id of ids) {
         try {
-          const response = await fetch(`${API_URL}/google/get-place-name`, {
+          const response = await fetch(`${API_URL}/google/get-place-details`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -42,17 +68,16 @@ const AdminPage = () => {
 
           if (response.ok) {
             const data = await response.json();
-            names[id] = data.place_name; // Store the place name with place ID as key
+            details[id] = `${data.place_name}, ${data.address}`; // Store the formatted string
           } else {
-            console.error(`Error fetching place name for ID ${id}`);
+            console.error(`Error fetching place details for ID ${id}`);
           }
         } catch (error) {
           console.error('Error:', error);
         }
       }
-      setPlaceNames(names); // Update state with the fetched names
+      setPlaceDetails(details);
     };
-
 
     const fetchTopPlaceIds = async (location) => {
       try {
@@ -75,7 +100,8 @@ const AdminPage = () => {
         console.log('Place IDs:', data.place_ids);
 
         setPlaceIds(data.place_ids); 
-        fetchPlaceNames(data.place_ids); 
+        // fetchPlaceNames(data.place_ids);
+        fetchPlaceDetails(data.place_ids); 
 
       } catch (error) {
         console.error('Error:', error);
@@ -159,17 +185,29 @@ const AdminPage = () => {
                 <option value="company3">Company 3</option>
               </select> */}
 
-            <select
+            {/* <select
               className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
               required
             >
               <option value="" disabled>Select a company</option>
               {placeIds.map((placeId) => (
                 <option key={placeId} value={placeId}>
-                  {placeNames[placeId] || 'Loading...'} {/* Show loading until the name is fetched */}
+                  {placeNames[placeId] || 'Loading...'} 
                 </option>
               ))}
-            </select>
+            </select> */}
+
+              <select
+                className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
+                required
+              >
+                <option value="" disabled>Select a company</option>
+                {placeIds.map((placeId) => (
+                  <option key={placeId} value={placeId}>
+                    {placeDetails[placeId] || 'Loading...'}
+                  </option>
+                ))}
+              </select>
 
             </div>
 
