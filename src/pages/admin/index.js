@@ -15,6 +15,8 @@ const AdminPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [location, setLocation] = useState(''); 
   const [placeIds, setPlaceIds] = useState([]);
+  const [selectedPlaceId, setSelectedPlaceId] = useState(() => localStorage.getItem("place_id") || "");
+
   // const [placeNames, setPlaceNames] = useState({});
   const [placeDetails, setPlaceDetails] = useState({});
   // const [typingTimeout, setTypingTimeout] = useState(null); // State for timeout
@@ -22,7 +24,8 @@ const AdminPage = () => {
 
   const handlePlaceIdChange = (event) => {
     const selectedPlaceId = event.target.value;
-    localStorage.setItem("place_id", selectedPlaceId); // Store the selected placeId in localStorage
+    setSelectedPlaceId(selectedPlaceId); // Update local state
+    localStorage.setItem("place_id", selectedPlaceId); // Update localStorage
   };
 
   useEffect(() => {
@@ -205,6 +208,7 @@ const AdminPage = () => {
               <select
                 className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
                 required
+                value={selectedPlaceId} 
                 onChange={handlePlaceIdChange} 
               >
                 <option value="" disabled>Select a company</option>

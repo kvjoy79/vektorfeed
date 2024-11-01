@@ -12,7 +12,7 @@ const Reviews = () => {
 
   useEffect(() => {
     // const placeId = localStorage.getItem('place_id');
-    const placeId = "ChIJUXK7lzYTdkgRbmi1F6lULPI;"
+    const placeId = "ChIJUXK7lzYTdkgRbmi1F6lULPI";
 
     if (!placeId) {
       toast.error("No place_id found. Please select a location.");
