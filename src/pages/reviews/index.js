@@ -53,16 +53,18 @@ const Reviews = () => {
       </div>
 
       <div className="reviews-list">
-        {currentPageData.map((review) => (
-          <div key={review.id} className="review-item">
+        {currentPageData.map((review, index) => (
+          <div key={index} className="review-item">
             <div className="review-rating">
               {'⭐'.repeat(review.rating)} {review.rating} / 5
             </div>
             <div className="review-details">
-              <p>By: {review.reviewer}</p>
-              <p>Platform: {review.platform}</p>
-              <p>Posted on: {review.date}</p>
-              <p>{review.content}</p>
+              <div className="review-author">
+                <img src={review.profile_photo_url} alt={review.author_name} className="review-author-photo" />
+                <span className="review-author-name">{review.author_name}</span>
+              </div>
+              <p>Posted: {review.relative_time_description}</p>
+              <p>{review.text}</p>
             </div>
           </div>
         ))}
