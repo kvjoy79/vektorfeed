@@ -27,6 +27,7 @@ const Reviews = () => {
         throw new Error('Failed to fetch reviews');
       }
       const data = await response.json();
+      console.log(data.reviews);
       setReviewsData(data.reviews || []); // Assuming the API returns reviews in data.reviews
     } catch (error) {
       toast.error(error.message);
