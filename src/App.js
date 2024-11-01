@@ -11,12 +11,18 @@ import ForgotPasswordPage from './pages/forgot-password';
 import ResetPasswordPage from './pages/reset-password'; 
 import LoginPage from './pages/login';
 import AdminPage from './pages/admin';
+import Dashboard from './pages/dashboard'; 
+import ReviewListings from './pages/review-listings';
+import Reviews from './pages/reviews';
+import WithSidebar from './components/WithSidebar/withsidebar';
+
 
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* No sidebar routes */}
         {/* <Route path="/" element={<AllPages />} /> */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -29,6 +35,33 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/admin" element={<AdminPage />} />
+
+        {/* Routes with sidebar */}
+        <Route
+          path="/dashboard"
+          element={
+            <WithSidebar>
+              <Dashboard />
+            </WithSidebar>
+          }
+        />
+        <Route
+          path="/review-listing"
+          element={
+            <WithSidebar>
+              <ReviewListings />
+            </WithSidebar>
+          }
+        />
+        <Route
+          path="/reviews"
+          element={
+            <WithSidebar>
+              <Reviews />
+            </WithSidebar>
+          }
+        />
+
       </Routes>
     </Router>
   );

@@ -1,0 +1,22 @@
+/* src/components/WithSidebar/withsidebar.css */
+.app-container {
+  display: flex;
+  min-height: 100vh; /* Full height layout */
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #333; /* Sidebar background color */
+  color: #fff;
+  height: 100vh;
+  position: fixed; /* Keep sidebar fixed */
+}
+
+.main-content {
+  margin-left: 250px; /* Same width as the sidebar */
+  padding: 20px;
+  flex: 1;
+  height: 100vh; /* Ensure the main content takes full height */
+  overflow-y: auto; /* Enables vertical scrolling */
+  background-color: #f9f9f9;
+}

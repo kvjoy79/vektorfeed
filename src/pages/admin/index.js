@@ -20,6 +20,11 @@ const AdminPage = () => {
   // const [typingTimeout, setTypingTimeout] = useState(null); // State for timeout
   const typingTimeoutRef = useRef(null); // Use ref for timeout ID
 
+  const handlePlaceIdChange = (event) => {
+    const selectedPlaceId = event.target.value;
+    localStorage.setItem("place_id", selectedPlaceId); // Store the selected placeId in localStorage
+  };
+
   useEffect(() => {
     document.title = 'Admin - Vektordata';
   }, []);
@@ -200,6 +205,7 @@ const AdminPage = () => {
               <select
                 className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
                 required
+                onChange={handlePlaceIdChange} 
               >
                 <option value="" disabled>Select a company</option>
                 {placeIds.map((placeId) => (
