@@ -11,8 +11,7 @@ const Reviews = () => {
   const reviewsPerPage = 5;
 
   useEffect(() => {
-    // const placeId = localStorage.getItem('place_id');
-    const placeId = "ChIJUXK7lzYTdkgRbmi1F6lULPI";
+    const placeId = localStorage.getItem('place_id');
 
     if (!placeId) {
       toast.error("No place_id found. Please select a location.");
@@ -23,7 +22,7 @@ const Reviews = () => {
 
   const fetchReviews = async (placeId) => {
     try {
-      const response = await fetch(`${API_URL}/api/google/place-review-details?place_id=${placeId}`);
+      const response = await fetch(`${API_URL}/google/place-review-details?place_id=${placeId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch reviews');
       }
