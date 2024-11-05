@@ -15,7 +15,7 @@ const AdminPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [location, setLocation] = useState(''); 
   const [placeIds, setPlaceIds] = useState([]);
-  const [selectedPlaceId, setSelectedPlaceId] = useState(() => localStorage.getItem("place_id") || "");
+  const [selectedPlaceId, setSelectedPlaceId] = useState("");  // Initial state empty
 
   // const [placeNames, setPlaceNames] = useState({});
   const [placeDetails, setPlaceDetails] = useState({});
@@ -23,14 +23,22 @@ const AdminPage = () => {
   const typingTimeoutRef = useRef(null); // Use ref for timeout ID
 
   const handlePlaceIdChange = (event) => {
-    const selectedPlaceId = event.target.value;
-    setSelectedPlaceId(selectedPlaceId); // Update local state
-    localStorage.setItem("place_id", selectedPlaceId); // Update localStorage
+    const newPlaceId = event.target.value;
+    setSelectedPlaceId(newPlaceId); // Update local state
+    localStorage.setItem("place_id", newPlaceId); // Sync localStorage
   };
 
   useEffect(() => {
     document.title = 'Admin - Vektordata';
   }, []);
+
+   // Sync selectedPlaceId with localStorage on mount and when localStorage changes
+   useEffect(() => {
+    const placeIdFromLocalStorage = localStorage.getItem("place_id");
+    if (placeIdFromLocalStorage) {
+      setSelectedPlaceId(placeIdFromLocalStorage); // Sync with state
+    }
+  }, []); // Empty array ensures this runs only on initial mount
 
   useEffect(() => {
     if (typingTimeoutRef.current) {
