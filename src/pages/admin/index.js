@@ -119,8 +119,8 @@ const AdminPage = () => {
         // fetchPlaceNames(data.place_ids);
         fetchPlaceDetails(data.place_ids); 
 
-        // Set the first place_id as the selectedPlaceId if not already set
-        if (!selectedPlaceId && data.place_ids.length > 0) {
+        
+        if (data.place_ids.length > 0) {
           const firstPlaceId = data.place_ids[0];
           setSelectedPlaceId(firstPlaceId);
           localStorage.setItem("place_id", firstPlaceId);  // Sync with localStorage
