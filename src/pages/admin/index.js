@@ -196,20 +196,19 @@ const AdminPage = () => {
 
         {activeStep === 0 && (
           <form onSubmit={handleNext}>
-
-
-            <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Location</label>
-            <input
-              type="text"
-              placeholder="Enter location"
-              className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
-              required
-              value={location} // Bind the input value to state
-              onChange={(e) => setLocation(e.target.value)} // Update state on input change
-            />
-              
-              {/* <img src={LocationIcon} alt="Location Icon" className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5" /> */}
+            {/* Location Input - Moved up */}
+            <div className="mb-4 relative">
+              <label className="block text-sm font-medium text-gray-700">Location</label>
+              <input
+                type="text"
+                placeholder="Enter location"
+                className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
+                required
+                value={location} // Bind the input value to state
+                onChange={(e) => setLocation(e.target.value)} // Update state on input change
+              />
+                
+              {/* Location Icon */}
               <img 
                 src={LocationIcon} 
                 alt="Location Icon" 
@@ -218,31 +217,9 @@ const AdminPage = () => {
               />
             </div>
 
-
-            <div className="mb-4 relative">
+            {/* Company Dropdown - Moved down */}
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">Company</label>
-              {/* <select
-                className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
-                required
-              >
-                <option value="" disabled>Select a company</option>
-                <option value="company1">Company 1</option>
-                <option value="company2">Company 2</option>
-                <option value="company3">Company 3</option>
-              </select> */}
-
-            {/* <select
-              className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
-              required
-            >
-              <option value="" disabled>Select a company</option>
-              {placeIds.map((placeId) => (
-                <option key={placeId} value={placeId}>
-                  {placeNames[placeId] || 'Loading...'} 
-                </option>
-              ))}
-            </select> */}
-
               <select
                 className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
                 required
@@ -256,7 +233,6 @@ const AdminPage = () => {
                   </option>
                 ))}
               </select>
-
             </div>
 
             <div>
@@ -266,6 +242,7 @@ const AdminPage = () => {
             </div>
           </form>
         )}
+
 
         {activeStep === 1 && (
           <form onSubmit={handleNext}>
