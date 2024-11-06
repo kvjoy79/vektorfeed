@@ -196,7 +196,30 @@ const AdminPage = () => {
 
         {activeStep === 0 && (
           <form onSubmit={handleNext}>
+
+
             <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Location</label>
+            <input
+              type="text"
+              placeholder="Enter location"
+              className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
+              required
+              value={location} // Bind the input value to state
+              onChange={(e) => setLocation(e.target.value)} // Update state on input change
+            />
+              
+              {/* <img src={LocationIcon} alt="Location Icon" className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5" /> */}
+              <img 
+                src={LocationIcon} 
+                alt="Location Icon" 
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 cursor-pointer" 
+                onClick={handleLocationClick} 
+              />
+            </div>
+
+
+            <div className="mb-4 relative">
               <label className="block text-sm font-medium text-gray-700">Company</label>
               {/* <select
                 className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
@@ -234,26 +257,6 @@ const AdminPage = () => {
                 ))}
               </select>
 
-            </div>
-
-            <div className="mb-4 relative">
-            <label className="block text-sm font-medium text-gray-700">Location</label>
-            <input
-              type="text"
-              placeholder="Enter location"
-              className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
-              required
-              value={location} // Bind the input value to state
-              onChange={(e) => setLocation(e.target.value)} // Update state on input change
-            />
-              
-              {/* <img src={LocationIcon} alt="Location Icon" className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5" /> */}
-              <img 
-                src={LocationIcon} 
-                alt="Location Icon" 
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 cursor-pointer" 
-                onClick={handleLocationClick} 
-              />
             </div>
 
             <div>
