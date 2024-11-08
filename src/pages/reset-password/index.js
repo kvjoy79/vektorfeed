@@ -102,7 +102,8 @@ const ResetPasswordPage = () => {
     <div className="resetpassword-container flex flex-col items-center justify-center min-h-screen bg-gray-50">
 
       {/* <div className="w-full max-w-md p-8 bg-white shadow-md rounded-md mt-6"> */}
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+      {/* <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg"> */}
+      <div className="w-full max-w-md p-8 space-y-8">
 
         <div className="flex justify-center">
    

@@ -19,13 +19,14 @@ const VerifyEmailPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white-50">
       <div className="mt-12">
         {/* Logo */}
         <img src={VektordataBanner} alt="VektordataBanner-logo" /> 
       </div>
 
-      <div className="mt-8 w-full max-w-md p-8 bg-white shadow-md rounded-md text-center">
+      {/* <div className="mt-8 w-full max-w-md p-8 bg-white shadow-md rounded-md text-center"> */}
+      <div className="w-full max-w-md p-8 space-y-8 text-center">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           Welcome to VektorData!
         </h2>

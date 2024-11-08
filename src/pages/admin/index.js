@@ -147,7 +147,8 @@ const AdminPage = () => {
   }, [location]); // Only depend on location
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    navigate('/dashboard'); // Navigate to dashboard page
   };
 
   const handleGotoDashobard = () => {
@@ -166,8 +167,9 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="resetpassword-container flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+    <div className="resetpassword-container flex flex-col items-center justify-center min-h-screen bg-white-50">
+      {/* <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg"> */}
+      <div className="w-full max-w-md p-8 space-y-8">
         <div className="flex flex-col items-center">
           <h2 className="text-2xl text-center" style={{ marginTop: '0', marginBottom: '0px', fontWeight: '900', color: 'navy' }}>
             WELCOME TO
@@ -196,12 +198,12 @@ const AdminPage = () => {
 
         {activeStep === 0 && (
           <form onSubmit={handleNext}>
-            {/* Location Input - Moved up */}
+            {/* Company Input - Moved up */}
             <div className="mb-4 relative">
-              <label className="block text-sm font-medium text-gray-700">Location</label>
+              <label className="block text-sm font-medium text-gray-700">Company</label>
               <input
                 type="text"
-                placeholder="Enter location"
+                placeholder="Enter Company"
                 className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
                 required
                 value={location} // Bind the input value to state
@@ -217,16 +219,16 @@ const AdminPage = () => {
               />
             </div>
 
-            {/* Company Dropdown - Moved down */}
+            {/* Location Dropdown - Moved down */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Company</label>
+              <label className="block text-sm font-medium text-gray-700">Location</label>
               <select
                 className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-500"
                 required
                 value={selectedPlaceId} 
                 onChange={handlePlaceIdChange} 
               >
-                <option value="" disabled>Select a company</option>
+                <option value="" disabled>Select a location</option>
                 {placeIds.map((placeId) => (
                   <option key={placeId} value={placeId}>
                     {placeDetails[placeId] || 'Loading...'}
@@ -313,6 +315,7 @@ const AdminPage = () => {
         )}
 
 
+      
       </div>
     </div>
   );

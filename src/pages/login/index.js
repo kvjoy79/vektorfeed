@@ -193,7 +193,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 relative">
+    <div className="flex items-center justify-center h-screen bg-white-100 relative">
 
       {/* Toast Container for displaying notifications */}
       <ToastContainer />
@@ -211,7 +211,8 @@ const LoginPage = () => {
         ))}
       </div> */}
 
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+      {/* <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg"> */}
+      <div className="w-full max-w-md p-8 space-y-8">
         {/* <div className="flex justify-center">
           <img src={VektordataLogo} alt="Vektordata Logo" className="w-48" />
         </div>

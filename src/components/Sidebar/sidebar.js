@@ -21,20 +21,14 @@ const Sidebar = () => {
         <li className={activeItem === '/dashboard' ? 'active' : ''}>
           <Link to="/dashboard" onClick={() => setActiveItem('/dashboard')}>Dashboard</Link>
         </li>
-        <li className={activeItem === '/review-listing' ? 'active' : ''}>
-          <Link to="/review-listing" onClick={() => setActiveItem('/review-listing')}>Review Listings</Link>
+        <li className={activeItem === '/chatbot-for-reviews' ? 'active' : ''}>
+          <Link to="/chatbot-for-reviews" onClick={() => setActiveItem('/chatbot-for-reviews')}>Chatbot for reviews</Link>
         </li>
         <li className={activeItem === '/reviews' ? 'active' : ''}>
           <Link to="/reviews" onClick={() => setActiveItem('/reviews')}>Reviews</Link>
         </li>
         <li className={activeItem === '/notifications' ? 'active' : ''}>
           <Link to="/notifications" onClick={() => setActiveItem('/notifications')}>Notifications</Link>
-        </li>
-        <li className={activeItem === '/review-campaigns' ? 'active' : ''}>
-          <Link to="/review-campaigns" onClick={() => setActiveItem('/review-campaigns')}>Review Campaigns</Link>
-        </li>
-        <li className={activeItem === '/widgets' ? 'active' : ''}>
-          <Link to="/widgets" onClick={() => setActiveItem('/widgets')}>Review Widgets</Link>
         </li>
         <li className={activeItem === '/integrations' ? 'active' : ''}>
           <Link to="/integrations" onClick={() => setActiveItem('/integrations')}>Integrations</Link>

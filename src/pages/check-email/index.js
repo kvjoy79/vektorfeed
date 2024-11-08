@@ -44,8 +44,9 @@ const CheckEmailPage = () => {
 
   return (
     // <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-    <div className="checkemail flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+    <div className="checkemail flex flex-col items-center justify-center min-h-screen bg-white-50">
+      {/* <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg"> */}
+      <div className="w-full max-w-md p-8 space-y-8">
 
         <div className="flex justify-center">
           
@@ -54,8 +55,9 @@ const CheckEmailPage = () => {
         </div>
 
         {/* Confirmation Message */}
-        <div className="mt-1 w-full max-w-lg p-8 bg-white shadow-sm rounded-lg text-center">
-          
+        {/* <div className="mt-1 w-full max-w-lg p-8 bg-white shadow-sm rounded-lg text-center"> */}
+        <div className="mt-1 w-full max-w-lg p-8 text-center">
+
           <div className="mb-2 flex justify-center" style={{marginTop: '-60px'}}>
             {/* SVG Email Icon */}
             <img src={MessageSentIcon} alt="MessageSentIcon" /> 

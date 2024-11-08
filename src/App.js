@@ -12,7 +12,7 @@ import ResetPasswordPage from './pages/reset-password';
 import LoginPage from './pages/login';
 import AdminPage from './pages/admin';
 import Dashboard from './pages/dashboard'; 
-import ReviewListings from './pages/review-listings';
+import ChatBotForReviews from './pages/chatbot-for-reviews';
 import Reviews from './pages/reviews';
 import WithSidebar from './components/WithSidebar/withsidebar';
 
@@ -46,10 +46,10 @@ function App() {
           }
         />
         <Route
-          path="/review-listing"
+          path="/chatbot-for-reviews"
           element={
             <WithSidebar>
-              <ReviewListings />
+              <ChatBotForReviews />
             </WithSidebar>
           }
         />

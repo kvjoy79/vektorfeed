@@ -21,9 +21,11 @@ const SuccessPage = () => {
 
   return (
     // <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
-    <div className="sucess-container flex items-center justify-center h-screen bg-gray-100 relative">
+    <div className="sucess-container flex items-center justify-center h-screen bg-white-100 relative">
       
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+      {/* <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg"> */}
+      <div className="w-full max-w-md p-8 space-y-8">
+
         <div className="flex justify-center">
             <img src={VektordataBanner} alt="Vektordata Logo" className="w-48 logo" style={{ marginBottom: '0px' }} />
         </div>

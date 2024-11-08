@@ -21,9 +21,10 @@ const ForgotPasswordPage = () => {
 
   return (
     // <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
-    <div className="flex items-center justify-center h-screen bg-gray-100 relative">
+    <div className="flex items-center justify-center h-screen bg-white-100 relative">
 
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+      {/* <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg"> */}
+      <div className="w-full max-w-md p-8 space-y-8">
 
           <div className="flex justify-center">
             {/* <div className="mt-12"> */}
