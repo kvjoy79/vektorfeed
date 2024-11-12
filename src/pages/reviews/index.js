@@ -22,7 +22,7 @@ const Reviews = () => {
 
   const fetchReviews = async (placeId) => {
     try {
-      const response = await fetch(`${API_URL}/google/place-review-details?place_id=${placeId}`);
+      const response = await fetch(`${API_URL}/serpapi/place-review-details?place_id=${placeId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch reviews');
       }
