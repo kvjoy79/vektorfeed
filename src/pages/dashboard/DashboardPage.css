@@ -1,0 +1,239 @@
+/* Main Container */
+.dashboard-main-container {
+  background-color: #f0f0f0; /* Gray background */
+  padding: 20px;
+}
+
+/* Top Button Group */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.date-buttons button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.date-buttons button.active {
+  background-color: brown;
+  color: white;
+  border-color: brown;
+}
+
+
+/* Content Grid */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.card-container {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.span-two {
+  grid-column: span 2;
+}
+
+/* Rating Style */
+.rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rating-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.rating-value {
+  font-size: 2.5rem; /* Larger font for the rating */
+  font-weight: bold; /* Bold style for the rating */
+}
+
+.rating-text {
+  font-size: 1rem; /* Smaller font for the descriptive text */
+  color: #555; /* Slightly muted color for the text */
+}
+
+.rating-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line-graph {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 120px; /* Adjust as needed */
+}
+
+.line-graph span {
+  font-size: 0.8rem;
+  margin: 0 3px;
+  color: #888; /* Placeholder style */
+}
+
+/* Keywords Styling */
+.keywords-container {
+  text-align: left;
+}
+
+.keywords-title {
+  font-weight: bold; /* Bold title for Positive/Negative Keywords */
+  margin-bottom: 10px;
+}
+
+.positive-content {
+  color: red; /* Red color for positive keywords content */
+  font-weight: normal;
+}
+
+.negative-content {
+  color: green; /* Green color for negative keywords content */
+  font-weight: normal;
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Line Graph Container */
+.line-graph-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+}
+
+.line-graph {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.line-graph circle {
+  transition: fill 0.3s;
+}
+
+.line-graph circle:hover {
+  fill: #555;
+}
+
+.graph-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.graph-labels span {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+
+/* Action Buttons */
+.action-buttons button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover effect */
+.action-buttons button:hover {
+  background-color: #d3d3d3; /* Gray background on hover */
+}
+
+/* Styling for clicked buttons */
+.action-buttons button.clicked {
+  background-color: red; /* Red background when clicked */
+  color: white;
+}
+
+/* Reset to normal background after animation */
+.action-buttons button:not(.clicked) {
+  background-color: white;
+  color: black;
+}
+
+
+/* Align the line graph labels correctly below the points */
+.line-graph-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  position: relative; /* Allow absolute positioning of labels */
+}
+
+.line-graph {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.line-graph circle {
+  transition: fill 0.3s;
+}
+
+.line-graph circle:hover {
+  fill: #555;
+}
+
+/* Position the labels at the correct positions */
+.graph-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  bottom: -20px; /* Adjust this to place labels below the graph */
+}
+
+.graph-labels span {
+  font-size: 0.8rem;
+  color: #555;
+  display: inline-block;
+  width: 20px; /* Ensure the labels are evenly spaced */
+  text-align: center;
+}
+
+/* Styling for the new text labels under the rating */
+.rating-description {
+  font-size: 0.9rem;
+  color: #666; /* Lighter gray for description text */
+  margin-top: 5px; /* Space between the rating text and description */
+  font-weight: normal;
+  text-align: left; /* Left-align the text under the ratings */
+}

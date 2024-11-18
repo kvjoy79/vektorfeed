@@ -1,0 +1,17 @@
+.card-container {
+    background-color: white; /* White background for each card */
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Optional: Add any specific styles to adjust card elements */
+  .card-container h3 {
+    margin-bottom: 10px;
+  }
+  
+  .card-container p {
+    margin: 5px 0;
+  }
+  
