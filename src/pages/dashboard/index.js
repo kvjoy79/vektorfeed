@@ -24,6 +24,52 @@ const Dashboard = () => {
     }, 500); // Reset after 1 second
   };
 
+
+  const tableData = [
+    {
+      placename: "McDonald's, High Street, Watford, UK",
+      values: [
+        [5, 3],
+        [2, 1],
+        ['', 4],
+        [3, 2],
+        [4, 6],
+      ],
+    },
+    {
+      placename: "McDonald's, Strand, London, UK",
+      values: [
+        [2, 3],
+        [1, 4],
+        [3, 2],
+        [1, 1],
+        ['', 0],
+      ],
+    },
+    {
+      placename: "McDonald's, High Street, Watford, UK",
+      values: [
+        [0, 1],
+        [0, 2],
+        [1, 0],
+        [4, 3],
+        [2, 5],
+      ],
+    },
+  ];
+
+  const renderSentiment = (value) => {
+    if (value === 1) {
+      return <span className="emoji happy">😊</span>;
+    } else if (value === 2) {
+      return <span className="emoji neutral">😐</span>;
+    } else if (value === 3) {
+      return <span className="emoji sad">☹️</span>;
+    } else {
+      return null;
+    }
+  };
+
   return (
     <div className="dashboard-main-container">
       {/* Top Buttons */}
@@ -76,7 +122,7 @@ const Dashboard = () => {
               <div className="rating-value">4.8</div>
               <div className="rating-text">overall rating</div>
               <p></p>
-              <div className="rating-description">10 visitor in a post week.</div>
+              <div className="rating-description">10 visitors in a post week.</div>
             </div>
             <div className="rating-right">
               <div className="line-graph-container">
@@ -118,7 +164,7 @@ const Dashboard = () => {
               <div className="rating-value">4.9</div>
               <div className="rating-text">on Google</div>
               <p></p>
-              <div className="rating-description">9 visitor in a post week.</div>
+              <div className="rating-description">9 visitors in a post week.</div>
             </div>
             <div className="rating-right">
               <div className="line-graph-container">
@@ -157,26 +203,102 @@ const Dashboard = () => {
         <Card>
           <div className="keywords-container">
             <div className="keywords-title">Positive Keywords</div>
-            <p className="positive-content">18 Food</p>
-            <p className="positive-content">11 Location</p>
-            <p className="positive-content">5 Delivery</p>
+              <ul className="indented-list">
+                <p className="positive-content">18 Food</p>
+                <p className="positive-content">11 Location</p>
+                <p className="positive-content">5 Delivery</p>
+              </ul>
           </div>
         </Card>
 
         {/* Negative Keywords */}
         <Card>
           <div className="keywords-container">
+          
             <div className="keywords-title">Negative Keywords</div>
-            <p className="negative-content">5 Closing time</p>
-            <p className="negative-content">2 Staff</p>
-            <p className="negative-content">1 Location</p>
+            <ul className="indented-list">
+              <p className="negative-content">5 Closing time</p>
+              <p className="negative-content">2 Staff</p>
+              <p className="negative-content">1 Location</p>
+            </ul>
           </div>
         </Card>
 
         {/* Table Container */}
-        <Card title="Table Data" spanTwoColumns={true}>
-          <p>Table content goes here.</p>
-        </Card>
+      {/* <Card title="Review Profile" spanTwoColumns={true}> */}
+      <Card spanTwoColumns={true}>
+        <div className="table-container">
+          <table className="review-table">
+            <thead>
+              <tr>
+                <th>Review Profile</th>
+                <th>2024-10-19</th>
+                <th>2024-10-20</th>
+                <th>2024-10-21</th>
+                <th>2024-10-22</th>
+                <th>2024-10-23</th>
+              </tr>
+            </thead>
+            <thead>
+              <tr>
+                <th> &nbsp; </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((row, index) => (
+                <tr key={index}>
+                  <td>{row.placename}</td>
+                  {row.values.map((value, idx) => (
+                    <td key={idx}>
+                      <div className="split-cell">
+                        {value[0] !== '' ? value[0] : '-'}
+                        <span className="divider"></span>
+                        {value[1] !== '' ? value[1] : '-'}
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
       </div>
     </div>
   );
