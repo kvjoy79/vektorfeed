@@ -12,7 +12,7 @@ import ResetPasswordPage from './pages/reset-password';
 import LoginPage from './pages/login';
 import AdminPage from './pages/admin';
 import Dashboard from './pages/dashboard'; 
-import FeedbackGPT from './pages/feedbackgpt';
+import VektorGPT from './pages/vektorgpt';
 import Notifications from './pages/notifications';
 import Settings from './pages/settings';
 import Logout from './pages/logout';
@@ -59,10 +59,10 @@ function App() {
         />
 
         <Route
-          path="/feedbackgpt"
+          path="/vektorgpt"
           element={
             <WithSidebar>
-              <FeedbackGPT />
+              <VektorGPT />
             </WithSidebar>
           }
         />

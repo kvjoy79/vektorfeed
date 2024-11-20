@@ -28,7 +28,7 @@ const Sidebar = () => {
           <Link to="/reviews" onClick={() => setActiveItem('/reviews')}>Reviews</Link>
         </li>
         <li className={activeItem === '/feedbackgpt' ? 'active' : ''}>
-          <Link to="/feedbackgpt" onClick={() => setActiveItem('/feedbackgpt')}>FeedbackGPT</Link>
+          <Link to="/vektorgpt" onClick={() => setActiveItem('/vektorgpt')}>VektorGPT</Link>
         </li>
         <li className={activeItem === '/notifications' ? 'active' : ''}>
           <Link to="/notifications" onClick={() => setActiveItem('/notifications')}>Notifications</Link>

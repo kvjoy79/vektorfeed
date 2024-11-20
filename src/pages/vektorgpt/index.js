@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./FeedbackGPTPage.css"; // Importing the CSS file
+import "./VektorGPTPage.css"; // Importing the CSS file
 import SendButton from "../../assets/svgs/up-button.svg"; // Importing the SVG file
 import AIBotIcon from "../../assets/svgs/bot-svgrepo-com.svg"; // Importing the chatbot icon
 
 
-const FeedbackGPT = () => {
+const VektorGPT = () => {
   const [messages, setMessages] = useState([]); // State to manage chat messages
   const [input, setInput] = useState(""); // State to manage the input field
   const [showConversation, setShowConversation] = useState(false); // State to toggle conversation container
@@ -70,4 +70,4 @@ const FeedbackGPT = () => {
   );
 };
 
-export default FeedbackGPT;
+export default VektorGPT;
