@@ -1,0 +1,124 @@
+/* Main container */
+.feedback-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full screen height */
+    background-color: #f7f8fa;
+    transition: justify-content 0.3s ease-in-out; /* Smooth transition */
+  }
+  
+  .feedback-container.conversation-active {
+    justify-content: flex-start; /* Moves everything to the top when conversation starts */
+    padding-top: 20px;
+  }
+  
+  /* Heading */
+  .feedback-heading {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Chat area */
+  .chat-area {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    height: 70%;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    border-radius: 10px;
+    /* background-color: #fff; */
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Chat messages */
+  .chat-message {
+    display: flex;
+    align-items: flex-start;
+    margin: 5px 0;
+  }
+  
+  .chat-message.user-message {
+    justify-content: flex-end;
+  }
+  
+  .chat-message.bot-message {
+    justify-content: flex-start;
+  }
+  
+  .chat-text {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #e6f7ff;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  .chat-message.user-message .chat-text {
+    background-color: #d9f7be;
+  }
+  
+  /* Avatar for bot */
+  /* .bot-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  } */
+
+
+  /* Avatar for bot */
+  .bot-avatar {
+    margin-right: 10px;
+  }
+  
+  .bot-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  /* Input area */
+  .feedback-input-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    position: absolute;
+    bottom: 20px; /* Default position */
+    transition: bottom 0.3s ease-in-out;
+  }
+  
+  .feedback-input-wrapper.active {
+    position: static; /* Keeps it in the flow of the layout after the first message */
+  }
+  
+  .feedback-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .feedback-send-button {
+    background: none;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  .send-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
