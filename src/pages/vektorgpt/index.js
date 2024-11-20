@@ -57,7 +57,7 @@ const VektorGPT = () => {
       <div className={`feedback-input-wrapper ${showConversation ? "active" : ""}`}>
         <input
           type="text"
-          placeholder="Message FeedbackGPT"
+          placeholder="Message VektorGPT"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="feedback-input"
