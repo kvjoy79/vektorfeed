@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './sidebar.css';
+import VektordataLogo from '../../assets/svgs/vektordata-banner.svg'; // Import vektordaa logo
+
 
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState('');
@@ -15,7 +17,8 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <h2>Vektordata</h2>
+        {/* <h2>Vektordata</h2> */}
+        <img src={VektordataLogo} alt="Vektordata Logo" className="sidebar-logo" />
       </div>
       <ul className="sidebar-menu">
         <li className={activeItem === '/dashboard' ? 'active' : ''}>

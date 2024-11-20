@@ -6,8 +6,8 @@
 
 .sidebar {
   width: 250px;
-  background-color: #333; /* Sidebar background color */
-  color: #fff;
+  background-color: #e4e1e1; /* Sidebar background color */
+  color: #161616;
   height: 100vh;
   position: fixed; /* Keep sidebar fixed */
 }
