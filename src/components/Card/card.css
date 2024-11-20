@@ -8,7 +8,9 @@
   
   /* Optional: Add any specific styles to adjust card elements */
   .card-container h3 {
+    font-weight: bold; /* Bold title for Positive/Negative Keywords */
     margin-bottom: 10px;
+    font-size: 1.7rem; 
   }
   
   .card-container p {

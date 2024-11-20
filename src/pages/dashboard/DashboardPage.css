@@ -98,7 +98,8 @@
 
 .keywords-title {
   font-weight: bold; /* Bold title for Positive/Negative Keywords */
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.7rem; 
 }
 
 .keywords-container h4 {

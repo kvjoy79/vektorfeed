@@ -116,7 +116,8 @@ const Dashboard = () => {
       {/* Containers Grid */}
       <div className="content-grid">
         {/* Reviews Card */}
-        <Card>
+        {/* <Card> */}
+        <Card title="Reviews">
           <div className="rating-container">
             <div className="rating-left">
               <div className="rating-value">4.8</div>
@@ -158,7 +159,7 @@ const Dashboard = () => {
         </Card>
 
         {/* Google Ratings Card */}
-        <Card>
+        <Card title="Google Rating">
           <div className="rating-container">
             <div className="rating-left">
               <div className="rating-value">4.9</div>
