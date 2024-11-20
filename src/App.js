@@ -12,7 +12,10 @@ import ResetPasswordPage from './pages/reset-password';
 import LoginPage from './pages/login';
 import AdminPage from './pages/admin';
 import Dashboard from './pages/dashboard'; 
-import ChatBotForReviews from './pages/chatbot-for-reviews';
+import FeedbackGPT from './pages/feedbackgpt';
+import Notifications from './pages/notifications';
+import Settings from './pages/settings';
+import Logout from './pages/logout';
 import Reviews from './pages/reviews';
 import WithSidebar from './components/WithSidebar/withsidebar';
 
@@ -45,14 +48,7 @@ function App() {
             </WithSidebar>
           }
         />
-        <Route
-          path="/chatbot-for-reviews"
-          element={
-            <WithSidebar>
-              <ChatBotForReviews />
-            </WithSidebar>
-          }
-        />
+
         <Route
           path="/reviews"
           element={
@@ -61,6 +57,43 @@ function App() {
             </WithSidebar>
           }
         />
+
+        <Route
+          path="/feedbackgpt"
+          element={
+            <WithSidebar>
+              <FeedbackGPT />
+            </WithSidebar>
+          }
+        />
+
+        <Route
+          path="/notifications"
+          element={
+            <WithSidebar>
+              <Notifications />
+            </WithSidebar>
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <WithSidebar>
+              <Settings />
+            </WithSidebar>
+          }
+        />
+
+        <Route
+          path="/logout"
+          element={
+            <WithSidebar>
+              <Logout />
+            </WithSidebar>
+          }
+        />
+
 
       </Routes>
     </Router>

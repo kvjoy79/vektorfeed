@@ -19,22 +19,22 @@ const Sidebar = () => {
       </div>
       <ul className="sidebar-menu">
         <li className={activeItem === '/dashboard' ? 'active' : ''}>
-          <Link to="/dashboard" onClick={() => setActiveItem('/dashboard')}>Dashboard</Link>
-        </li>
-        <li className={activeItem === '/chatbot-for-reviews' ? 'active' : ''}>
-          <Link to="/chatbot-for-reviews" onClick={() => setActiveItem('/chatbot-for-reviews')}>Chatbot for reviews</Link>
+          <Link to="/dashboard" onClick={() => setActiveItem('/dashboard')}>Overview</Link>
         </li>
         <li className={activeItem === '/reviews' ? 'active' : ''}>
           <Link to="/reviews" onClick={() => setActiveItem('/reviews')}>Reviews</Link>
         </li>
+        <li className={activeItem === '/feedbackgpt' ? 'active' : ''}>
+          <Link to="/feedbackgpt" onClick={() => setActiveItem('/feedbackgpt')}>FeedbackGPT</Link>
+        </li>
         <li className={activeItem === '/notifications' ? 'active' : ''}>
           <Link to="/notifications" onClick={() => setActiveItem('/notifications')}>Notifications</Link>
         </li>
-        <li className={activeItem === '/integrations' ? 'active' : ''}>
-          <Link to="/integrations" onClick={() => setActiveItem('/integrations')}>Integrations</Link>
-        </li>
         <li className={activeItem === '/settings' ? 'active' : ''}>
           <Link to="/settings" onClick={() => setActiveItem('/settings')}>Settings</Link>
+        </li>
+        <li className={activeItem === '/logout' ? 'active' : ''}>
+          <Link to="/logout" onClick={() => setActiveItem('/logout')}>Logout</Link>
         </li>
       </ul>
     </div>
