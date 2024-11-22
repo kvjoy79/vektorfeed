@@ -283,6 +283,8 @@
   font-size: 1rem;
 }
 
+
+/* old */
 .emoji {
   font-size: 1.5rem;
 }
@@ -298,6 +300,26 @@
 .emoji.sad {
   color: #F44336;
 }
+
+/* new */
+.emoji {
+  width: 1.5rem; /* Adjust the width of the icons */
+  height: 1.5rem; /* Adjust the height of the icons */
+  object-fit: contain; /* Ensure the image is not distorted */
+}
+
+.emoji.happy {
+  color: #4CAF50;
+}
+
+.emoji.neutral {
+  color: #FFC107;
+}
+
+.emoji.sad {
+  color: #F44336;
+}
+
 
 .review-table tr:nth-child(even) {
   background-color: #f9f9f9;

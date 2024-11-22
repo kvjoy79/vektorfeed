@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Card from '../../components/Card/card';
 import './DashboardPage.css';
+import LikeIcon from '../../assets/pngs/like-icon.png';
+import DislikeIcon from '../../assets/pngs/dislike-icon.png';
+
 
 const Dashboard = () => {
   const [activeButton, setActiveButton] = useState('Week');
@@ -25,6 +28,39 @@ const Dashboard = () => {
   };
 
 
+  // const tableData = [
+  //   {
+  //     placename: "McDonald's, High Street, Watford, UK",
+  //     values: [
+  //       [5, 3],
+  //       [2, 1],
+  //       ['', 4],
+  //       [3, 2],
+  //       [4, 6],
+  //     ],
+  //   },
+  //   {
+  //     placename: "McDonald's, Strand, London, UK",
+  //     values: [
+  //       [2, 3],
+  //       [1, 4],
+  //       [3, 2],
+  //       [1, 1],
+  //       ['', 0],
+  //     ],
+  //   },
+  //   {
+  //     placename: "McDonald's, High Street, Watford, UK",
+  //     values: [
+  //       [0, 1],
+  //       [0, 2],
+  //       [1, 0],
+  //       [4, 3],
+  //       [2, 5],
+  //     ],
+  //   },
+  // ];
+
   const tableData = [
     {
       placename: "McDonald's, High Street, Watford, UK",
@@ -36,51 +72,40 @@ const Dashboard = () => {
         [4, 6],
       ],
     },
-    {
-      placename: "McDonald's, Strand, London, UK",
-      values: [
-        [2, 3],
-        [1, 4],
-        [3, 2],
-        [1, 1],
-        ['', 0],
-      ],
-    },
-    {
-      placename: "McDonald's, High Street, Watford, UK",
-      values: [
-        [0, 1],
-        [0, 2],
-        [1, 0],
-        [4, 3],
-        [2, 5],
-      ],
-    },
   ];
+
+
+  // const renderSentiment = (value) => {
+  //   if (value === 1) {
+  //     return <span className="emoji happy">😊</span>;
+  //   } else if (value === 2) {
+  //     return <span className="emoji neutral">😐</span>;
+  //   } else if (value === 3) {
+  //     return <span className="emoji sad">☹️</span>;
+  //   } else {
+  //     return null;
+  //   }
+  // };
+
 
   const renderSentiment = (value) => {
     if (value === 1) {
-      return <span className="emoji happy">😊</span>;
+      return <img src={LikeIcon} alt="Like" className="emoji" />;
     } else if (value === 2) {
-      return <span className="emoji neutral">😐</span>;
+      return <span className="emoji neutral">😐</span>; // You can leave this as is for neutral sentiment
     } else if (value === 3) {
-      return <span className="emoji sad">☹️</span>;
+      return <img src={DislikeIcon} alt="Dislike" className="emoji" />;
     } else {
       return null;
     }
   };
 
+  
   return (
     <div className="dashboard-main-container">
       {/* Top Buttons */}
       <div className="button-group">
         <div className="date-buttons">
-          <button
-            className={activeButton === 'Day' ? 'active' : ''}
-            onClick={() => handleButtonClick('Day')}
-          >
-            Day
-          </button>
           <button
             className={activeButton === 'Week' ? 'active' : ''}
             onClick={() => handleButtonClick('Week')}
@@ -92,6 +117,12 @@ const Dashboard = () => {
             onClick={() => handleButtonClick('Month')}
           >
             Month
+          </button>
+          <button
+            className={activeButton === 'Quarter' ? 'active' : ''}
+            onClick={() => handleButtonClick('Quarter')}
+          >
+            Quarter
           </button>
         </div>
 
