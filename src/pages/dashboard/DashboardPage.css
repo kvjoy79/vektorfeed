@@ -360,3 +360,119 @@
 .emoji.sad {
   color: #F44336;
 }
+
+
+
+/* new */
+
+/* Google Rating Card Styles */
+.rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+}
+
+.rating-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.rating-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.rating-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.google-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -30px 15px 0;  /* Move the icon 20px up */
+}
+
+.google-icon {
+  width: 4rem;  /* Size of the Google icon */
+  height: 4rem;
+  object-fit: contain; /* Ensure the icon keeps its aspect ratio */
+}
+
+/* Ensures the line graph container and overall layout remains consistent */
+.rating-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line-graph-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+}
+
+.line-graph {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.graph-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.graph-labels span {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* new */
+/* Ensuring the text is inline and doesn't wrap */
+.rating-text {
+  display: flex; /* Flexbox for alignment */
+  align-items: center; /* Vertically aligns the text and the icon */
+  justify-content: flex-start; /* Aligns the text to the left */
+  margin-bottom: 8px; /* Space between the Google text and the description below */
+}
+
+.google-icon-container {
+  display: inline-flex; /* Inline Flexbox to keep icon inline with text */
+  align-items: center; /* Vertically align the icon */
+  margin-left: 8px; /* Add some space between the text and the icon */
+}
+
+.google-icon {
+  width: 60px; /* Size of the icon */
+  height: auto; /* Maintain aspect ratio */
+  margin-left: 20px; /* Small gap between icon and the text */
+  margin-top: -30px;
+}
+
+/* Prevent text from wrapping and ensure the rating description stays below */
+.rating-description {
+  white-space: nowrap; /* Prevent text wrap */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 4px; /* Space between description and the text */
+}
+
+
+/* Add some padding or margin between the icon and the text */
+.rating-description {
+  display: flex; /* Align text and icon horizontally */
+  align-items: center; /* Vertically align the text and icon */
+  gap: 8px; /* Space between icon and text */
+}
+
+.arrow-icon {
+  width: 16px; /* Adjust the size of the arrow */
+  height: auto; /* Maintain aspect ratio */
+}

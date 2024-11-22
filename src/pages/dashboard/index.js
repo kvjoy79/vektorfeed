@@ -3,10 +3,27 @@ import Card from '../../components/Card/card';
 import './DashboardPage.css';
 import LikeIcon from '../../assets/pngs/like-icon.png';
 import DislikeIcon from '../../assets/pngs/dislike-icon.png';
-
+import GoogleIcon from '../../assets/svgs/google-icon-logo-svgrepo-com.svg';
+import GreenUpArrow from '../../assets/svgs/green-up-arrow.svg';
+import RedDownArrow from '../../assets/svgs/red-down-arrow.svg';
 
 const Dashboard = () => {
   const [activeButton, setActiveButton] = useState('Week');
+
+  const [starCountOverall, setstarCountOverall] = useState(0.1); // Starting with 0.1 stars
+  const [starCountGoogle, setstarCountGoogle] = useState(0.5); // Starting with 0.5 stars
+  const [iconTypeOverallRating, seticonTypeOverallRating] = useState('green-up-arrow'); // Default to green-up arrow
+  const [iconTypeGoogleRating, seticonTypeGoogleRating] = useState('red-down-arrow'); // Default to green-up arrow
+
+  // Determine which arrow to show based on the state
+  const renderArrow = (type) => {
+    if (type === 'green-up-arrow') {
+      return <img src={GreenUpArrow} alt="Green Up Arrow" className="arrow-icon" />;
+    } else if (type === 'red-down-arrow') {
+      return <img src={RedDownArrow} alt="Red Down Arrow" className="arrow-icon" />;
+    }
+    return null;
+  };
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
@@ -152,7 +169,9 @@ const Dashboard = () => {
               <div className="rating-value">4.8</div>
               <div className="rating-text">overall rating</div>
               <p></p>
-              <div className="rating-description">10 visitors in a post week.</div>
+              <div className="rating-description">
+                {renderArrow(iconTypeOverallRating)} {starCountOverall} stars in a post week.
+              </div>
             </div>
             <div className="rating-right">
               <div className="line-graph-container">
@@ -191,10 +210,16 @@ const Dashboard = () => {
         <Card title="Google Rating">
           <div className="rating-container">
             <div className="rating-left">
-              <div className="rating-value">4.9</div>
-              <div className="rating-text">on Google</div>
-              <p></p>
-              <div className="rating-description">9 visitors in a post week.</div>
+                <div className="rating-value">4.9</div>
+                <div className="rating-text">
+                  on Google
+                  <div className="google-icon-container">
+                    <img src={GoogleIcon} alt="Google Logo" className="google-icon" />
+                  </div>
+                </div>
+                <div className="rating-description">
+                  {renderArrow(iconTypeGoogleRating)} {starCountGoogle} stars in a post week.
+                </div>
             </div>
             <div className="rating-right">
               <div className="line-graph-container">
