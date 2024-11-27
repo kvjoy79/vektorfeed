@@ -77,13 +77,16 @@ const Dashboard = () => {
         const data = await response.json();
 
         console.log(data);
-        
+
         if (response.ok) {
-          const keywords = JSON.parse(data.response);  // Parse the response into an array
+          // Clean up the response string before parsing it
+          const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
+          const keywords = JSON.parse(cleanedResponse);  // Now safely parse the cleaned response string
           setPositiveKeywords(keywords);
         } else {
           setErrorMessage(data.error || 'Error fetching keywords');
         }
+        
       } catch (error) {
         setErrorMessage('An error occurred while fetching data.');
       }
