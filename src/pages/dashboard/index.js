@@ -166,9 +166,12 @@ const Dashboard = () => {
   //   },
   // ];
 
+  const placenameFromLocalStorage = localStorage.getItem('place_name') || "Loading..."; // Fallback to the default value if not in localStorage
+
+
   const tableData = [
     {
-      placename: "McDonald's, High Street, Watford, UK",
+      placename: placenameFromLocalStorage,
       values: [
         [5, 3],
         [2, 1],

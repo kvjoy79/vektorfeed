@@ -39,6 +39,7 @@ const AdminPage = () => {
     // Use selectedPlaceId instead of firstPlaceId
     if (selectedPlaceId && placeDetails[selectedPlaceId]) {
       console.log('Place details for selectedPlaceId:', placeDetails[selectedPlaceId]);
+      localStorage.setItem("place_name", placeDetails[selectedPlaceId]); 
     }
   }, [placeDetails, selectedPlaceId]); // Dependencies are placeDetails and selectedPlaceId
   
