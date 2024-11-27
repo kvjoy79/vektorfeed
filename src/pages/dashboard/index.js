@@ -6,14 +6,43 @@ import DislikeIcon from '../../assets/pngs/dislike-icon.png';
 import GoogleIcon from '../../assets/svgs/google-icon-logo-svgrepo-com.svg';
 import GreenUpArrow from '../../assets/svgs/green-up-arrow.svg';
 import RedDownArrow from '../../assets/svgs/red-down-arrow.svg';
+import { API_URL } from '../../config/config';
 
 const Dashboard = () => {
   const [activeButton, setActiveButton] = useState('Week');
-
+  const [overallRating, setOverallRating] = useState(null);
   const [starCountOverall, setstarCountOverall] = useState(0.1); // Starting with 0.1 stars
   const [starCountGoogle, setstarCountGoogle] = useState(0.5); // Starting with 0.5 stars
   const [iconTypeOverallRating, seticonTypeOverallRating] = useState('green-up-arrow'); // Default to green-up arrow
   const [iconTypeGoogleRating, seticonTypeGoogleRating] = useState('red-down-arrow'); // Default to green-up arrow
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // Fetch overall rating from the API
+  useEffect(() => {
+    const fetchOverallRating = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/vektordata/get-overall-rating?period=${activeButton.toLowerCase()}`);
+        const data = await response.json();
+        if (response.ok) {
+          setOverallRating(data.overall_rating);
+          // Set the arrow based on the rating change
+          if (data.overall_rating >= 4.5) {
+            setIconTypeOverallRating('green-up-arrow');
+          } else if (data.overall_rating < 3.5) {
+            setIconTypeOverallRating('red-down-arrow');
+          } else {
+            setIconTypeOverallRating('');
+          }
+        } else {
+          setErrorMessage(data.error || 'Error fetching data');
+        }
+      } catch (error) {
+        setErrorMessage('An error occurred while fetching data.');
+      }
+    };
+
+    fetchOverallRating();
+  }, [activeButton]); // Runs when activeButton (period) changes
 
   // Determine which arrow to show based on the state
   const renderArrow = (type) => {
@@ -166,8 +195,9 @@ const Dashboard = () => {
         <Card title="Reviews">
           <div className="rating-container">
             <div className="rating-left">
-              <div className="rating-value">4.8</div>
-              <div className="rating-text">overall rating</div>
+              {/* Use fetched overall rating */}
+              <div className="rating-value">{overallRating !== null ? overallRating : 'Loading...'}</div>
+              <div className="rating-text">Overall Rating</div>
               <p></p>
               <div className="rating-description">
                 {renderArrow(iconTypeOverallRating)} {starCountOverall} stars in a post week.
