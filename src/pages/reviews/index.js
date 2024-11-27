@@ -36,32 +36,55 @@ const Reviews = () => {
 
   useEffect(() => {
     const placeId = localStorage.getItem('place_id');
-    const requiredNumberOfReviews = 9; // You can adjust this based on your needs
+    // const requiredNumberOfReviews = 9; // You can adjust this based on your needs
 
     if (!placeId) {
       toast.error("No place_id found. Please select a location.");
     } else {
-      fetchReviews(placeId, requiredNumberOfReviews);
+      // fetchReviews(placeId, requiredNumberOfReviews);
+      fetchReviews(placeId);
     }
   }, []);
 
-  const fetchReviews = async (placeId, requiredNumberOfReviews) => {
-    try {
+  // const fetchReviews = async (placeId, requiredNumberOfReviews) => {
+  //   try {
       
-      // const response = await fetch(`${API_URL}/serpapi/place-review-details-extended?place_id=${placeId}&required_number_of_reviews=${requiredNumberOfReviews}`);
-      const response = await fetch(`${API_URL}/serpapi/get-review-details?place_id=${placeId}&required_number_of_reviews=${requiredNumberOfReviews}`);
+  //     const response = await fetch(`${API_URL}/serpapi/place-review-details-extended?place_id=${placeId}&required_number_of_reviews=${requiredNumberOfReviews}`);
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch reviews');
-      }
-      const data = await response.json();
-      console.log("Fetched reviews data:", data); // Log the response to check its structure
+  //     if (!response.ok) {
+  //       throw new Error('Failed to fetch reviews');
+  //     }
+  //     const data = await response.json();
+  //     console.log("Fetched reviews data:", data); // Log the response to check its structure
   
-      // Ensure reviews are in the correct structure (data.reviews.reviews)
+  //     // Ensure reviews are in the correct structure (data.reviews.reviews)
+  //     if (Array.isArray(data.reviews?.reviews)) {
+  //       setReviewsData(data.reviews.reviews || []); // Correctly set reviews data from data.reviews.reviews
+  //     } else {
+  //       toast.error('No reviews found for the given place.');
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
+
+  const fetchReviews = async (reviewId) => {
+    try {
+      // Construct the URL with the new route and review_id
+      const response = await fetch(`${API_URL}/serpapi/get-review-details?review_id=${reviewId}`);
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch review details');
+      }
+  
+      const data = await response.json();
+      console.log("Fetched review data:", data); // Log the response to check its structure
+  
+      // Ensure the review data is correctly structured
       if (Array.isArray(data.reviews?.reviews)) {
-        setReviewsData(data.reviews.reviews || []); // Correctly set reviews data from data.reviews.reviews
+        setReviewsData(data.reviews.reviews || []); // Set the reviews data from data.reviews.reviews
       } else {
-        toast.error('No reviews found for the given place.');
+        toast.error('Review not found.');
       }
     } catch (error) {
       toast.error(error.message);
