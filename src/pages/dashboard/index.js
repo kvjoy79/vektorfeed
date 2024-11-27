@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [iconTypeOverallRating, setIconTypeOverallRating] = useState(''); // Default to green-up arrow
   const [iconTypeGoogleRating, setIconTypeGoogleRating] = useState(''); // Default to green-up arrow
   const [positiveKeywords, setPositiveKeywords] = useState([]);
+  const [negativeKeywords, setNegativeKeywords] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
 
@@ -56,44 +57,45 @@ const Dashboard = () => {
   }, [activeButton, reviewId]); // Runs when activeButton (period) or reviewId changes
 
 
-  useEffect(() => {
-    if (!reviewId) {
-      setErrorMessage('No place_id found in localStorage');
-      return;
-    }
 
-    const fetchPositiveKeywords = async () => {
-      try {
-        const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: "give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?",
-          }),
-        });
-
-        const data = await response.json();
-
-        console.log(data);
-
-        if (response.ok) {
-          // Clean up the response string before parsing it
-          const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
-          const keywords = JSON.parse(cleanedResponse);  // Now safely parse the cleaned response string
-          setPositiveKeywords(keywords);
-        } else {
-          setErrorMessage(data.error || 'Error fetching keywords');
-        }
-        
-      } catch (error) {
-        setErrorMessage('An error occurred while fetching data.');
+    // Fetch Positive and Negative Keywords
+    useEffect(() => {
+      if (!reviewId) {
+        setErrorMessage('No place_id found in localStorage');
+        return;
       }
-    };
-
-    fetchPositiveKeywords();
-  }, []);
+  
+      // Fetch Positive or Negative Keywords
+      const fetchKeywords = async (query, setKeywords) => {
+        try {
+          const response = await fetch(`${API_URL}/api/langchain-query?vector_store_id=${placeId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query }),
+          });
+  
+          const data = await response.json();
+          console.log('Response data:', data);  // Add log to inspect the response
+  
+          if (response.ok) {
+            // Clean up the response string before parsing it
+            const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
+            const keywords = JSON.parse(cleanedResponse);  // Now safely parse the cleaned response string
+            setKeywords(keywords);
+          } else {
+            setErrorMessage(data.error || 'Error fetching keywords');
+          }
+        } catch (error) {
+          setErrorMessage('An error occurred while fetching data.');
+        }
+      };
+  
+      // Fetch Positive and Negative Keywords
+      fetchKeywords("give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
+      fetchKeywords("give the 3 negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
+    }, []);
 
   // Determine which arrow to show based on the state
   const renderArrow = (type) => {
