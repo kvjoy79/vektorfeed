@@ -53,9 +53,10 @@ const Reviews = () => {
       }
       const data = await response.json();
       console.log("Fetched reviews data:", data); // Log the response to check its structure
-      
-      if (Array.isArray(data.reviews)) {
-        setReviewsData(data.reviews || []); // Ensure reviews is an array
+  
+      // Ensure reviews are in the correct structure (data.reviews.reviews)
+      if (Array.isArray(data.reviews?.reviews)) {
+        setReviewsData(data.reviews.reviews || []); // Correctly set reviews data from data.reviews.reviews
       } else {
         toast.error('No reviews found for the given place.');
       }
