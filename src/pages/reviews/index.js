@@ -9,6 +9,7 @@ const Reviews = () => {
   const [reviewsData, setReviewsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const reviewsPerPage = 5;
+  const [placeId, setPlaceId] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
 
   // useEffect(() => {
   //   const placeId = localStorage.getItem('place_id');
@@ -35,13 +36,13 @@ const Reviews = () => {
   // };
 
   useEffect(() => {
-    const placeId = localStorage.getItem('place_id');
     // const requiredNumberOfReviews = 9; // You can adjust this based on your needs
 
     if (!placeId) {
       toast.error("No place_id found. Please select a location.");
     } else {
       // fetchReviews(placeId, requiredNumberOfReviews);
+      setPlaceId(placeId); // Sync with state
       fetchReviews(placeId);
     }
   }, []);

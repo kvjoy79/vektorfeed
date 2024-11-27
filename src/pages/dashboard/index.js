@@ -18,15 +18,15 @@ const Dashboard = () => {
   const [positiveKeywords, setPositiveKeywords] = useState([]);
   const [negativeKeywords, setNegativeKeywords] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-
-
-  // Retrieve the review_id from localStorage
-  const reviewId = localStorage.getItem('place_id');
+  const [reviewId, setReviewId] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
 
   useEffect(() => {
     if (!reviewId) {
       setErrorMessage('No place_id found in localStorage');
       return;
+    }
+    else {
+      setReviewId(reviewId); // Sync with state
     }
 
     const fetchOverallRating = async () => {

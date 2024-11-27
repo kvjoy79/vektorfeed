@@ -7,7 +7,7 @@ import LocationIcon from '../../assets/svgs/location.svg';
 import './AdminPage.css';
 import { API_URL } from '../../config/config';
 // import GradientButton from '../../components/GradientButton/gradientbutton';
-
+const [placeIdFromLocalStorage, setplaceIdFromLocalStorage] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
 
 const steps = ['Company', 'Data Source', 'AI Model'];
 
@@ -35,7 +35,7 @@ const AdminPage = () => {
 
    // Sync selectedPlaceId with localStorage on mount and when localStorage changes
    useEffect(() => {
-    const placeIdFromLocalStorage = localStorage.getItem("place_id");
+    // const placeIdFromLocalStorage = localStorage.getItem("place_id");
     if (placeIdFromLocalStorage) {
       setSelectedPlaceId(placeIdFromLocalStorage); // Sync with state
     }

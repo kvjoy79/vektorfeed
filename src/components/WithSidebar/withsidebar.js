@@ -1,5 +1,4 @@
-// src/components/WithSidebar/withsidebar.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { API_URL } from '../../config/config';
 import Sidebar from '../Sidebar/sidebar';
 import './withsidebar.css'; 
@@ -7,20 +6,40 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const WithSidebar = ({ children }) => {
+  // Declare state to store place_id
+  const [placeId, setPlaceId] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
 
-  // useEffect hook to log when the component is loaded
   useEffect(() => {
+    // This effect runs on component mount and listens for storage changes
     console.log("withsidebar is loaded");
 
-    const placeId = localStorage.getItem('place_id'); // Get place_id from localStorage
-
-    if (!placeId) {
-      toast.error("No place_id found. Please select a location.");
-    } else {
-      // Fetch review data from Flask API
+    // Fetch review data if placeId exists
+    if (placeId) {
+      setPlaceId(placeId); // Sync with state
       fetchReviewsFromFlask(placeId);
+    } else {
+      toast.error("No place_id found. Please select a location.");
     }
-  }, []); // The empty array ensures this runs only once when the component mounts.
+
+    // Event listener to handle changes to localStorage
+    const handleStorageChange = (event) => {
+      if (event.key === 'place_id') { // Check if the place_id was modified
+        const newPlaceId = localStorage.getItem('place_id');
+        if (newPlaceId !== placeId) {
+          setPlaceId(newPlaceId);  // Update state with new place_id from localStorage
+          fetchReviewsFromFlask(newPlaceId);  // Fetch new reviews
+        }
+      }
+    };
+
+    // Add storage event listener for cross-tab/localStorage changes
+    window.addEventListener('storage', handleStorageChange);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [placeId]); // Re-run the effect when placeId changes
 
   const fetchReviewsFromFlask = async (placeId) => {
     try {
