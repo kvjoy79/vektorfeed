@@ -27,7 +27,9 @@ const WithSidebar = ({ children }) => {
         const newPlaceId = localStorage.getItem('place_id');
         if (newPlaceId !== placeId) {
           setPlaceId(newPlaceId);  // Update state with new place_id from localStorage
-          fetchReviewsFromFlask(newPlaceId);  // Fetch new reviews
+          // fetchReviewsFromFlask(newPlaceId);  // Fetch new reviews
+          console.log("localStorage Changed!");
+          console.log(newPlaceId);
         }
       }
     };
