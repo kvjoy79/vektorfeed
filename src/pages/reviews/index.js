@@ -47,7 +47,7 @@ const Reviews = () => {
 
   const fetchReviews = async (placeId, requiredNumberOfReviews) => {
     try {
-      const response = await fetch(`${API_URL}/api/serpapi/place-review-details-extended?place_id=${placeId}&required_number_of_reviews=${requiredNumberOfReviews}`);
+      const response = await fetch(`${API_URL}/serpapi/place-review-details-extended?place_id=${placeId}&required_number_of_reviews=${requiredNumberOfReviews}`);
       if (!response.ok) {
         throw new Error('Failed to fetch reviews');
       }
