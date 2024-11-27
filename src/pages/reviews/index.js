@@ -10,25 +10,53 @@ const Reviews = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const reviewsPerPage = 5;
 
+  // useEffect(() => {
+  //   const placeId = localStorage.getItem('place_id');
+
+  //   if (!placeId) {
+  //     toast.error("No place_id found. Please select a location.");
+  //   } else {
+  //     fetchReviews(placeId);
+  //   }
+  // }, []);
+
+  // const fetchReviews = async (placeId) => {
+  //   try {
+  //     const response = await fetch(`${API_URL}/serpapi/place-review-details?place_id=${placeId}`);
+  //     if (!response.ok) {
+  //       throw new Error('Failed to fetch reviews');
+  //     }
+  //     const data = await response.json();
+  //     console.log(data.reviews);
+  //     setReviewsData(data.reviews || []); // Assuming the API returns reviews in data.reviews
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
+
   useEffect(() => {
     const placeId = localStorage.getItem('place_id');
+    const requiredNumberOfReviews = 9; // You can adjust this based on your needs
 
     if (!placeId) {
       toast.error("No place_id found. Please select a location.");
     } else {
-      fetchReviews(placeId);
+      fetchReviews(placeId, requiredNumberOfReviews);
     }
   }, []);
 
-  const fetchReviews = async (placeId) => {
+  const fetchReviews = async (placeId, requiredNumberOfReviews) => {
     try {
-      const response = await fetch(`${API_URL}/serpapi/place-review-details?place_id=${placeId}`);
+      const response = await fetch(`${API_URL}/serpapi/place-review-details-extended?place_id=${placeId}&required_number_of_reviews=${requiredNumberOfReviews}`);
       if (!response.ok) {
         throw new Error('Failed to fetch reviews');
       }
       const data = await response.json();
-      console.log(data.reviews);
-      setReviewsData(data.reviews || []); // Assuming the API returns reviews in data.reviews
+      if (data.reviews) {
+        setReviewsData(data.reviews || []); // Assuming the API returns reviews in data.reviews
+      } else {
+        toast.error('No reviews found for the given place.');
+      }
     } catch (error) {
       toast.error(error.message);
     }
