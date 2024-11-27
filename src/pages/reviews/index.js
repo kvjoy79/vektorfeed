@@ -47,13 +47,15 @@ const Reviews = () => {
 
   const fetchReviews = async (placeId, requiredNumberOfReviews) => {
     try {
-      const response = await fetch(`${API_URL}/serpapi/place-review-details-extended?place_id=${placeId}&required_number_of_reviews=${requiredNumberOfReviews}`);
+      const response = await fetch(`${API_URL}/api/serpapi/place-review-details-extended?place_id=${placeId}&required_number_of_reviews=${requiredNumberOfReviews}`);
       if (!response.ok) {
         throw new Error('Failed to fetch reviews');
       }
       const data = await response.json();
-      if (data.reviews) {
-        setReviewsData(data.reviews || []); // Assuming the API returns reviews in data.reviews
+      console.log("Fetched reviews data:", data); // Log the response to check its structure
+      
+      if (Array.isArray(data.reviews)) {
+        setReviewsData(data.reviews || []); // Ensure reviews is an array
       } else {
         toast.error('No reviews found for the given place.');
       }
