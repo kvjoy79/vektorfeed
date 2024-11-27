@@ -366,7 +366,7 @@ const Dashboard = () => {
         </Card>
 
         {/* Negative Keywords */}
-        <Card>
+        {/* <Card>
           <div className="keywords-container">
           
             <div className="keywords-title">Negative Keywords</div>
@@ -374,6 +374,23 @@ const Dashboard = () => {
               <p className="negative-content">5 Closing time</p>
               <p className="negative-content">2 Staff</p>
               <p className="negative-content">1 Location</p>
+            </ul>
+          </div>
+        </Card> */}
+
+        {/* Negative Keywords Card */}
+        <Card>
+          <div className="keywords-container">
+            <div className="keywords-title">Negative Keywords</div>
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            <ul className="indented-list">
+              {negativeKeywords.length > 0 ? (
+                negativeKeywords.map((keyword, index) => (
+                  <p key={index} className="negative-content">{`${index + 1} ${keyword}`}</p>
+                ))
+              ) : (
+                <p className="negative-content">Loading...</p>
+              )}
             </ul>
           </div>
         </Card>
