@@ -22,10 +22,16 @@ const AdminPage = () => {
   // const [typingTimeout, setTypingTimeout] = useState(null); // State for timeout
   const typingTimeoutRef = useRef(null); // Use ref for timeout ID
 
+  // Function to filter place_id
+  const filterPlaceId = (placeId) => {
+    return placeId.replace(/[^a-zA-Z0-9]/g, 'Az'); // Replace any character that is not a letter or number with "Az"
+  };
+
   const handlePlaceIdChange = (event) => {
     const newPlaceId = event.target.value;
     setSelectedPlaceId(newPlaceId); // Update local state
-    localStorage.setItem("place_id", newPlaceId); // Sync localStorage
+    const filteredPlaceId = filterPlaceId(newPlaceId);
+    localStorage.setItem("place_id", filteredPlaceId);  // Sync with localStorage
   };
 
   useEffect(() => {
@@ -123,7 +129,8 @@ const AdminPage = () => {
         if (data.place_ids.length > 0) {
           const firstPlaceId = data.place_ids[0];
           setSelectedPlaceId(firstPlaceId);
-          localStorage.setItem("place_id", firstPlaceId);  // Sync with localStorage
+          const filteredPlaceId = filterPlaceId(firstPlaceId);
+          localStorage.setItem("place_id", filteredPlaceId);  // Sync with localStorage
         }
 
       } catch (error) {
