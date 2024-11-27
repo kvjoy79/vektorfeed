@@ -186,7 +186,7 @@ const AdminPage = () => {
       // For example: setReviews(reviewData.reviews);
   
       // Now, navigate to the dashboard after fetching the review data
-      // navigate('/dashboard');
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error:', error);
     }
