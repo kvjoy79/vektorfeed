@@ -99,7 +99,7 @@ const Dashboard = () => {
       fetchKeywords("give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
       // Fetch Negative Keywords
       fetchKeywords("give the 3 negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
-    }, 6000); // 3000ms = 3 seconds
+    }, 20000); // 3000ms = 3 seconds
 
   }, []);
 
