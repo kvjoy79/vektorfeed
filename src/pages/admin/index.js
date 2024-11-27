@@ -8,6 +8,7 @@ import './AdminPage.css';
 import { API_URL } from '../../config/config';
 // import GradientButton from '../../components/GradientButton/gradientbutton';
 
+
 const steps = ['Company', 'Data Source', 'AI Model'];
 
 const AdminPage = () => {
@@ -16,8 +17,6 @@ const AdminPage = () => {
   const [location, setLocation] = useState(''); 
   const [placeIds, setPlaceIds] = useState([]);
   const [selectedPlaceId, setSelectedPlaceId] = useState("");  // Initial state empty
-  const [placeIdFromLocalStorage, setplaceIdFromLocalStorage] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
-
 
   // const [placeNames, setPlaceNames] = useState({});
   const [placeDetails, setPlaceDetails] = useState({});
@@ -36,7 +35,7 @@ const AdminPage = () => {
 
    // Sync selectedPlaceId with localStorage on mount and when localStorage changes
    useEffect(() => {
-    // const placeIdFromLocalStorage = localStorage.getItem("place_id");
+    const placeIdFromLocalStorage = localStorage.getItem("place_id");
     if (placeIdFromLocalStorage) {
       setSelectedPlaceId(placeIdFromLocalStorage); // Sync with state
     }
