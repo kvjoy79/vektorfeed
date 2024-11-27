@@ -8,7 +8,6 @@ import './AdminPage.css';
 import { API_URL } from '../../config/config';
 // import GradientButton from '../../components/GradientButton/gradientbutton';
 
-
 const steps = ['Company', 'Data Source', 'AI Model'];
 
 const AdminPage = () => {
