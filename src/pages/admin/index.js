@@ -31,6 +31,7 @@ const AdminPage = () => {
     const newPlaceId = event.target.value;
     setSelectedPlaceId(newPlaceId); // Update local state
     localStorage.setItem("orig_place_id", newPlaceId); 
+    console.log(placeDetails[newPlaceId]);
     const filteredPlaceId = filterPlaceId(newPlaceId);
     localStorage.setItem("place_id", filteredPlaceId);  // Sync with localStorage
   };
@@ -130,6 +131,7 @@ const AdminPage = () => {
         if (data.place_ids.length > 0) {
           const firstPlaceId = data.place_ids[0];
           setSelectedPlaceId(firstPlaceId);
+          console.log(placeDetails[firstPlaceId]);
           localStorage.setItem("orig_place_id", firstPlaceId); 
           const filteredPlaceId = filterPlaceId(firstPlaceId);
           localStorage.setItem("place_id", filteredPlaceId);  // Sync with localStorage
