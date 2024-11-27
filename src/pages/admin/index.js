@@ -30,8 +30,7 @@ const AdminPage = () => {
   const handlePlaceIdChange = (event) => {
     const newPlaceId = event.target.value;
     setSelectedPlaceId(newPlaceId); // Update local state
-    localStorage.setItem("orig_place_id", newPlaceId); 
-    console.log(placeDetails[newPlaceId]);
+    localStorage.setItem("orig_place_id", newPlaceId);
     const filteredPlaceId = filterPlaceId(newPlaceId);
     localStorage.setItem("place_id", filteredPlaceId);  // Sync with localStorage
   };
