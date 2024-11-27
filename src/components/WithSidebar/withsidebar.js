@@ -27,9 +27,10 @@ const WithSidebar = ({ children }) => {
         const newPlaceId = localStorage.getItem('place_id');
         if (newPlaceId !== placeId) {
           setPlaceId(newPlaceId);  // Update state with new place_id from localStorage
-          // fetchReviewsFromFlask(newPlaceId);  // Fetch new reviews
           console.log("localStorage Changed!");
           console.log(newPlaceId);
+          fetchReviewsFromFlask(newPlaceId);  // Fetch new reviews
+          
         }
       }
     };
@@ -45,6 +46,8 @@ const WithSidebar = ({ children }) => {
 
   const fetchReviewsFromFlask = async (placeId) => {
     try {
+      console.log("load-review-by-id:");
+      console.log(placeId);
       const response = await fetch(`${API_URL}/load-review-by-id?review_id=${placeId}`, {
         method: 'POST',
       });
