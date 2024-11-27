@@ -19,11 +19,20 @@ const Dashboard = () => {
 
 
 
-  // Fetch overall rating from the API
+  // Retrieve the review_id from localStorage
+  const reviewId = localStorage.getItem('place_id');
+
   useEffect(() => {
+    if (!reviewId) {
+      setErrorMessage('No place_id found in localStorage');
+      return;
+    }
+
     const fetchOverallRating = async () => {
       try {
-        const response = await fetch(`${API_URL}/vektordata/get-overall-rating?period=${activeButton.toLowerCase()}`);
+        const response = await fetch(
+          `${API_URL}/vektordata/get-overall-rating?period=${activeButton.toLowerCase()}&review_id=${reviewId}`
+        );
         const data = await response.json();
         if (response.ok) {
           setOverallRating(data.overall_rating);
@@ -44,7 +53,8 @@ const Dashboard = () => {
     };
 
     fetchOverallRating();
-  }, [activeButton]); // Runs when activeButton (period) changes
+  }, [activeButton, reviewId]); // Runs when activeButton (period) or reviewId changes
+
 
   // Determine which arrow to show based on the state
   const renderArrow = (type) => {
