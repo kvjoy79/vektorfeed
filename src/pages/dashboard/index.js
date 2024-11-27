@@ -69,7 +69,7 @@ const Dashboard = () => {
     // Fetch Keywords function
     const fetchKeywords = async (query, setKeywords) => {
       try {
-        const response = await fetch(`${API_URL}/api/langchain-query?vector_store_id=${reviewId}`, {
+        const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ const Dashboard = () => {
       fetchKeywords("give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
       // Fetch Negative Keywords
       fetchKeywords("give the 3 negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
-    }, 20000); // 3000ms = 3 seconds
+    }, 6000); // 3000ms = 3 seconds
 
   }, []);
 
