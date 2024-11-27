@@ -75,6 +75,9 @@ const Dashboard = () => {
         });
 
         const data = await response.json();
+
+        console.log(data);
+        
         if (response.ok) {
           const keywords = JSON.parse(data.response);  // Parse the response into an array
           setPositiveKeywords(keywords);
