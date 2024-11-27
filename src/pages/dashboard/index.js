@@ -15,8 +15,8 @@ const Dashboard = () => {
   const [starCountGoogle, setStarCountGoogle] = useState(0.5); // Starting with 0.5 stars
   const [iconTypeOverallRating, setIconTypeOverallRating] = useState(''); // Default to green-up arrow
   const [iconTypeGoogleRating, setIconTypeGoogleRating] = useState(''); // Default to green-up arrow
+  const [positiveKeywords, setPositiveKeywords] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-
 
 
   // Retrieve the review_id from localStorage
@@ -55,6 +55,39 @@ const Dashboard = () => {
     fetchOverallRating();
   }, [activeButton, reviewId]); // Runs when activeButton (period) or reviewId changes
 
+
+  useEffect(() => {
+    if (!reviewId) {
+      setErrorMessage('No place_id found in localStorage');
+      return;
+    }
+
+    const fetchPositiveKeywords = async () => {
+      try {
+        const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: "give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?",
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          const keywords = JSON.parse(data.response);  // Parse the response into an array
+          setPositiveKeywords(keywords);
+        } else {
+          setErrorMessage(data.error || 'Error fetching keywords');
+        }
+      } catch (error) {
+        setErrorMessage('An error occurred while fetching data.');
+      }
+    };
+
+    fetchPositiveKeywords();
+  }, []);
 
   // Determine which arrow to show based on the state
   const renderArrow = (type) => {
@@ -296,8 +329,7 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        {/* Positive Keywords */}
-        <Card>
+        {/* <Card>
           <div className="keywords-container">
             <div className="keywords-title">Positive Keywords</div>
               <ul className="indented-list">
@@ -305,6 +337,23 @@ const Dashboard = () => {
                 <p className="positive-content">11 Location</p>
                 <p className="positive-content">5 Delivery</p>
               </ul>
+          </div>
+        </Card> */}
+
+        {/* Positive Keywords Card */}
+        <Card>
+          <div className="keywords-container">
+            <div className="keywords-title">Positive Keywords</div>
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            <ul className="indented-list">
+              {positiveKeywords.length > 0 ? (
+                positiveKeywords.map((keyword, index) => (
+                  <p key={index} className="positive-content">{`${index + 1} ${keyword}`}</p>
+                ))
+              ) : (
+                <p className="positive-content">Loading...</p>
+              )}
+            </ul>
           </div>
         </Card>
 
