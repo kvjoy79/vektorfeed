@@ -7,7 +7,6 @@ import LocationIcon from '../../assets/svgs/location.svg';
 import './AdminPage.css';
 import { API_URL } from '../../config/config';
 // import GradientButton from '../../components/GradientButton/gradientbutton';
-const [placeIdFromLocalStorage, setplaceIdFromLocalStorage] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
 
 const steps = ['Company', 'Data Source', 'AI Model'];
 
@@ -17,6 +16,8 @@ const AdminPage = () => {
   const [location, setLocation] = useState(''); 
   const [placeIds, setPlaceIds] = useState([]);
   const [selectedPlaceId, setSelectedPlaceId] = useState("");  // Initial state empty
+  const [placeIdFromLocalStorage, setplaceIdFromLocalStorage] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
+
 
   // const [placeNames, setPlaceNames] = useState({});
   const [placeDetails, setPlaceDetails] = useState({});
