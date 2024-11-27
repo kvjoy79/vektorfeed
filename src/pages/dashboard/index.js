@@ -11,11 +11,13 @@ import { API_URL } from '../../config/config';
 const Dashboard = () => {
   const [activeButton, setActiveButton] = useState('Week');
   const [overallRating, setOverallRating] = useState(null);
-  const [starCountOverall, setstarCountOverall] = useState(0.1); // Starting with 0.1 stars
-  const [starCountGoogle, setstarCountGoogle] = useState(0.5); // Starting with 0.5 stars
-  const [iconTypeOverallRating, seticonTypeOverallRating] = useState('green-up-arrow'); // Default to green-up arrow
-  const [iconTypeGoogleRating, seticonTypeGoogleRating] = useState('red-down-arrow'); // Default to green-up arrow
+  const [starCountOverall, setStarCountOverall] = useState(0.1); // Starting with 0.1 stars
+  const [starCountGoogle, setStarCountGoogle] = useState(0.5); // Starting with 0.5 stars
+  const [iconTypeOverallRating, setIconTypeOverallRating] = useState(''); // Default to green-up arrow
+  const [iconTypeGoogleRating, setIconTypeGoogleRating] = useState(''); // Default to green-up arrow
   const [errorMessage, setErrorMessage] = useState('');
+
+
 
   // Fetch overall rating from the API
   useEffect(() => {
@@ -31,7 +33,7 @@ const Dashboard = () => {
           } else if (data.overall_rating < 3.5) {
             setIconTypeOverallRating('red-down-arrow');
           } else {
-            setIconTypeOverallRating('');
+            setIconTypeOverallRating(''); // No arrow for ratings between 3.5 and 4.5
           }
         } else {
           setErrorMessage(data.error || 'Error fetching data');
