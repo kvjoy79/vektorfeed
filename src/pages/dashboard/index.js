@@ -69,7 +69,7 @@ const Dashboard = () => {
     // Fetch Keywords function
     const fetchKeywords = async (query, setKeywords) => {
       try {
-        const response = await fetch(`${API_URL}/api/langchain-query?vector_store_id=${placeId}`, {
+        const response = await fetch(`${API_URL}/api/langchain-query?vector_store_id=${reviewId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
