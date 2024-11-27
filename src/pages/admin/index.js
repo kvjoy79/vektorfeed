@@ -7,7 +7,7 @@ import LocationIcon from '../../assets/svgs/location.svg';
 import './AdminPage.css';
 import { API_URL } from '../../config/config';
 // import GradientButton from '../../components/GradientButton/gradientbutton';
-import { API_URL } from '../../config/config';
+
 
 const steps = ['Company', 'Data Source', 'AI Model'];
 
