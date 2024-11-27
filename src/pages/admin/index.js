@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import VektordataBanner from '../../assets/svgs/vektordata-banner.svg';
 import LocationIcon from '../../assets/svgs/location.svg';
 import './AdminPage.css';
+import { API_URL } from '../../config/config';
 // import GradientButton from '../../components/GradientButton/gradientbutton';
 import { API_URL } from '../../config/config';
 
@@ -146,9 +147,41 @@ const AdminPage = () => {
     return () => clearTimeout(typingTimeoutRef.current); // Cleanup on component unmount
   }, [location]); // Only depend on location
 
-  const handleNext = () => {
-    // setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    navigate('/dashboard'); // Navigate to dashboard page
+  // const handleNext = () => {
+  //   // setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  //   navigate('/dashboard'); // Navigate to dashboard page
+  // };
+
+  const handleNext = async (event) => {
+    event.preventDefault();  // Prevent default form submission
+    const placeIdFromLocalStorage = localStorage.getItem("place_id");
+  
+    if (!placeIdFromLocalStorage) {
+      console.error('No place_id found in localStorage');
+      return;
+    }
+  
+    try {
+      // Fetch review details from the API
+      const response = await fetch(`${API_URL}/serpapi/place-review-details-extended?place_id=${placeIdFromLocalStorage}`);
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error fetching reviews:', errorData.error || 'Unknown error');
+        return;
+      }
+  
+      const reviewData = await response.json();
+      console.log('Review details fetched:', reviewData);
+  
+      // You can handle the reviewData here, for example, store it in state
+      // For example: setReviews(reviewData.reviews);
+  
+      // Now, navigate to the dashboard after fetching the review data
+      // navigate('/dashboard');
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const handleGotoDashobard = () => {
