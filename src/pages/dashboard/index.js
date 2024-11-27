@@ -23,7 +23,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchOverallRating = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/vektordata/get-overall-rating?period=${activeButton.toLowerCase()}`);
+        const response = await fetch(`${API_URL}/vektordata/get-overall-rating?period=${activeButton.toLowerCase()}`);
         const data = await response.json();
         if (response.ok) {
           setOverallRating(data.overall_rating);
