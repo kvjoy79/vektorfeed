@@ -36,10 +36,12 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
-    if (firstPlaceId && placeDetails[firstPlaceId]) {
-      console.log('Place details for firstPlaceId:', placeDetails[firstPlaceId]);
+    // Use selectedPlaceId instead of firstPlaceId
+    if (selectedPlaceId && placeDetails[selectedPlaceId]) {
+      console.log('Place details for selectedPlaceId:', placeDetails[selectedPlaceId]);
     }
-  }, [placeDetails, firstPlaceId]);
+  }, [placeDetails, selectedPlaceId]); // Dependencies are placeDetails and selectedPlaceId
+  
 
   useEffect(() => {
     document.title = 'Admin - Vektordata';
