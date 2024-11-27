@@ -68,7 +68,7 @@ const Dashboard = () => {
       // Fetch Positive or Negative Keywords
       const fetchKeywords = async (query, setKeywords) => {
         try {
-          const response = await fetch(`${API_URL}/api/langchain-query?vector_store_id=${reviewId}`, {
+          const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
