@@ -58,44 +58,50 @@ const Dashboard = () => {
 
 
 
-    // Fetch Positive and Negative Keywords
-    useEffect(() => {
-      if (!reviewId) {
-        setErrorMessage('No place_id found in localStorage');
-        return;
-      }
-  
-      // Fetch Positive or Negative Keywords
-      const fetchKeywords = async (query, setKeywords) => {
-        try {
-          const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ query }),
-          });
-  
-          const data = await response.json();
-          console.log('Response data:', data);  // Add log to inspect the response
-  
-          if (response.ok) {
-            // Clean up the response string before parsing it
-            const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
-            const keywords = JSON.parse(cleanedResponse);  // Now safely parse the cleaned response string
-            setKeywords(keywords);
-          } else {
-            setErrorMessage(data.error || 'Error fetching keywords');
-          }
-        } catch (error) {
-          setErrorMessage('An error occurred while fetching data.');
+
+  // Fetch Positive and Negative Keywords with delay
+  useEffect(() => {
+    if (!reviewId) {
+      setErrorMessage('No place_id found in localStorage');
+      return;
+    }
+
+    // Fetch Keywords function
+    const fetchKeywords = async (query, setKeywords) => {
+      try {
+        const response = await fetch(`${API_URL}/api/langchain-query?vector_store_id=${placeId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ query }),
+        });
+
+        const data = await response.json();
+        console.log('Response data:', data);  // Log the response for debugging
+
+        if (response.ok) {
+          // Clean up the response string before parsing it
+          const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
+          const keywords = JSON.parse(cleanedResponse);  // Parse the response safely
+          setKeywords(keywords);
+        } else {
+          setErrorMessage(data.error || 'Error fetching keywords');
         }
-      };
-  
-      // Fetch Positive and Negative Keywords
+      } catch (error) {
+        setErrorMessage('An error occurred while fetching data.');
+      }
+    };
+
+    // Delay the fetch operation by 3 seconds
+    setTimeout(() => {
+      // Fetch Positive Keywords
       fetchKeywords("give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
+      // Fetch Negative Keywords
       fetchKeywords("give the 3 negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
-    }, []);
+    }, 3000); // 3000ms = 3 seconds
+
+  }, []);
 
   // Determine which arrow to show based on the state
   const renderArrow = (type) => {
