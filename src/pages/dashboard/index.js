@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '../../components/Card/card';
 import './DashboardPage.css';
 import LikeIcon from '../../assets/pngs/like-icon.png';
