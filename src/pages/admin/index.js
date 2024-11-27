@@ -30,6 +30,7 @@ const AdminPage = () => {
   const handlePlaceIdChange = (event) => {
     const newPlaceId = event.target.value;
     setSelectedPlaceId(newPlaceId); // Update local state
+    localStorage.setItem("orig_place_id", newPlaceId); 
     const filteredPlaceId = filterPlaceId(newPlaceId);
     localStorage.setItem("place_id", filteredPlaceId);  // Sync with localStorage
   };
@@ -40,7 +41,7 @@ const AdminPage = () => {
 
    // Sync selectedPlaceId with localStorage on mount and when localStorage changes
    useEffect(() => {
-    const placeIdFromLocalStorage = localStorage.getItem("place_id");
+    const placeIdFromLocalStorage = localStorage.getItem("orig_place_id");
     if (placeIdFromLocalStorage) {
       setSelectedPlaceId(placeIdFromLocalStorage); // Sync with state
     }
@@ -129,6 +130,7 @@ const AdminPage = () => {
         if (data.place_ids.length > 0) {
           const firstPlaceId = data.place_ids[0];
           setSelectedPlaceId(firstPlaceId);
+          localStorage.setItem("orig_place_id", firstPlaceId); 
           const filteredPlaceId = filterPlaceId(firstPlaceId);
           localStorage.setItem("place_id", filteredPlaceId);  // Sync with localStorage
         }
@@ -160,7 +162,7 @@ const AdminPage = () => {
 
   const handleNext = async (event) => {
     event.preventDefault();  // Prevent default form submission
-    const placeIdFromLocalStorage = localStorage.getItem("place_id");
+    const placeIdFromLocalStorage = localStorage.getItem("orig_place_id");
   
     if (!placeIdFromLocalStorage) {
       console.error('No place_id found in localStorage');
