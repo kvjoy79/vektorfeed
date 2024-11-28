@@ -337,7 +337,7 @@ const Dashboard = () => {
         <Card title="Google Rating">
           <div className="rating-container">
             <div className="rating-left">
-                <div className="rating-value">{googleRating !== null ? googleRating : 'Loading...'}</div>
+                <div className="rating-value">{googleRating !== null ? googleRating : '-'}</div>
                 <div className="rating-text">
                 {/* <div className="rating-value">4.9</div>
                 <div className="rating-text"> */}
