@@ -33,14 +33,15 @@ const Dashboard = () => {
       try {
         const response = await fetch(`${API_URL}/google/get-place-rating?place_id=${placeId}`);
         const data = await response.json();
+        console.log(data);
 
         if (response.ok) {
-          setGoogleRating(data.google_rating);
+          setGoogleRating(data.rating);
 
           // Set the arrow based on the rating
-          if (data.google_rating >= 4.5) {
+          if (data.rating >= 4.5) {
             setIconTypeGoogleRating('green-up-arrow');
-          } else if (data.google_rating < 3.5) {
+          } else if (data.rating < 3.5) {
             setIconTypeGoogleRating('red-down-arrow');
           } else {
             setIconTypeGoogleRating(''); // No arrow for ratings between 3.5 and 4.5
