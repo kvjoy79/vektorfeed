@@ -11,6 +11,7 @@ import { API_URL } from '../../config/config';
 const Dashboard = () => {
   const [activeButton, setActiveButton] = useState('Week');
   const [overallRating, setOverallRating] = useState(null);
+  const [googleRating, setGoogleRating] = useState(null);
   const [starCountOverall, setStarCountOverall] = useState(0.1); // Starting with 0.1 stars
   const [starCountGoogle, setStarCountGoogle] = useState(0.5); // Starting with 0.5 stars
   const [iconTypeOverallRating, setIconTypeOverallRating] = useState(''); // Default to green-up arrow
@@ -19,6 +20,41 @@ const Dashboard = () => {
   const [negativeKeywords, setNegativeKeywords] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [reviewId, setReviewId] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
+
+  // Fetch Google rating on mount
+  useEffect(() => {
+    const fetchGoogleRating = async () => {
+      const placeId = localStorage.getItem('orig_place_id');
+      if (!placeId) {
+        setErrorMessage('No orig_place_id');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/api/google/get-place-rating?place_id=${placeId}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          setGoogleRating(data.google_rating);
+
+          // Set the arrow based on the rating
+          if (data.google_rating >= 4.5) {
+            setIconTypeGoogleRating('green-up-arrow');
+          } else if (data.google_rating < 3.5) {
+            setIconTypeGoogleRating('red-down-arrow');
+          } else {
+            setIconTypeGoogleRating(''); // No arrow for ratings between 3.5 and 4.5
+          }
+        } else {
+          setErrorMessage(data.error || 'Error fetching Google rating');
+        }
+      } catch (error) {
+        setErrorMessage('An error occurred while fetching Google rating');
+      }
+    };
+
+    fetchGoogleRating();
+  }, []); // Run only once on component mount
 
   useEffect(() => {
     if (!reviewId) {
@@ -55,8 +91,6 @@ const Dashboard = () => {
 
     fetchOverallRating();
   }, [activeButton, reviewId]); // Runs when activeButton (period) or reviewId changes
-
-
 
 
   // Fetch Positive and Negative Keywords with delay
@@ -302,8 +336,10 @@ const Dashboard = () => {
         <Card title="Google Rating">
           <div className="rating-container">
             <div className="rating-left">
-                <div className="rating-value">4.9</div>
+                <div className="rating-value">{googleRating !== null ? googleRating : 'Loading...'}</div>
                 <div className="rating-text">
+                {/* <div className="rating-value">4.9</div>
+                <div className="rating-text"> */}
                   on Google
                   <div className="google-icon-container">
                     <img src={GoogleIcon} alt="Google Logo" className="google-icon" />
@@ -345,6 +381,8 @@ const Dashboard = () => {
             </div>
           </div>
         </Card>
+
+        
 
         {/* <Card>
           <div className="keywords-container">
