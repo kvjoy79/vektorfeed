@@ -31,7 +31,7 @@ const Dashboard = () => {
       }
 
       try {
-        const response = await fetch(`${API_URL}/api/google/get-place-rating?place_id=${placeId}`);
+        const response = await fetch(`${API_URL}/google/get-place-rating?place_id=${placeId}`);
         const data = await response.json();
 
         if (response.ok) {
