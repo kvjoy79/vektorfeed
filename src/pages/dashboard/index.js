@@ -7,9 +7,10 @@ import GoogleIcon from '../../assets/svgs/google-icon-logo-svgrepo-com.svg';
 import GreenUpArrow from '../../assets/svgs/green-up-arrow.svg';
 import RedDownArrow from '../../assets/svgs/red-down-arrow.svg';
 import { API_URL } from '../../config/config';
+import dayjs from 'dayjs';
 
 const Dashboard = () => {
-  const [activeButton, setActiveButton] = useState('Week');
+  const [activeButton, setActiveButton] = useState('Last Month');
   const [overallRating, setOverallRating] = useState(null);
   const [googleRating, setGoogleRating] = useState(null);
   const [starCountOverall, setStarCountOverall] = useState(0.1); // Starting with 0.1 stars
@@ -20,7 +21,68 @@ const Dashboard = () => {
   const [negativeKeywords, setNegativeKeywords] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [reviewId, setReviewId] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
+  const [showCustomDateRange, setShowCustomDateRange] = useState(false);  // Show custom date range
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [dateError, setDateError] = useState('');
 
+  // Handle Date Validation
+  const validateDates = (start, end) => {
+    const currentDate = dayjs();
+    const startDate = dayjs(start);
+    const endDate = dayjs(end);
+
+    // Check if the dates are in the valid range
+    if (startDate.isAfter(currentDate, 'day') || endDate.isAfter(currentDate, 'day')) {
+      setDateError('Dates cannot be in the future.');
+      return false;
+    }
+    if (startDate.year() < 2000 || endDate.year() < 2000) {
+      setDateError('Dates cannot be earlier than the year 2000.');
+      return false;
+    }
+    if (endDate.diff(startDate, 'days') > 365) {
+      setDateError('The date range cannot be longer than 1 year.');
+      return false;
+    }
+
+    setDateError('');
+    return true;
+  };
+
+  // Handle Custom Date Range Submit
+  const handleDateSubmit = () => {
+    if (validateDates(startDate, endDate)) {
+      setActiveButton('Custom Date Range');
+      setShowCustomDateRange(false); // Close the modal
+      console.log(`Fetching data from ${startDate} to ${endDate}`);
+      // You can add your API call here with the custom date range.
+    }
+  };
+
+  // Function to handle backdrop click
+  const handleBackdropClick = (e) => {
+    if (e.target.classList.contains('modal-backdrop')) {
+      setShowCustomDateRange(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeButton === 'Custom Date Range') {
+      setShowCustomDateRange(true);
+    } else {
+      setShowCustomDateRange(false);
+    }
+  }, [activeButton]);
+
+  useEffect(() => {
+    if (activeButton === 'Custom Date Range') {
+      setShowCustomDateRange(true);
+    } else {
+      setShowCustomDateRange(false);
+    }
+  }, [activeButton]);
+  
   // Fetch Google rating on mount
   useEffect(() => {
     const fetchGoogleRating = async () => {
@@ -69,7 +131,7 @@ const Dashboard = () => {
     const fetchOverallRating = async () => {
       try {
         const response = await fetch(
-          `${API_URL}/vektordata/get-overall-rating?period=${activeButton.toLowerCase()}&review_id=${reviewId}`
+          `${API_URL}/vektordata/get-overall-rating-from-storage?period=${activeButton.toLowerCase()}&place_id=${reviewId}`
         );
         const data = await response.json();
         if (response.ok) {
@@ -250,25 +312,18 @@ const Dashboard = () => {
       <div className="button-group">
         <div className="date-buttons">
           <button
-            className={activeButton === 'Week' ? 'active' : ''}
-            onClick={() => handleButtonClick('Week')}
+            className={activeButton === 'Last Month' ? 'active' : ''}
+            onClick={() => handleButtonClick('Last Month')}
           >
-            Week
+            Last Month
           </button>
           <button
-            className={activeButton === 'Month' ? 'active' : ''}
-            onClick={() => handleButtonClick('Month')}
+            className={activeButton === 'Custom Date Range' ? 'active' : ''}
+            onClick={() => handleButtonClick('Custom Date Range')}
           >
-            Month
-          </button>
-          <button
-            className={activeButton === 'Quarter' ? 'active' : ''}
-            onClick={() => handleButtonClick('Quarter')}
-          >
-            Quarter
+            Custom Date Range
           </button>
         </div>
-
         <div className="action-buttons">
           <button
             className={`action-button ${clickedButton === 'send' ? 'clicked' : ''}`}
@@ -285,6 +340,36 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Custom Date Range Picker Modal */}
+      {showCustomDateRange && (
+        <div className="modal-backdrop" onClick={handleBackdropClick}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="date-range-container">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="date-input"
+              />
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="date-input"
+              />
+              <div className="submit-container">
+                <button onClick={handleDateSubmit} className="submit-button">
+                  Submit
+                </button>
+                {dateError && <span className="error">{dateError}</span>}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+
       {/* Containers Grid */}
       <div className="content-grid">
         {/* Reviews Card */}
@@ -293,7 +378,7 @@ const Dashboard = () => {
           <div className="rating-container">
             <div className="rating-left">
               {/* Use fetched overall rating */}
-              <div className="rating-value">{overallRating !== null ? overallRating : 'Loading...'}</div>
+              <div className="rating-value">{overallRating !== null ? overallRating : '-'}</div>
               <div className="rating-text">Overall Rating</div>
               <p></p>
               <div className="rating-description">
@@ -400,7 +485,8 @@ const Dashboard = () => {
         <Card>
           <div className="keywords-container">
             <div className="keywords-title">Positive Keywords</div>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {/* {errorMessage && <div className="error-message">{errorMessage}</div>} */}
+            {errorMessage && <div className="error-message">-</div>}
             <ul className="indented-list">
               {positiveKeywords.length > 0 ? (
                 positiveKeywords.map((keyword, index) => (
@@ -430,7 +516,8 @@ const Dashboard = () => {
         <Card>
           <div className="keywords-container">
             <div className="keywords-title">Negative Keywords</div>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {/* {errorMessage && <div className="error-message">{errorMessage}</div>} */}
+            {errorMessage && <div className="error-message">-</div>}
             <ul className="indented-list">
               {negativeKeywords.length > 0 ? (
                 negativeKeywords.map((keyword, index) => (
