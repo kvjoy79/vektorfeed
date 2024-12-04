@@ -491,7 +491,8 @@ const Dashboard = () => {
             <ul className="indented-list">
               {positiveKeywords.length > 0 ? (
                 positiveKeywords.map((keyword, index) => (
-                  <p key={index} className="positive-content">{`${index + 1} ${keyword}`}</p>
+                  // <p key={index} className="positive-content">{`${index + 1} ${keyword}`}</p>
+                  <p key={index} className="positive-content">{`${keyword.charAt(0).toUpperCase() + keyword.slice(1)}`}</p>   
                 ))
               ) : (
                 <p className="positive-content">Loading...</p>
@@ -522,7 +523,8 @@ const Dashboard = () => {
             <ul className="indented-list">
               {negativeKeywords.length > 0 ? (
                 negativeKeywords.map((keyword, index) => (
-                  <p key={index} className="negative-content">{`${index + 1} ${keyword}`}</p>
+                  // <p key={index} className="negative-content">{`${index + 1} ${keyword}`}</p>
+                  <p key={index} className="negative-content">{`${keyword.charAt(0).toUpperCase() + keyword.slice(1)}`}</p>
                 ))
               ) : (
                 <p className="negative-content">Loading...</p>
