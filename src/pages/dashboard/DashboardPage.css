@@ -118,12 +118,12 @@
 }
 
 .positive-content {
-  color: red; /* Red color for positive keywords content */
+  color: green; /* Green color for negative keywords content */
   font-weight: normal;
 }
 
 .negative-content {
-  color: green; /* Green color for negative keywords content */
+  color: red; /* Red color for positive keywords content */
   font-weight: normal;
 }
 
