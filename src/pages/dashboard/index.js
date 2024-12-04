@@ -131,7 +131,8 @@ const Dashboard = () => {
     const fetchOverallRating = async () => {
       try {
         const response = await fetch(
-          `${API_URL}/vektordata/get-overall-rating-from-storage?period=${activeButton.toLowerCase()}&place_id=${reviewId}`
+          // `${API_URL}/vektordata/get-overall-rating-from-storage?period=${activeButton.toLowerCase()}&place_id=${reviewId}`
+          `${API_URL}/vektordata/get-overall-rating-from-storage?place_id=${reviewId}`
         );
         const data = await response.json();
         if (response.ok) {
