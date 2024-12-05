@@ -20,9 +20,7 @@ const Dashboard = () => {
   const [iconTypeOverallRating, setIconTypeOverallRating] = useState(''); // Default to green-up arrow
   const [iconTypeGoogleRating, setIconTypeGoogleRating] = useState(''); // Default to green-up arrow
   const [positiveKeywords, setPositiveKeywords] = useState([]);
-  const [positiveKeywordsFetched, setPositiveKeywordsFetched] = useState(false);  // New state to track if the data has been fetched
   const [negativeKeywords, setNegativeKeywords] = useState([]);
-  const [negativeKeywordsFetched, setNegativeKeywordsFetched] = useState(false);  // Flag for negative keywords
   const [errorMessage, setErrorMessage] = useState('');
   const [reviewId, setReviewId] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
   const [showCustomDateRange, setShowCustomDateRange] = useState(false);  // Show custom date range
@@ -173,8 +171,18 @@ const Dashboard = () => {
     }
 
     // Function to fetch the keywords
-    const fetchKeywords = async (query, setKeywords, setFetchedFlag) => {
+    const fetchKeywords = async (query, setKeywords, storageKey) => {
       try {
+        // Check if the keywords are already stored in localStorage
+        const storedKeywords = localStorage.getItem(storageKey);
+        if (storedKeywords) {
+          // If stored, use the stored data
+          setKeywords(JSON.parse(storedKeywords));
+          console.log(`Loaded ${storageKey} from localStorage.`);
+          return; // Exit if keywords are already in localStorage
+        }
+
+        // If not stored, make an API request
         const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
           method: 'POST',
           headers: {
@@ -190,8 +198,12 @@ const Dashboard = () => {
           // Clean up the response string before parsing it
           const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
           const keywords = JSON.parse(cleanedResponse);  // Parse the response safely
-          setKeywords(keywords);  // Set the fetched keywords
-          setFetchedFlag(true);  // Mark as fetched
+
+          // Store the fetched keywords in localStorage
+          localStorage.setItem(storageKey, JSON.stringify(keywords));
+
+          // Update the state with the fetched keywords
+          setKeywords(keywords);
         } else {
           setErrorMessage(data.error || 'Error fetching keywords');
         }
@@ -200,21 +212,17 @@ const Dashboard = () => {
       }
     };
 
-    // If data is not fetched yet, initiate a timeout to fetch the keywords
-    if (!positiveKeywordsFetched || !negativeKeywordsFetched) {
-      setTimeout(() => {
-        if (!positiveKeywordsFetched) {
-          fetchKeywords("give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords, setPositiveKeywordsFetched);
-        }
-        if (!negativeKeywordsFetched) {
-          fetchKeywords("give the 3 negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords, setNegativeKeywordsFetched);
-        }
-      }, 6000); // 6000ms = 6 seconds delay
-    }
+    // Fetch the positive and negative keywords with delay
+    setTimeout(() => {
+      // Fetch Positive Keywords (only if they are not already in localStorage)
+      fetchKeywords("give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords, 'positiveKeywords');
+      
+      // Fetch Negative Keywords (only if they are not already in localStorage)
+      fetchKeywords("give the 3 negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords, 'negativeKeywords');
+    }, 6000); // 6000ms = 6 seconds delay
 
-  }, [reviewId, positiveKeywordsFetched, negativeKeywordsFetched]);
+  }, [reviewId]);
 
-  
   // useEffect(() => {
   //   if (!reviewId) {
   //     setErrorMessage('No place_id found in localStorage');
