@@ -452,7 +452,7 @@
 .google-icon {
   width: 60px; /* Size of the icon */
   height: auto; /* Maintain aspect ratio */
-  margin-left: 20px; /* Small gap between icon and the text */
+  margin-left: 80px; /* Small gap between icon and the text */
   margin-top: -30px;
 }
 
@@ -554,4 +554,18 @@
   text-align: center;
   margin-top: 10px;
 }
+
+
+.rating-text {
+  display: flex;
+  align-items: center; /* Align the items vertically in the center */
+  flex-wrap: wrap; /* Allow wrapping of content if necessary */
+}
+
+.rating-text-content {
+  margin-right: 5px; /* Optional: Adjust the margin between the text and icon */
+  white-space: normal; /* Allow wrapping of the text */
+}
+
+
 

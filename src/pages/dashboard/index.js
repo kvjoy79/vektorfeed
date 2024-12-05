@@ -8,6 +8,8 @@ import GreenUpArrow from '../../assets/svgs/green-up-arrow.svg';
 import RedDownArrow from '../../assets/svgs/red-down-arrow.svg';
 import { API_URL } from '../../config/config';
 import dayjs from 'dayjs';
+import LineGraph from '../../components/LineGraph/linegraph';
+
 
 const Dashboard = () => {
   const [activeButton, setActiveButton] = useState('Last Month');
@@ -25,6 +27,10 @@ const Dashboard = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [dateError, setDateError] = useState('');
+
+
+  const yValues = [1, 2, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
+
 
   // Handle Date Validation
   const validateDates = (start, end) => {
@@ -381,41 +387,20 @@ const Dashboard = () => {
               {/* Use fetched overall rating */}
               <div className="rating-value">{overallRating !== null ? overallRating : '-'}</div>
               <div className="rating-text">Overall Rating</div>
-              <p></p>
+            
               <div className="rating-description">
                 {renderArrow(iconTypeOverallRating)} {starCountOverall} stars in a post week.
               </div>
             </div>
-            <div className="rating-right">
-              <div className="line-graph-container">
-                <svg className="line-graph" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-                  <polyline
-                    points="0,80 30,60 60,70 90,40 120,50 150,30 180,50"
-                    fill="none"
-                    stroke="#888"
-                    strokeWidth="2"
-                  />
-                  {Array.from({ length: 7 }).map((_, i) => (
-                    <circle
-                      key={i}
-                      cx={i * 30}
-                      cy={[80, 60, 70, 40, 50, 30, 50][i]}
-                      r="3"
-                      fill="#888"
-                    />
-                  ))}
-                </svg>
-                <div className="graph-labels">
-                  <span>S</span>
-                  <span>M</span>
-                  <span>T</span>
-                  <span>W</span>
-                  <span>T</span>
-                  <span>F</span>
-                  <span>S</span>
-                </div>
-              </div>
+
+            <div className="rating-right" style={{ width: "60%", height: "100px" }}>
+              <LineGraph yValues={yValues} />
+              {/* <LineGraph
+                yValues={[3, 4, 5, 6, 7, 8, 9]}
+                labels={["January", "February", "March", "April", "May", "June", "July"]}
+              /> */}
             </div>
+
           </div>
         </Card>
 
@@ -427,7 +412,9 @@ const Dashboard = () => {
                 <div className="rating-text">
                 {/* <div className="rating-value">4.9</div>
                 <div className="rating-text"> */}
-                  on Google
+                  <span className="rating-text-content">
+                    on Google
+                  </span>
                   <div className="google-icon-container">
                     <img src={GoogleIcon} alt="Google Logo" className="google-icon" />
                   </div>
@@ -436,35 +423,12 @@ const Dashboard = () => {
                   {renderArrow(iconTypeGoogleRating)} {starCountGoogle} stars in a post week.
                 </div>
             </div>
-            <div className="rating-right">
-              <div className="line-graph-container">
-                <svg className="line-graph" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-                  <polyline
-                    points="0,60 30,40 60,50 90,30 120,60 150,50 180,70"
-                    fill="none"
-                    stroke="#888"
-                    strokeWidth="2"
-                  />
-                  {Array.from({ length: 7 }).map((_, i) => (
-                    <circle
-                      key={i}
-                      cx={i * 30}
-                      cy={[60, 40, 50, 30, 60, 50, 70][i]}
-                      r="3"
-                      fill="#888"
-                    />
-                  ))}
-                </svg>
-                <div className="graph-labels">
-                  <span>S</span>
-                  <span>M</span>
-                  <span>T</span>
-                  <span>W</span>
-                  <span>T</span>
-                  <span>F</span>
-                  <span>S</span>
-                </div>
-              </div>
+            <div className="rating-right" style={{ width: "60%", height: "100px" }}>
+              <LineGraph yValues={yValues} />
+              {/* <LineGraph
+                yValues={[3, 4, 5, 6, 7, 8, 9]}
+                labels={["January", "February", "March", "April", "May", "June", "July"]}
+              /> */}
             </div>
           </div>
         </Card>
@@ -540,7 +504,7 @@ const Dashboard = () => {
           <table className="review-table">
             <thead>
               <tr>
-                <th>Review Profile</th>
+                <th>Review Profile for last 4 weeks</th>
                 <th>2024-10-19</th>
                 <th>2024-10-20</th>
                 <th>2024-10-21</th>
