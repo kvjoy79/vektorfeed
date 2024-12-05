@@ -98,22 +98,46 @@ const Dashboard = () => {
         return;
       }
 
+      // Check if the rating is already stored in localStorage
+      const storedRating = localStorage.getItem('googleRating');
+      if (storedRating) {
+        // If stored, use the stored rating
+        setGoogleRating(JSON.parse(storedRating));
+
+        // Set the arrow based on the stored rating
+        if (JSON.parse(storedRating) >= 4.5) {
+          setIconTypeGoogleRating('green-up-arrow');
+        } else if (JSON.parse(storedRating) < 3.5) {
+          setIconTypeGoogleRating('red-down-arrow');
+        } else {
+          setIconTypeGoogleRating(''); // No arrow for ratings between 3.5 and 4.5
+        }
+
+        console.log("Loaded Google rating from localStorage.");
+        return; // Exit if the rating is found in localStorage
+      }
+
       try {
         const response = await fetch(`${API_URL}/google/get-place-rating?place_id=${placeId}`);
         const data = await response.json();
         console.log(data);
 
         if (response.ok) {
-          setGoogleRating(data.rating);
+          const rating = data.rating;
+          setGoogleRating(rating);
 
           // Set the arrow based on the rating
-          if (data.rating >= 4.5) {
+          if (rating >= 4.5) {
             setIconTypeGoogleRating('green-up-arrow');
-          } else if (data.rating < 3.5) {
+          } else if (rating < 3.5) {
             setIconTypeGoogleRating('red-down-arrow');
           } else {
             setIconTypeGoogleRating(''); // No arrow for ratings between 3.5 and 4.5
           }
+
+          // Store the fetched rating in localStorage
+          localStorage.setItem('googleRating', JSON.stringify(rating));
+
         } else {
           setErrorMessage(data.error || 'Error fetching Google rating');
         }
