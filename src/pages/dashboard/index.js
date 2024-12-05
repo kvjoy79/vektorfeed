@@ -212,17 +212,21 @@ const Dashboard = () => {
       }
     };
 
-    // Fetch the positive and negative keywords with delay
-    setTimeout(() => {
-      // Fetch Positive Keywords (only if they are not already in localStorage)
+    // Fetch the positive and negative keywords immediately
+    if (!localStorage.getItem('positiveKeywords')) {
       fetchKeywords("give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords, 'positiveKeywords');
-      
-      // Fetch Negative Keywords (only if they are not already in localStorage)
+    } else {
+      setPositiveKeywords(JSON.parse(localStorage.getItem('positiveKeywords')));
+    }
+
+    if (!localStorage.getItem('negativeKeywords')) {
       fetchKeywords("give the 3 negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords, 'negativeKeywords');
-    }, 6000); // 6000ms = 6 seconds delay
+    } else {
+      setNegativeKeywords(JSON.parse(localStorage.getItem('negativeKeywords')));
+    }
 
   }, [reviewId]);
-
+  
   // useEffect(() => {
   //   if (!reviewId) {
   //     setErrorMessage('No place_id found in localStorage');
