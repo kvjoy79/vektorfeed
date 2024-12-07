@@ -70,42 +70,48 @@ const WithSidebar = ({ children }) => {
     }
   };
 
-  // Function to send table data to Flask
   const sendTableDataToFlask = async (placeId, placeName) => {
     try {
-      console.log('Sending table data to Flask...');
-      
-      // Prepare data to send in the request body
+      // Prepare the data to be sent
       const data = [
         {
-          place_id: placeId,
-          place_name: placeName,
-          // Add other necessary fields for the table data here if needed
+          place_id: placeId,    // Ensure placeId is valid
+          placename: placeName, // Ensure placeName is valid
         },
       ];
-
+  
+      // Log the data to make sure it's in the correct format
+      console.log('Data to send to Flask:', data);
+  
+      // Make the API call
       const response = await fetch(`${API_URL}/vektordata/add-review-table-data`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data), // Send the data as JSON
+        body: JSON.stringify(data), // Send data as JSON
       });
-
+  
+      // Check if response is OK
       if (!response.ok) {
         throw new Error('Failed to send table data to Flask');
       }
-
+  
+      // Parse the response
       const responseData = await response.json();
+  
+      // Handle response
       if (responseData.error) {
-        toast.error(responseData.error); // Show error message if any
+        toast.error(responseData.error); // Show error if any
       } else {
-        toast.success(responseData.message); // Show success message if data is successfully added
+        toast.success(responseData.message); // Show success message
       }
     } catch (error) {
-      toast.error(error.message); // Handle any errors
+      // Handle errors
+      toast.error(error.message); 
     }
   };
+  
 
   return (
     <div className="app-container">
