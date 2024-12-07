@@ -46,8 +46,7 @@ const WithSidebar = ({ children }) => {
 
   const fetchReviewsFromFlask = async (placeId) => {
     try {
-      console.log("load-review-by-id:");
-      console.log(placeId);
+      console.log(`load-review-by-id: ${placeId}`);
       const response = await fetch(`${API_URL}/load-review-by-id?review_id=${placeId}`, {
         method: 'POST',
       });
