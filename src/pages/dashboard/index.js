@@ -250,8 +250,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!reviewId) {
-      setErrorMessage('No place_id found in localStorage');
-      setIsLoading(false);
+      setErrorMessage('No place_id found in localStorage');;
       return;
     }
 
