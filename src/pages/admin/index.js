@@ -39,6 +39,7 @@ const AdminPage = () => {
   useEffect(() => {
     // Remove the specified items from localStorage
     const itemsToRemove = [
+      'googleRating',
       'negativeKeywords',
       'orig_place_id',
       'place_id',
