@@ -247,6 +247,42 @@ const Dashboard = () => {
 
   }, [reviewId]);
 
+
+  useEffect(() => {
+    if (!reviewId) {
+      setErrorMessage('No place_id found in localStorage');
+      return;
+    }
+  
+    const fetchTableData = async () => {
+      try {
+        // Make API call to fetch table data using the reviewId (place_id)
+        const response = await fetch(
+          `${API_URL}/vektordata/get-review-profile-table-data?place_id=${reviewId}`
+        );
+        
+        const data = await response.json();
+  
+        if (response.ok) {
+          // Check if tableData exists and is not empty
+          if (data && data.tableData && data.tableData.length > 0) {
+            // Assuming the data is returned in the 'tableData' format
+            setTableData(data.tableData[0]);  // Get the first element from tableData array
+          } else {
+            setErrorMessage('No table data found for this place.');
+          }
+        } else {
+          setErrorMessage(data.error || 'Error fetching table data');
+        }
+      } catch (error) {
+        setErrorMessage('An error occurred while fetching data.');
+      }
+    };
+  
+    fetchTableData();
+  }, [reviewId]); // Dependency array will run this effect when reviewId changes
+
+  
   // useEffect(() => {
   //   if (!reviewId) {
   //     setErrorMessage('No place_id found in localStorage');
@@ -356,20 +392,20 @@ const Dashboard = () => {
   const placenameFromLocalStorage = localStorage.getItem('place_name') || "Loading..."; // Fallback to the default value if not in localStorage
 
 
-  const tableData = [
-    {
-      placename: placenameFromLocalStorage,
-      values: [
-        [5, 3],
-        [2, 1],
-        ['', 4],
-        [3, 2],
-        [4, 6],
-      ],
-      // Hardcoded dates
-      dates: ['2024-10-19', '2024-10-20', '2024-10-21', '2024-10-22', '2024-10-23'],
-    },
-  ];
+  // const tableData = [
+  //   {
+  //     placename: placenameFromLocalStorage,
+  //     values: [
+  //       [5, 3],
+  //       [2, 1],
+  //       ['', 4],
+  //       [3, 2],
+  //       [4, 6],
+  //     ],
+  //     // Hardcoded dates
+  //     dates: ['2024-10-19', '2024-10-20', '2024-10-21', '2024-10-22', '2024-10-23'],
+  //   },
+  // ];
 
 
   // const renderSentiment = (value) => {
