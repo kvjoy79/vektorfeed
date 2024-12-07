@@ -625,13 +625,20 @@ const Dashboard = () => {
         <div className="table-container">
           <table className="review-table">
             <thead>
-              <tr>
+              {/* <tr>
                 <th>Review Profile for last 4 weeks</th>
                 <th>{tableData[0].dates[0]}</th>
                 <th>{tableData[0].dates[1]}</th>
                 <th>{tableData[0].dates[2]}</th>
                 <th>{tableData[0].dates[3]}</th>
                 <th>{tableData[0].dates[4]}</th>
+              </tr> */}
+
+              <tr>
+                <th>Review Profile for last 4 weeks</th>
+                {tableData.dates && tableData.dates.map((date, index) => (
+                  <th key={index}>{date}</th>
+                ))}
               </tr>
             </thead>
             <thead>
