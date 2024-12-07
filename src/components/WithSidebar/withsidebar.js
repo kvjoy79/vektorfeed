@@ -19,6 +19,7 @@ const WithSidebar = ({ children }) => {
     if (placeId && placeName) {
       setPlaceId(placeId); // Sync with state
       setPlaceName(placeName); // Sync with state
+      fetchReviewsFromFlask(placeId);
       sendTableDataToFlask(placeId, placeName); // Call function to send table data
     } else {
       toast.error("No place_id or place_name found. Please select a location.");
@@ -35,6 +36,7 @@ const WithSidebar = ({ children }) => {
           setPlaceName(newPlaceName);  // Update state with new place_name from localStorage
           console.log("localStorage Changed!");
           sendTableDataToFlask(newPlaceId, newPlaceName);  // Send data to Flask
+          fetchReviewsFromFlask(newPlaceId);  // Fetch new reviews
         }
       }
     };
