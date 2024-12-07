@@ -16,7 +16,7 @@ const Dashboard = () => {
   const [overallRating, setOverallRating] = useState(null);
   const [googleRating, setGoogleRating] = useState(null);
   const [starCountOverall, setStarCountOverall] = useState(0.1); // Starting with 0.1 stars
-  const [starCountGoogle, setStarCountGoogle] = useState(0.5); // Starting with 0.5 stars
+  const [starCountGoogle, setStarCountGoogle] = useState(0.1); // Starting with 0.1 stars
   const [iconTypeOverallRating, setIconTypeOverallRating] = useState(''); // Default to green-up arrow
   const [iconTypeGoogleRating, setIconTypeGoogleRating] = useState(''); // Default to green-up arrow
   const [positiveKeywords, setPositiveKeywords] = useState([]);
@@ -365,6 +365,8 @@ const Dashboard = () => {
         [3, 2],
         [4, 6],
       ],
+      // Hardcoded dates
+      dates: ['2024-10-19', '2024-10-20', '2024-10-21', '2024-10-22', '2024-10-23'],
     },
   ];
 
@@ -587,11 +589,11 @@ const Dashboard = () => {
             <thead>
               <tr>
                 <th>Review Profile for last 4 weeks</th>
-                <th>2024-10-19</th>
-                <th>2024-10-20</th>
-                <th>2024-10-21</th>
-                <th>2024-10-22</th>
-                <th>2024-10-23</th>
+                <th>${tableData[0].dates[0]}</th>
+                <th>${tableData[0].dates[1]}</th>
+                <th>${tableData[0].dates[2]}</th>
+                <th>${tableData[0].dates[3]}</th>
+                <th>${tableData[0].dates[4]}</th>
               </tr>
             </thead>
             <thead>
