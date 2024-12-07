@@ -263,8 +263,12 @@ const Dashboard = () => {
         const data = await response.json();
   
         if (response.ok) {
-          // Assuming the data is returned in the 'tableData' format
-          setTableData(data.tableData[0]);  // Get the first element from tableData array
+          // Check if tableData exists and is not empty
+          if (data.tableData && data.tableData.length > 0) {
+            setTableData(data.tableData[0]);  // Get the first element from tableData array
+          } else {
+            setErrorMessage('No table data found for this place.');
+          }
         } else {
           setErrorMessage(data.error || 'Error fetching table data');
         }
@@ -275,7 +279,7 @@ const Dashboard = () => {
   
     fetchTableData();
   }, [reviewId]); // Dependency array will run this effect when reviewId changes
-
+  
 
   // useEffect(() => {
   //   if (!reviewId) {
