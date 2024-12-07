@@ -287,7 +287,7 @@ const Dashboard = () => {
   
     fetchReviewProfileData();
   }, []); // Empty dependency array to run only once when the component mounts
-  
+
   // useEffect(() => {
   //   if (!reviewId) {
   //     setErrorMessage('No place_id found in localStorage');
@@ -394,7 +394,7 @@ const Dashboard = () => {
   //   },
   // ];
 
-  // const placenameFromLocalStorage = localStorage.getItem('place_name') || "Loading..."; // Fallback to the default value if not in localStorage
+  const placenameFromLocalStorage = localStorage.getItem('place_name') || "Loading..."; // Fallback to the default value if not in localStorage
 
 
   // const tableData = [
@@ -653,7 +653,8 @@ const Dashboard = () => {
             <tbody>
               {tableData.map((row, index) => (
                 <tr key={index}>
-                  <td>{row.placename}</td>
+                  {/* <td>{row.placename}</td> */}
+                  <td> {placenameFromLocalStorage} </td>
                   {row.values.map((value, idx) => (
                     <td key={idx}>
                       <div className="split-cell">
