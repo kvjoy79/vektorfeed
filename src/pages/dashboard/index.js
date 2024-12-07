@@ -27,6 +27,7 @@ const Dashboard = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [dateError, setDateError] = useState('');
+  const [tableData, setTableData] = useState(null); // tableData state
   
 
 
