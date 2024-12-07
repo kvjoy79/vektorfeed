@@ -41,7 +41,6 @@ const AdminPage = () => {
     const itemsToRemove = [
       'googleRating',
       'negativeKeywords',
-      'orig_place_id',
       'place_id',
       'place_name',
       'positiveKeywords',
