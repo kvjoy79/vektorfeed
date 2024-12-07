@@ -250,10 +250,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!reviewId) {
-      setErrorMessage('No place_id found in localStorage');;
+      setErrorMessage('No place_id found in localStorage');
       return;
     }
-
+  
     const fetchTableData = async () => {
       try {
         // Make API call to fetch table data using the reviewId
@@ -261,7 +261,7 @@ const Dashboard = () => {
           `${API_URL}/vektordata/get-review-profile-table-data?place_id=${reviewId}`
         );
         const data = await response.json();
-
+  
         if (response.ok) {
           // Assuming the data is returned in the 'tableData' format
           setTableData(data.tableData[0]);  // Get the first element from tableData array
@@ -270,9 +270,9 @@ const Dashboard = () => {
         }
       } catch (error) {
         setErrorMessage('An error occurred while fetching data.');
-      } 
+      }
     };
-
+  
     fetchTableData();
   }, [reviewId]); // Dependency array will run this effect when reviewId changes
 
