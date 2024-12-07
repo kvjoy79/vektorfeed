@@ -255,14 +255,28 @@ const Dashboard = () => {
         setErrorMessage('No place_id found');
         return;
       }
-
+  
+      // Check if the tableData is already stored in localStorage
+      const storedTableData = localStorage.getItem('tableData');
+      if (storedTableData) {
+        // If stored, use the stored data
+        setTableData(JSON.parse(storedTableData));
+        console.log('Loaded table data from localStorage');
+        return;
+      }
+  
       try {
         const response = await fetch(`${API_URL}/vektordata/get-review-profile-table-data?place_id=${placeId}`);
         const data = await response.json();
         console.log(data);
-
+  
         if (response.ok) {
-          setTableData(data.tableData); // Set the table data from the response
+          // Set the table data from the response
+          setTableData(data.tableData);
+  
+          // Store the fetched table data in localStorage for future use
+          localStorage.setItem('tableData', JSON.stringify(data.tableData));
+          console.log('Stored table data in localStorage');
         } else {
           setErrorMessage(data.error || 'Error fetching review profile data');
         }
@@ -270,10 +284,10 @@ const Dashboard = () => {
         setErrorMessage('An error occurred while fetching the data');
       }
     };
-
+  
     fetchReviewProfileData();
   }, []); // Empty dependency array to run only once when the component mounts
-
+  
   // useEffect(() => {
   //   if (!reviewId) {
   //     setErrorMessage('No place_id found in localStorage');
