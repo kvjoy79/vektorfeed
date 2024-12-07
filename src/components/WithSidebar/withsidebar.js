@@ -15,14 +15,13 @@ const WithSidebar = ({ children }) => {
     // This effect runs on component mount and listens for storage changes
     console.log("withsidebar is loaded");
 
-    // Fetch review data if placeId exists
-    if (placeId) {
+    // Fetch table data if placeId and placeName exist
+    if (placeId && placeName) {
       setPlaceId(placeId); // Sync with state
       setPlaceName(placeName); // Sync with state
-      fetchReviewsFromFlask(placeId);
       sendTableDataToFlask(placeId, placeName); // Call function to send table data
     } else {
-      toast.error("No place_id found. Please select a location.");
+      toast.error("No place_id or place_name found. Please select a location.");
     }
 
     // Event listener to handle changes to localStorage
