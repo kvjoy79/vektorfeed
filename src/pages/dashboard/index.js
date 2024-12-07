@@ -27,7 +27,6 @@ const Dashboard = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [dateError, setDateError] = useState('');
-  const [tableData, setTableData] = useState(null); // tableData state
   
 
 
@@ -248,42 +247,6 @@ const Dashboard = () => {
 
   }, [reviewId]);
 
-
-  useEffect(() => {
-    if (!reviewId) {
-      setErrorMessage('No place_id found in localStorage');
-      return;
-    }
-  
-    const fetchTableData = async () => {
-      try {
-        // Make API call to fetch table data using the reviewId (place_id)
-        const response = await fetch(
-          `${API_URL}/vektordata/get-review-profile-table-data?place_id=${reviewId}`
-        );
-        
-        const data = await response.json();
-  
-        if (response.ok) {
-          // Check if tableData exists and is not empty
-          if (data && data.tableData && data.tableData.length > 0) {
-            // Assuming the data is returned in the 'tableData' format
-            setTableData(data.tableData[0]);  // Get the first element from tableData array
-          } else {
-            setErrorMessage('No table data found for this place.');
-          }
-        } else {
-          setErrorMessage(data.error || 'Error fetching table data');
-        }
-      } catch (error) {
-        setErrorMessage('An error occurred while fetching data.');
-      }
-    };
-  
-    fetchTableData();
-  }, [reviewId]); // Dependency array will run this effect when reviewId changes
-
-  
   // useEffect(() => {
   //   if (!reviewId) {
   //     setErrorMessage('No place_id found in localStorage');
@@ -393,20 +356,20 @@ const Dashboard = () => {
   const placenameFromLocalStorage = localStorage.getItem('place_name') || "Loading..."; // Fallback to the default value if not in localStorage
 
 
-  // const tableData = [
-  //   {
-  //     placename: placenameFromLocalStorage,
-  //     values: [
-  //       [5, 3],
-  //       [2, 1],
-  //       ['', 4],
-  //       [3, 2],
-  //       [4, 6],
-  //     ],
-  //     // Hardcoded dates
-  //     dates: ['2024-10-19', '2024-10-20', '2024-10-21', '2024-10-22', '2024-10-23'],
-  //   },
-  // ];
+  const tableData = [
+    {
+      placename: placenameFromLocalStorage,
+      values: [
+        [5, 3],
+        [2, 1],
+        ['', 4],
+        [3, 2],
+        [4, 6],
+      ],
+      // Hardcoded dates
+      dates: ['2024-10-19', '2024-10-20', '2024-10-21', '2024-10-22', '2024-10-23'],
+    },
+  ];
 
 
   // const renderSentiment = (value) => {
@@ -622,68 +585,63 @@ const Dashboard = () => {
         {/* Table Container */}
       {/* <Card title="Review Profile" spanTwoColumns={true}> */}
       <Card spanTwoColumns={true}>
-      <div className="table-container">
-      {errorMessage && <p>{errorMessage}</p>} {/* Display error message if any */}
-      
-      {/* Render the table if tableData and its dates are available */}
-      {tableData && tableData.dates && tableData.dates.length > 0 && (
-        <table className="review-table">
-          <thead>
-            <tr>
-              <th>Review Profile for last 4 weeks</th>
-              <th>{tableData.dates[0]}</th>
-              <th>{tableData.dates[1]}</th>
-              <th>{tableData.dates[2]}</th>
-              <th>{tableData.dates[3]}</th>
-              <th>{tableData.dates[4]}</th>
-            </tr>
-          </thead>
-          <thead>
-            <tr>
-              <th> &nbsp; </th>
-              <th>
-                <div className="split-cell">
-                  {renderSentiment(1)}
-                  <span className="divider"></span>
-                  {renderSentiment(3)}
-                </div>
-              </th>
-              <th>
-                <div className="split-cell">
-                  {renderSentiment(1)}
-                  <span className="divider"></span>
-                  {renderSentiment(3)}
-                </div>
-              </th>
-              <th>
-                <div className="split-cell">
-                  {renderSentiment(1)}
-                  <span className="divider"></span>
-                  {renderSentiment(3)}
-                </div>
-              </th>
-              <th>
-                <div className="split-cell">
-                  {renderSentiment(1)}
-                  <span className="divider"></span>
-                  {renderSentiment(3)}
-                </div>
-              </th>
-              <th>
-                <div className="split-cell">
-                  {renderSentiment(1)}
-                  <span className="divider"></span>
-                  {renderSentiment(3)}
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(tableData.values) ? (
-              tableData.values.map((row, index) => (
+        <div className="table-container">
+          <table className="review-table">
+            <thead>
+              <tr>
+                <th>Review Profile for last 4 weeks</th>
+                <th>{tableData[0].dates[0]}</th>
+                <th>{tableData[0].dates[1]}</th>
+                <th>{tableData[0].dates[2]}</th>
+                <th>{tableData[0].dates[3]}</th>
+                <th>{tableData[0].dates[4]}</th>
+              </tr>
+            </thead>
+            <thead>
+              <tr>
+                <th> &nbsp; </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+                <th>
+                  <div className="split-cell">
+                    {renderSentiment(1)}
+                    <span className="divider"></span>
+                    {renderSentiment(3)}
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((row, index) => (
                 <tr key={index}>
                   <td>{row.placename}</td>
-                  {Array.isArray(row.values) && row.values.map((value, idx) => (
+                  {row.values.map((value, idx) => (
                     <td key={idx}>
                       <div className="split-cell">
                         {value[0] !== '' ? value[0] : '-'}
@@ -693,16 +651,10 @@ const Dashboard = () => {
                     </td>
                   ))}
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No valid values found.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      )}
-    </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </Card>
 
       </div>
