@@ -35,6 +35,24 @@ const AdminPage = () => {
     localStorage.setItem("place_id", filteredPlaceId);  // Sync with localStorage
   };
 
+  // Function to remove items from localStorage when the page loads
+  useEffect(() => {
+    // Remove the specified items from localStorage
+    const itemsToRemove = [
+      'negativeKeywords',
+      'orig_place_id',
+      'place_id',
+      'place_name',
+      'positiveKeywords',
+      'tableData'
+    ];
+    
+    itemsToRemove.forEach(item => {
+      localStorage.removeItem(item);
+    });
+  }, []); // Empty dependency array ensures this runs once on component mount
+
+
   useEffect(() => {
     // Use selectedPlaceId instead of firstPlaceId
     if (selectedPlaceId && placeDetails[selectedPlaceId]) {
