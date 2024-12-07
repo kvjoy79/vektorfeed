@@ -623,81 +623,79 @@ const Dashboard = () => {
       {/* <Card title="Review Profile" spanTwoColumns={true}> */}
       <Card spanTwoColumns={true}>
         <div className="table-container">
-          <table className="review-table">
-            <thead>
-              {/* <tr>
-                <th>Review Profile for last 4 weeks</th>
-                <th>{tableData[0].dates[0]}</th>
-                <th>{tableData[0].dates[1]}</th>
-                <th>{tableData[0].dates[2]}</th>
-                <th>{tableData[0].dates[3]}</th>
-                <th>{tableData[0].dates[4]}</th>
-              </tr> */}
-
-              <tr>
-                <th>Review Profile for last 4 weeks</th>
-                {tableData.dates && tableData.dates.map((date, index) => (
-                  <th key={index}>{date}</th>
-                ))}
-              </tr>
-            </thead>
-            <thead>
-              <tr>
-                <th> &nbsp; </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableData.map((row, index) => (
-                <tr key={index}>
-                  <td>{row.placename}</td>
-                  {row.values.map((value, idx) => (
-                    <td key={idx}>
-                      <div className="split-cell">
-                        {value[0] !== '' ? value[0] : '-'}
-                        <span className="divider"></span>
-                        {value[1] !== '' ? value[1] : '-'}
-                      </div>
-                    </td>
-                  ))}
+          {errorMessage && <p>{errorMessage}</p>} {/* Display error message if any */}
+          
+          {/* Render the table if tableData and its dates are available */}
+          {tableData && tableData.dates && tableData.dates.length > 0 && (
+            <table className="review-table">
+              <thead>
+                <tr>
+                  <th>Review Profile for last 4 weeks</th>
+                  <th>{tableData.dates[0]}</th>
+                  <th>{tableData.dates[1]}</th>
+                  <th>{tableData.dates[2]}</th>
+                  <th>{tableData.dates[3]}</th>
+                  <th>{tableData.dates[4]}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <thead>
+                <tr>
+                  <th> &nbsp; </th>
+                  <th>
+                    <div className="split-cell">
+                      {renderSentiment(1)}
+                      <span className="divider"></span>
+                      {renderSentiment(3)}
+                    </div>
+                  </th>
+                  <th>
+                    <div className="split-cell">
+                      {renderSentiment(1)}
+                      <span className="divider"></span>
+                      {renderSentiment(3)}
+                    </div>
+                  </th>
+                  <th>
+                    <div className="split-cell">
+                      {renderSentiment(1)}
+                      <span className="divider"></span>
+                      {renderSentiment(3)}
+                    </div>
+                  </th>
+                  <th>
+                    <div className="split-cell">
+                      {renderSentiment(1)}
+                      <span className="divider"></span>
+                      {renderSentiment(3)}
+                    </div>
+                  </th>
+                  <th>
+                    <div className="split-cell">
+                      {renderSentiment(1)}
+                      <span className="divider"></span>
+                      {renderSentiment(3)}
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {tableData.values && tableData.values.map((row, index) => (
+                  <tr key={index}>
+                    <td>{row.placename}</td>
+                    {row.values.map((value, idx) => (
+                      <td key={idx}>
+                        <div className="split-cell">
+                          {value[0] !== '' ? value[0] : '-'}
+                          <span className="divider"></span>
+                          {value[1] !== '' ? value[1] : '-'}
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </Card>
 
