@@ -271,9 +271,7 @@ const Dashboard = () => {
         }
       } catch (error) {
         setErrorMessage('An error occurred while fetching data.');
-      } finally {
-        setIsLoading(false); // Set loading state to false after data is fetched
-      }
+      } 
     };
 
     fetchTableData();
