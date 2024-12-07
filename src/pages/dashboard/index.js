@@ -27,6 +27,7 @@ const Dashboard = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [dateError, setDateError] = useState('');
+  const [tableData, setTableData] = useState([]);
   
 
 
@@ -247,6 +248,31 @@ const Dashboard = () => {
 
   }, [reviewId]);
 
+  useEffect(() => {
+    const fetchReviewProfileData = async () => {
+      const placeId = localStorage.getItem('place_id');
+      if (!placeId) {
+        setErrorMessage('No place_id found');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/vektordata/get-review-profile-table-data?place_id=${placeId}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          setTableData(data.tableData); // Set the table data from the response
+        } else {
+          setErrorMessage(data.error || 'Error fetching review profile data');
+        }
+      } catch (error) {
+        setErrorMessage('An error occurred while fetching the data');
+      }
+    };
+
+    fetchReviewProfileData();
+  }, []); // Empty dependency array to run only once when the component mounts
+
   // useEffect(() => {
   //   if (!reviewId) {
   //     setErrorMessage('No place_id found in localStorage');
@@ -353,23 +379,23 @@ const Dashboard = () => {
   //   },
   // ];
 
-  const placenameFromLocalStorage = localStorage.getItem('place_name') || "Loading..."; // Fallback to the default value if not in localStorage
+  // const placenameFromLocalStorage = localStorage.getItem('place_name') || "Loading..."; // Fallback to the default value if not in localStorage
 
 
-  const tableData = [
-    {
-      placename: placenameFromLocalStorage,
-      values: [
-        [5, 3],
-        [2, 1],
-        ['', 4],
-        [3, 2],
-        [4, 6],
-      ],
-      // Hardcoded dates
-      dates: ['2024-10-19', '2024-10-20', '2024-10-21', '2024-10-22', '2024-10-23'],
-    },
-  ];
+  // const tableData = [
+  //   {
+  //     placename: placenameFromLocalStorage,
+  //     values: [
+  //       [5, 3],
+  //       [2, 1],
+  //       ['', 4],
+  //       [3, 2],
+  //       [4, 6],
+  //     ],
+  //     // Hardcoded dates
+  //     dates: ['2024-10-19', '2024-10-20', '2024-10-21', '2024-10-22', '2024-10-23'],
+  //   },
+  // ];
 
 
   // const renderSentiment = (value) => {
@@ -590,51 +616,23 @@ const Dashboard = () => {
             <thead>
               <tr>
                 <th>Review Profile for last 4 weeks</th>
-                <th>{tableData[0].dates[0]}</th>
-                <th>{tableData[0].dates[1]}</th>
-                <th>{tableData[0].dates[2]}</th>
-                <th>{tableData[0].dates[3]}</th>
-                <th>{tableData[0].dates[4]}</th>
+                  {tableData.length > 0 && tableData[0].dates.map((date, index) => (
+                    <th key={index}>{date}</th>
+                  ))}
               </tr>
             </thead>
             <thead>
               <tr>
                 <th> &nbsp; </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
-                <th>
-                  <div className="split-cell">
-                    {renderSentiment(1)}
-                    <span className="divider"></span>
-                    {renderSentiment(3)}
-                  </div>
-                </th>
+                {tableData.length > 0 && tableData[0].dates.map((_, index) => (
+                  <th key={index}>
+                    <div className="split-cell">
+                      {renderSentiment(1)}
+                      <span className="divider"></span>
+                      {renderSentiment(3)}
+                    </div>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
