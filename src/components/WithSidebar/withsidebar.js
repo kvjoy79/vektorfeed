@@ -85,7 +85,7 @@ const WithSidebar = ({ children }) => {
         },
       ];
 
-      const response = await fetch(`${API_URL}/vektordata/add-table-data`, {
+      const response = await fetch(`${API_URL}/vektordata/add-review-table-data`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
