@@ -259,6 +259,7 @@ const Dashboard = () => {
       try {
         const response = await fetch(`${API_URL}/vektordata/get-review-profile-table-data?place_id=${placeId}`);
         const data = await response.json();
+        console.log(data);
 
         if (response.ok) {
           setTableData(data.tableData); // Set the table data from the response
