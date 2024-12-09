@@ -515,6 +515,8 @@ const Dashboard = () => {
     }
   };
 
+
+
   // Modal to show reviews
   const renderModal = () => {
     if (!isModalOpen || !modalData) return null;
@@ -522,7 +524,7 @@ const Dashboard = () => {
     return (
       <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <h3>Reviews for "{keyword.charAt(0).toUpperCase() + keyword.slice(1)}"</h3>
+        <h3>Reviews for Keyword</h3>
 
           {/* Scrollable container for reviews */}
           <div className="reviews-container">
