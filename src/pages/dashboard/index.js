@@ -35,7 +35,6 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
 
-  
 
   // const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
 
@@ -249,8 +248,8 @@ const Dashboard = () => {
     };
 
     // Fetch the positive and negative keywords
-    fetchKeywords("give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords, 'positiveKeywords');
-    fetchKeywords("give the 3 negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords, 'negativeKeywords');
+    fetchKeywords("give the 4 positive keywords in format ['keyword1','keyword2','keyword3','keyword4']?", setPositiveKeywords, 'positiveKeywords');
+    fetchKeywords("give the 4 negative keywords in format ['keyword1','keyword2','keyword3','keyword4']?", setNegativeKeywords, 'negativeKeywords');
 
   }, [reviewId]);
 
@@ -514,7 +513,6 @@ const Dashboard = () => {
       return null;
     }
   };
-
 
 
   // Modal to show reviews
