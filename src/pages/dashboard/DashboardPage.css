@@ -260,25 +260,25 @@
   overflow-x: auto;
 }
 
-.review-table {
+.review-modal-table {
   width: 100%;
   border-collapse: collapse;
   background-color: white;
   text-align: left;
 }
 
-.review-table th, .review-table td {
+.review-modal-table th, .review-modal-table td {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-.review-table th {
+.review-modal-table th {
   background-color: #f4f4f4;
   font-weight: bold;
   text-align: center;
 }
 
-.review-table td {
+.review-modal-table td {
   text-align: center;
   font-size: 1rem;
 }
@@ -321,11 +321,11 @@
 }
 
 
-.review-table tr:nth-child(even) {
+.review-modal-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.review-table tr:hover {
+.review-modal-table tr:hover {
   background-color: #f1f1f1;
 }
 
@@ -603,22 +603,22 @@
   gap: 20px;
 }
 
-/* Reviews container to enable scrolling */
-.reviews-container {
+/* review-modals container to enable scrolling */
+.review-modals-container {
   overflow-y: auto; /* Enable vertical scroll */
   max-height: 400px; /* Fixed height for scrollable content */
 }
 
-/* Individual review card */
-.review-card {
+/* Individual review-modal card */
+.review-modal-card {
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 8px;
   background-color: #f9f9f9;
 }
 
-/* Header for each review (profile picture and author info) */
-.review-header {
+/* Header for each review-modal (profile picture and author info) */
+.review-modal-header {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -631,7 +631,7 @@
   object-fit: cover;
 }
 
-.review-author {
+.review-modal-author {
   display: flex;
   flex-direction: column;
 }
@@ -640,7 +640,7 @@
   font-weight: bold;
 }
 
-.review-rating {
+.review-modal-rating {
   color: #ffb400;
 }
 
@@ -649,14 +649,14 @@
   color: #888;
 }
 
-/* Review text */
-.review-text {
+/* review-modal text */
+.review-modal-text {
   margin-top: 10px;
   font-size: 0.9rem;
   color: #333;
 }
 
-/* Separator line between reviews */
+/* Separator line between review-modals */
 .separator-line {
   margin-top: 15px;
   border-top: 1px solid #ddd;

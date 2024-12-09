@@ -525,23 +525,23 @@ const Dashboard = () => {
         <h3>Reviews for Keyword</h3>
 
           {/* Scrollable container for reviews */}
-          <div className="reviews-container">
+          <div className="review-modals-container">
             {modalData.length > 0 ? (
               modalData.map((review, index) => (
-                <div key={index} className="review-card">
-                  <div className="review-header">
+                <div key={index} className="review-modal-card">
+                  <div className="review-modal-header">
                     <img
                       src={review.profile_photo_url}
                       alt={review.author_name}
                       className="profile-pic"
                     />
-                    <div className="review-author">
+                    <div className="review-modal-author">
                       <div className="author-name">{review.author_name}</div>
-                      <div className="review-rating">Rating: {review.rating}</div>
+                      <div className="review-modal-rating">Rating: {review.rating}</div>
                       <div className="relative-time">{review.relative_time_description}</div>
                     </div>
                   </div>
-                  <p className="review-text">{review.text}</p>
+                  <p className="review-modal-text">{review.text}</p>
                   <div className="separator-line"></div>
                 </div>
               ))
