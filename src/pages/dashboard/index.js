@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
 import Card from '../../components/Card/card';
 import './DashboardPage.css';
 import LikeIcon from '../../assets/pngs/like-icon.png';
@@ -13,8 +12,8 @@ import LineGraph from '../../components/LineGraph/linegraph';
 
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  
+
+
   const [activeButton, setActiveButton] = useState('Last Month');
   const [overallRating, setOverallRating] = useState(null);
   const [googleRating, setGoogleRating] = useState(null);
@@ -85,7 +84,7 @@ const Dashboard = () => {
     if (activeButton === 'Last Month') {
       // setShowCustomDateRange(true);
       console.log("Last Month!");
-      navigate('/dashboard');
+      
     } 
     // else {
     //   // setShowCustomDateRange(false);
