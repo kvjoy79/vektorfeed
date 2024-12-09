@@ -34,8 +34,6 @@ const Dashboard = () => {
   const [modalData, setModalData] = useState(null); // State for storing modal data
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
-
-
   // const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
 
 
@@ -81,11 +79,13 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (activeButton === 'Custom Date Range') {
-      setShowCustomDateRange(true);
-    } else {
-      setShowCustomDateRange(false);
-    }
+    if (activeButton === 'Last Month') {
+      // setShowCustomDateRange(true);
+      console.log("Last Month!");
+    } 
+    // else {
+    //   // setShowCustomDateRange(false);
+    // }
   }, [activeButton]);
 
   useEffect(() => {

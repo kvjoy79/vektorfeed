@@ -106,7 +106,8 @@ const WithSidebar = ({ children }) => {
       if (responseData.error) {
         toast.error(responseData.error); // Show error if any
       } else {
-        toast.success(responseData.message); // Show success message
+        // toast.success(responseData.message); // Show success message
+        console.log(responseData.message);
       }
     } catch (error) {
       // Handle errors
