@@ -30,6 +30,7 @@ const Dashboard = () => {
   const [tableData, setTableData] = useState([]);
   const [xLabels, setXLabels] = useState([]);
   const [yValues, setYValues] = useState([]);
+  // const [placeId, setPlaceId] = useState(null);  // State to store place_id
   
 
   // const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
@@ -290,15 +291,17 @@ const Dashboard = () => {
   }, []); // Empty dependency array to run only once when the component mounts
 
   useEffect(() => {
-    const placeId = localStorage.getItem('place_id');
-    if (!placeId) {
+
+    const placeIdFromStorage = localStorage.getItem('place_id');
+    if (!placeIdFromStorage) {
       console.error('No place_id found during fetching weekly ratings');
       return;
     }
+
     // Function to fetch weekly ratings data from the API
     const fetchWeeklyRatings = async () => {
       try {
-        let apiUrl = `${API_URL}/vektordata/weekly_ratings?place_id=${placeId}`;
+        let apiUrl = `${API_URL}/vektordata/weekly_ratings?place_id=${placeIdFromStorage}`;
         
         // Only add current_date to the URL if needed
         // If current_date is not passed, it will not be added to the URL.
