@@ -31,7 +31,7 @@ const Dashboard = () => {
   
 
 
-  const yValues = [1, 2, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
+  const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
 
 
   // Handle Date Validation
