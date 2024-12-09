@@ -28,10 +28,11 @@ const Dashboard = () => {
   const [endDate, setEndDate] = useState('');
   const [dateError, setDateError] = useState('');
   const [tableData, setTableData] = useState([]);
+  const [xLabels, setXLabels] = useState([]);
+  const [yValues, setYValues] = useState([]);
   
 
-
-  const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
+  // const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
 
 
   // Handle Date Validation
@@ -288,6 +289,36 @@ const Dashboard = () => {
     fetchReviewProfileData();
   }, []); // Empty dependency array to run only once when the component mounts
 
+  useEffect(() => {
+    const placeId = localStorage.getItem('place_id');
+    if (!placeId) {
+      console.error('No place_id found during fetching weekly ratings');
+      return;
+    }
+    // Function to fetch weekly ratings data from the API
+    const fetchWeeklyRatings = async () => {
+      try {
+        let apiUrl = `${API_URL}/vektordata/weekly_ratings?place_id=${placeId}`;
+        
+        // Only add current_date to the URL if needed
+        // If current_date is not passed, it will not be added to the URL.
+        const response = await fetch(apiUrl);
+        
+        if (response.ok) {
+          const data = await response.json();
+          setXLabels(data['x-labels']);  // Set the days of the week
+          setYValues(data['y-labels']);  // Set the count of 4-5 star ratings
+        } else {
+          console.error('Failed to fetch weekly ratings data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching weekly ratings:', error);
+      }
+    };
+
+    fetchWeeklyRatings();
+  }, [placeId]);  // Re-run the effect if the placeId changes
+
   // useEffect(() => {
   //   if (!reviewId) {
   //     setErrorMessage('No place_id found in localStorage');
@@ -520,11 +551,13 @@ const Dashboard = () => {
             </div>
 
             <div className="rating-right" style={{ width: "60%", height: "100px" }}>
-              <LineGraph yValues={yValues} />
+            <LineGraph yValues={yValues} labels={xLabels} />
+              {/* <LineGraph yValues={yValues} /> */}
               {/* <LineGraph
                 yValues={[3, 4, 5, 6, 7, 8, 9]}
                 labels={["January", "February", "March", "April", "May", "June", "July"]}
               /> */}
+
             </div>
 
           </div>
@@ -550,7 +583,8 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="rating-right" style={{ width: "60%", height: "100px" }}>
-              <LineGraph yValues={yValues} />
+            <LineGraph yValues={yValues} labels={xLabels} />
+              {/* <LineGraph yValues={yValues} /> */}
               {/* <LineGraph
                 yValues={[3, 4, 5, 6, 7, 8, 9]}
                 labels={["January", "February", "March", "April", "May", "June", "July"]}
