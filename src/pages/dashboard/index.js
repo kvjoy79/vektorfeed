@@ -320,7 +320,7 @@ const Dashboard = () => {
     };
 
     fetchWeeklyRatings();
-  }, [placeId]);  // Re-run the effect if the placeId changes
+  }, []);
 
   // useEffect(() => {
   //   if (!reviewId) {
