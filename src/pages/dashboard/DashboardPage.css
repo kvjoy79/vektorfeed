@@ -569,3 +569,84 @@
 
 
 
+/* Styles for Keywords */
+.clickable-keyword {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+.clickable-keyword:hover {
+  color: darkblue;
+}
+
+/* Modal Styles */
+.search-review-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  visibility: hidden; /* Initially hidden */
+}
+
+.search-review-modal-backdrop.show {
+  visibility: visible;
+}
+
+.search-review-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 500px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  margin-top: 10px;
+}
+
+.review-item {
+  margin-bottom: 20px;
+}
+
+.review-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+}
+
+.review-author p {
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.review-text p {
+  margin: 5px 0;
+}
+
+.close-modal-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 20px;
+}
+
+
+

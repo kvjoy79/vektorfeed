@@ -30,7 +30,11 @@ const Dashboard = () => {
   const [tableData, setTableData] = useState([]);
   const [xLabels, setXLabels] = useState([]);
   const [yValues, setYValues] = useState([]);
-  // const [placeId, setPlaceId] = useState(null);  // State to store place_id
+
+  const [modalData, setModalData] = useState(null); // State for storing modal data
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+
+
   
 
   // const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
@@ -322,6 +326,8 @@ const Dashboard = () => {
     fetchWeeklyRatings();
   }, []);
 
+
+  
   // useEffect(() => {
   //   if (!reviewId) {
   //     setErrorMessage('No place_id found in localStorage');
@@ -393,6 +399,43 @@ const Dashboard = () => {
       alert(`${buttonName} button clicked`);
     }, 500); // Reset after 1 second
   };
+
+  // Function to handle keyword click
+  const handleKeywordClick = async (keyword) => {
+    // Fetch place_id from localStorage
+    const place_id = localStorage.getItem('place_id');
+
+    if (!place_id) {
+      console.log('Place ID is not available in localStorage during fetching search-keywords');
+      return;
+    }
+
+    // Construct the URL to call the API
+    const url = `${API_URL}/vektordata/search-reviews?keyword=${encodeURIComponent(keyword)}&place_id=${place_id}`;
+
+    try {
+      // Make the fetch request to the API
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (response.ok) {
+        // Set modal data and open the modal
+        setModalData(data);
+        setIsModalOpen(true);
+      } else {
+        console.log(data.message || "No reviews found");
+      }
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      console.log("An error occurred while fetching reviews");
+    }
+  };
+  
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
 
   // const tableData = [
@@ -470,6 +513,30 @@ const Dashboard = () => {
     } else {
       return null;
     }
+  };
+
+  // Modal to show reviews
+  const renderModal = () => {
+    if (!isModalOpen || !modalData) return null;
+
+    return (
+      <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <h3>Reviews for Keyword</h3>
+          {modalData.length > 0 ? (
+            modalData.map((review, index) => (
+              <div key={index}>
+                <p><strong>{review.author_name}</strong> - {review.relative_time_description}</p>
+                <p>{review.text}</p>
+                <img src={review.profile_photo_url} alt={review.author_name} width="50" />
+              </div>
+            ))
+          ) : (
+            <p>No reviews found for this keyword.</p>
+          )}
+        </div>
+      </div>
+    );
   };
 
   
@@ -614,12 +681,13 @@ const Dashboard = () => {
           <div className="keywords-container">
             <div className="keywords-title">Positive Keywords</div>
             {/* {errorMessage && <div className="error-message">{errorMessage}</div>} */}
-            {errorMessage && <div className="error-message">-</div>}
+            {errorMessage && <div className="error-message"></div>}
             <ul className="indented-list">
               {positiveKeywords.length > 0 ? (
                 positiveKeywords.map((keyword, index) => (
                   // <p key={index} className="positive-content">{`${index + 1} ${keyword}`}</p>
-                  <p key={index} className="positive-content">{`${keyword.charAt(0).toUpperCase() + keyword.slice(1)}`}</p>   
+                  <p key={index} className="positive-content" onClick={() => handleKeywordClick(keyword)}>
+                    {`${keyword.charAt(0).toUpperCase() + keyword.slice(1)}`}</p>   
                 ))
               ) : (
                 <p className="positive-content">Loading...</p>
@@ -646,12 +714,13 @@ const Dashboard = () => {
           <div className="keywords-container">
             <div className="keywords-title">Negative Keywords</div>
             {/* {errorMessage && <div className="error-message">{errorMessage}</div>} */}
-            {errorMessage && <div className="error-message">-</div>}
+            {errorMessage && <div className="error-message"></div>}
             <ul className="indented-list">
               {negativeKeywords.length > 0 ? (
                 negativeKeywords.map((keyword, index) => (
                   // <p key={index} className="negative-content">{`${index + 1} ${keyword}`}</p>
-                  <p key={index} className="negative-content">{`${keyword.charAt(0).toUpperCase() + keyword.slice(1)}`}</p>
+                  <p key={index} className="negative-content" onClick={() => handleKeywordClick(keyword)}>
+                    {`${keyword.charAt(0).toUpperCase() + keyword.slice(1)}`}</p>
                 ))
               ) : (
                 <p className="negative-content">Loading...</p>
@@ -660,7 +729,9 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        {/* Table Container */}
+        {renderModal()}
+
+      {/* Table Container */}
       {/* <Card title="Review Profile" spanTwoColumns={true}> */}
       <Card spanTwoColumns={true}>
         <div className="table-container">
