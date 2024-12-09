@@ -569,83 +569,97 @@
 
 
 
-/* Styles for Keywords */
-.clickable-keyword {
-  cursor: pointer;
-  color: blue;
-  text-decoration: underline;
-}
 
-.clickable-keyword:hover {
-  color: darkblue;
-}
 
-/* Modal Styles */
-.search-review-modal-backdrop {
+
+
+
+/* Modal backdrop to darken the background */
+.modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  visibility: hidden; /* Initially hidden */
 }
 
-.search-review-modal-backdrop.show {
-  visibility: visible;
-}
-
-.search-review-modal {
+/* Modal content container */
+.modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 500px;
-}
-
-.modal-header {
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh; /* Limit the height of the modal */
+  overflow: hidden;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.modal-body {
-  margin-top: 10px;
+/* Reviews container to enable scrolling */
+.reviews-container {
+  overflow-y: auto; /* Enable vertical scroll */
+  max-height: 400px; /* Fixed height for scrollable content */
 }
 
-.review-item {
+/* Individual review card */
+.review-card {
   margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }
 
-.review-item img {
+/* Header for each review (profile picture and author info) */
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-pic {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .review-author {
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
-.review-author p {
-  margin-left: 10px;
+.author-name {
   font-weight: bold;
 }
 
-.review-text p {
-  margin: 5px 0;
+.review-rating {
+  color: #ffb400;
 }
 
-.close-modal-button {
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-size: 20px;
+.relative-time {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Review text */
+.review-text {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Separator line between reviews */
+.separator-line {
+  margin-top: 15px;
+  border-top: 1px solid #ddd;
 }
 
 

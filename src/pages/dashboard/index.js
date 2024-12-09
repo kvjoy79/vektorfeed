@@ -522,18 +522,33 @@ const Dashboard = () => {
     return (
       <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <h3>Reviews for Keyword</h3>
-          {modalData.length > 0 ? (
-            modalData.map((review, index) => (
-              <div key={index}>
-                <p><strong>{review.author_name}</strong> - {review.relative_time_description}</p>
-                <p>{review.text}</p>
-                <img src={review.profile_photo_url} alt={review.author_name} width="50" />
-              </div>
-            ))
-          ) : (
-            <p>No reviews found for this keyword.</p>
-          )}
+          <h3>Reviews for "{keyword.charAt(0).toUpperCase() + keyword.slice(1)}"</h3>
+
+          {/* Scrollable container for reviews */}
+          <div className="reviews-container">
+            {modalData.length > 0 ? (
+              modalData.map((review, index) => (
+                <div key={index} className="review-card">
+                  <div className="review-header">
+                    <img
+                      src={review.profile_photo_url}
+                      alt={review.author_name}
+                      className="profile-pic"
+                    />
+                    <div className="review-author">
+                      <div className="author-name">{review.author_name}</div>
+                      <div className="review-rating">Rating: {review.rating}</div>
+                      <div className="relative-time">{review.relative_time_description}</div>
+                    </div>
+                  </div>
+                  <p className="review-text">{review.text}</p>
+                  <div className="separator-line"></div>
+                </div>
+              ))
+            ) : (
+              <p>No reviews found for this keyword.</p>
+            )}
+          </div>
         </div>
       </div>
     );
