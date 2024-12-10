@@ -66,9 +66,15 @@ const Dashboard = () => {
   // Handle Custom Date Range Submit
   const handleDateSubmit = () => {
     if (validateDates(startDate, endDate)) {
+      // Store the value in localStorage
+      localStorage.setItem('dateButtonStatus', 'date-range');
       setActiveButton('Custom Date Range');
       setShowCustomDateRange(false); // Close the modal
+      localStorage.setItem('dateButtonCustom', `${startDate} to ${endDate}`);
       console.log(`Fetching data from ${startDate} to ${endDate}`);
+    
+      // Reload the page
+      window.location.reload();
       // You can add your API call here with the custom date range.
     }
   };
@@ -84,6 +90,12 @@ const Dashboard = () => {
     if (activeButton === 'Last Month') {
       // setShowCustomDateRange(true);
       console.log("Last Month!");
+
+      // Store the value in localStorage
+      localStorage.setItem('dateButtonStatus', 'last-month');
+
+      // Reload the page
+      window.location.reload();
       
     } 
     // else {
