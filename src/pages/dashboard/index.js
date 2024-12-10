@@ -100,8 +100,21 @@ const Dashboard = () => {
   useEffect(() => {
     if (activeButton === 'Last Month') {
       // setShowCustomDateRange(true);
-      console.log("Last Month!");
+      console.log("Set to Last Month!");
 
+      try {
+        // Check if the "dateButtonStatus" flag is set to "date-range" in localStorage
+        const isdateButtonStatus = localStorage.getItem('dateButtonStatus');
+
+        // If "dateButtonStatus" is "date-range", show toast notification
+        if (isdateButtonStatus=== 'date-range') {
+          toast.success("Set to Last Month!"); 
+        }
+      }
+      catch (error) {
+        toast.error("Failed to Set to Last Month!"); // Handle any errors
+      }
+      
       // Store the value in localStorage
       localStorage.setItem('dateButtonStatus', 'last-month');
       
