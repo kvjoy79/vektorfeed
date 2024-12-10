@@ -74,7 +74,7 @@ const Dashboard = () => {
       console.log(`Fetching data from ${startDate} to ${endDate}`);
     
       // Reload the page
-      window.location.reload();
+      // window.location.reload();
       // You can add your API call here with the custom date range.
     }
   };
