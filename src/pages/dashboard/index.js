@@ -65,6 +65,14 @@ const Dashboard = () => {
 
   // Handle Custom Date Range Submit
   const handleDateSubmit = () => {
+
+    // Check if both startDate and endDate are not empty
+    if (!startDate || !endDate) {
+      console.log('Please select both start and end dates.');
+      setDateError('Please select both start and end dates.');
+      return;  // Prevent further execution if any date is empty
+    }
+    
     if (validateDates(startDate, endDate)) {
       // Store the value in localStorage
       localStorage.setItem('dateButtonStatus', 'date-range');
