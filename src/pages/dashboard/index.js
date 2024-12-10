@@ -93,9 +93,6 @@ const Dashboard = () => {
 
       // Store the value in localStorage
       localStorage.setItem('dateButtonStatus', 'last-month');
-
-      // Reload the page
-      window.location.reload();
       
     } 
     // else {
