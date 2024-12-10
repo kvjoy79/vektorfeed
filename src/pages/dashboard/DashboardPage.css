@@ -260,25 +260,25 @@
   overflow-x: auto;
 }
 
-.review-modal-table {
+.review-table {
   width: 100%;
   border-collapse: collapse;
   background-color: white;
   text-align: left;
 }
 
-.review-modal-table th, .review-modal-table td {
+.review-table th, .review-table td {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-.review-modal-table th {
+.review-table th {
   background-color: #f4f4f4;
   font-weight: bold;
   text-align: center;
 }
 
-.review-modal-table td {
+.review-table td {
   text-align: center;
   font-size: 1rem;
 }
@@ -321,11 +321,11 @@
 }
 
 
-.review-modal-table tr:nth-child(even) {
+.review-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.review-modal-table tr:hover {
+.review-table tr:hover {
   background-color: #f1f1f1;
 }
 
@@ -574,6 +574,7 @@
 
 
 
+
 /* Modal backdrop to darken the background */
 .modal-backdrop {
   position: fixed;
@@ -616,6 +617,7 @@
   border-radius: 8px;
   background-color: #f9f9f9;
 }
+
 
 /* Header for each review-modal (profile picture and author info) */
 .review-modal-header {
