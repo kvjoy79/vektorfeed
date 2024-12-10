@@ -67,7 +67,7 @@ const Dashboard = () => {
   };
 
   // Handle Custom Date Range Submit
-  const handleDateSubmit = () => {
+  const handleDateSubmit = async ()  => {
 
     // Check if both startDate and endDate are not empty
     if (!startDate || !endDate) {
@@ -77,17 +77,62 @@ const Dashboard = () => {
     }
     
     if (validateDates(startDate, endDate)) {
+
+      const dateRange = `${startDate} to ${endDate}`;
       // Store the value in localStorage
       localStorage.setItem('dateButtonStatus', 'date-range');
       setActiveButton('Custom Date Range');
       setShowCustomDateRange(false); // Close the modal
-      localStorage.setItem('dateButtonCustom', `${startDate} to ${endDate}`);
-      console.log(`Fetching data from ${startDate} to ${endDate}`);
+      localStorage.setItem('dateButtonCustom', dateRange);
+      console.log(`Fetching data for date range: ${dateRange}`);
       toast.success("Custom Date Range Submitted!"); 
     
       // Reload the page
       // window.location.reload();
       // You can add your API call here with the custom date range.
+
+      // Fetch review details using the API
+      const placeIdFromLocalStorage = localStorage.getItem('orig_place_id'); // Ensure placeId is stored in localStorage
+
+      try {
+        // Fetch review details from the API
+        const response = await fetch(`${API_URL}/serpapi/place-review-details-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`);
+    
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Error fetching reviews:', errorData.error || 'Unknown error');
+          return;
+        }
+    
+        const reviewData = await response.json();
+        console.log('Review details fetched:', reviewData);
+
+
+        // Remove the specified items from localStorage
+        const itemsToRemove = [
+          'googleRating',
+          'negativeKeywords',
+          'positiveKeywords',
+          'tableData',
+          'milvusdb_loaded',
+          'dateButtonStatus',
+          'table_loaded'
+        ];
+        
+        itemsToRemove.forEach(item => {
+          localStorage.removeItem(item);
+        });
+        
+         // Store the dateButtonCustomExecute in localStorage
+         localStorage.setItem('dateButtonCustomExecute', 'yes');
+
+        // Reload the page
+        window.location.reload();
+    
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
     }
   };
 
@@ -98,33 +143,87 @@ const Dashboard = () => {
     }
   };
 
+  // last month methods
   useEffect(() => {
-    if (activeButton === 'Last Month') {
-      // setShowCustomDateRange(true);
-      console.log("Set to Last Month!");
+    const fetchLastMonthData = async () => {
+      if (activeButton === 'Last Month') {
+        console.log("Set to Last Month!");
+  
+        try {
+          // Check if the "dateButtonStatus" flag is set to "date-range" in localStorage
+          const isDateButtonStatus = localStorage.getItem('dateButtonStatus');
+  
+          if (isDateButtonStatus === 'date-range') {
+            toast.success("Set to Last Month!");
 
-      try {
-        // Check if the "dateButtonStatus" flag is set to "date-range" in localStorage
-        const isdateButtonStatus = localStorage.getItem('dateButtonStatus');
-
-        // If "dateButtonStatus" is "date-range", show toast notification
-        if (isdateButtonStatus=== 'date-range') {
-          toast.success("Set to Last Month!"); 
+            localStorage.removeItem('dateButtonCustomExecute');
+  
+            // Fetch review details using the API
+            const placeIdFromLocalStorage = localStorage.getItem('orig_place_id');
+            if (!placeIdFromLocalStorage) {
+              console.error('Place ID is missing in localStorage.');
+              toast.error('Place ID is missing.');
+              return;
+            }
+  
+            // Define the date range for "Last Month" (you may need to calculate this dynamically)
+            const dateRange = 'last_month'; // Replace this with actual logic if needed
+  
+            try {
+              const response = await fetch(
+                `${API_URL}/serpapi/place-review-details-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`
+              );
+  
+              if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error fetching reviews:', errorData.error || 'Unknown error');
+                return;
+              }
+  
+              const reviewData = await response.json();
+              console.log('Review details fetched:', reviewData);
+  
+              // Remove the specified items from localStorage
+              const itemsToRemove = [
+                'googleRating',
+                'negativeKeywords',
+                'positiveKeywords',
+                'tableData',
+                'milvusdb_loaded',
+                'dateButtonStatus',
+                'table_loaded',
+              ];
+  
+              itemsToRemove.forEach((item) => {
+                localStorage.removeItem(item);
+              });
+  
+              // Reload the page
+              window.location.reload();
+            } catch (error) {
+              console.error('Error during API call:', error);
+            }
+          }
+        } catch (error) {
+          console.error('Error handling "Last Month" logic:', error);
+          toast.error("Failed to Set to Last Month!");
         }
-      }
-      catch (error) {
-        toast.error("Failed to Set to Last Month!"); // Handle any errors
-      }
 
-      // Store the value in localStorage
-      localStorage.setItem('dateButtonStatus', 'last-month');
-      
-    } 
-    // else {
-    //   // setShowCustomDateRange(false);
-    // }
+        // Check the value of "dateButtonCustomExecute" in localStorage
+        const dateButtonCustomExecute = localStorage.getItem('dateButtonCustomExecute');
+
+        if (dateButtonCustomExecute === 'yes') {
+          // If "dateButtonCustomExecute" is "yes", set activeButton to "Custom Date Range"
+          setActiveButton('Custom Date Range');
+        } 
+        // Store the new date button status in localStorage
+        localStorage.setItem('dateButtonStatus', 'last-month');
+      }
+    };
+  
+    fetchLastMonthData();
   }, [activeButton]);
-
+  
   useEffect(() => {
     if (activeButton === 'Custom Date Range') {
       setShowCustomDateRange(true);
@@ -195,44 +294,6 @@ const Dashboard = () => {
 
 
   
-  // useEffect(() => {
-
-  //   if (!reviewId) {
-  //     setErrorMessage('No place_id found in localStorage');
-  //     return;
-  //   }
-  //   else {
-  //     setReviewId(reviewId); // Sync with state
-  //   }
-
-  //   const fetchOverallRating = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         // `${API_URL}/vektordata/get-overall-rating-from-storage?period=${activeButton.toLowerCase()}&place_id=${reviewId}`
-  //         `${API_URL}/vektordata/get-overall-rating-from-storage?place_id=${reviewId}`
-  //       );
-  //       const data = await response.json();
-  //       if (response.ok) {
-  //         setOverallRating(data.overall_rating);
-  //         // Set the arrow based on the rating change
-  //         if (data.overall_rating >= 4.5) {
-  //           setIconTypeOverallRating('green-up-arrow');
-  //         } else if (data.overall_rating < 3.5) {
-  //           setIconTypeOverallRating('red-down-arrow');
-  //         } else {
-  //           setIconTypeOverallRating(''); // No arrow for ratings between 3.5 and 4.5
-  //         }
-  //       } else {
-  //         setErrorMessage(data.error || 'Error fetching data');
-  //       }
-  //     } catch (error) {
-  //       setErrorMessage('An error occurred while fetching data.');
-  //     }
-  //   };
-
-  //   fetchOverallRating();
-  // }, [activeButton, reviewId]); // Runs when activeButton (period) or reviewId changes
-
 
   // fetch Overall Rating
   useEffect(() => {
@@ -277,9 +338,6 @@ const Dashboard = () => {
 
     fetchOverallRating();
   }, [activeButton, reviewId, retryCount]); // Runs when activeButton or reviewId changes or retryCount updates
-
-
-
 
 
   
