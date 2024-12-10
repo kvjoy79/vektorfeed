@@ -42,7 +42,10 @@ const AdminPage = () => {
       'googleRating',
       'negativeKeywords',
       'positiveKeywords',
-      'tableData'
+      'tableData',
+      'milvusdb_loaded',
+      'dateButtonStatus',
+      'table_loaded'
     ];
     
     itemsToRemove.forEach(item => {
