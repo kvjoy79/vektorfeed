@@ -9,6 +9,8 @@ import RedDownArrow from '../../assets/svgs/red-down-arrow.svg';
 import { API_URL } from '../../config/config';
 import dayjs from 'dayjs';
 import LineGraph from '../../components/LineGraph/linegraph';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Dashboard = () => {
@@ -80,6 +82,7 @@ const Dashboard = () => {
       setShowCustomDateRange(false); // Close the modal
       localStorage.setItem('dateButtonCustom', `${startDate} to ${endDate}`);
       console.log(`Fetching data from ${startDate} to ${endDate}`);
+      toast.success("Custom Date Range Submitted!"); 
     
       // Reload the page
       // window.location.reload();
@@ -576,7 +579,11 @@ const Dashboard = () => {
 
   
   return (
+    
     <div className="dashboard-main-container">
+
+      <ToastContainer /> {/* To display toast notifications */}
+
       {/* Top Buttons */}
       <div className="button-group">
         <div className="date-buttons">
