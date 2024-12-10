@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [activeButton, setActiveButton] = useState('Last Month');
   const [overallRating, setOverallRating] = useState(null);
   const [googleRating, setGoogleRating] = useState(null);
+  const [retryCount, setRetryCount] = useState(0);
   const [starCountOverall, setStarCountOverall] = useState(0.1); // Starting with 0.1 stars
   const [starCountGoogle, setStarCountGoogle] = useState(0.1); // Starting with 0.1 stars
   const [iconTypeOverallRating, setIconTypeOverallRating] = useState(''); // Default to green-up arrow
@@ -114,7 +115,7 @@ const Dashboard = () => {
       catch (error) {
         toast.error("Failed to Set to Last Month!"); // Handle any errors
       }
-      
+
       // Store the value in localStorage
       localStorage.setItem('dateButtonStatus', 'last-month');
       
@@ -192,22 +193,63 @@ const Dashboard = () => {
     fetchGoogleRating();
   }, []); // Run only once on component mount
 
+
+  
+  // useEffect(() => {
+
+  //   if (!reviewId) {
+  //     setErrorMessage('No place_id found in localStorage');
+  //     return;
+  //   }
+  //   else {
+  //     setReviewId(reviewId); // Sync with state
+  //   }
+
+  //   const fetchOverallRating = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         // `${API_URL}/vektordata/get-overall-rating-from-storage?period=${activeButton.toLowerCase()}&place_id=${reviewId}`
+  //         `${API_URL}/vektordata/get-overall-rating-from-storage?place_id=${reviewId}`
+  //       );
+  //       const data = await response.json();
+  //       if (response.ok) {
+  //         setOverallRating(data.overall_rating);
+  //         // Set the arrow based on the rating change
+  //         if (data.overall_rating >= 4.5) {
+  //           setIconTypeOverallRating('green-up-arrow');
+  //         } else if (data.overall_rating < 3.5) {
+  //           setIconTypeOverallRating('red-down-arrow');
+  //         } else {
+  //           setIconTypeOverallRating(''); // No arrow for ratings between 3.5 and 4.5
+  //         }
+  //       } else {
+  //         setErrorMessage(data.error || 'Error fetching data');
+  //       }
+  //     } catch (error) {
+  //       setErrorMessage('An error occurred while fetching data.');
+  //     }
+  //   };
+
+  //   fetchOverallRating();
+  // }, [activeButton, reviewId]); // Runs when activeButton (period) or reviewId changes
+
+
+  // fetch Overall Rating
   useEffect(() => {
     if (!reviewId) {
       setErrorMessage('No place_id found in localStorage');
       return;
-    }
-    else {
+    } else {
       setReviewId(reviewId); // Sync with state
     }
 
     const fetchOverallRating = async () => {
       try {
         const response = await fetch(
-          // `${API_URL}/vektordata/get-overall-rating-from-storage?period=${activeButton.toLowerCase()}&place_id=${reviewId}`
           `${API_URL}/vektordata/get-overall-rating-from-storage?place_id=${reviewId}`
         );
         const data = await response.json();
+
         if (response.ok) {
           setOverallRating(data.overall_rating);
           // Set the arrow based on the rating change
@@ -220,6 +262,13 @@ const Dashboard = () => {
           }
         } else {
           setErrorMessage(data.error || 'Error fetching data');
+          // Retry if the response is 404 (not found) and retryCount < 2
+          if ((response.status === 404 || response.status === 500) && retryCount < 1) {
+            console.log("Retrying in 6 seconds...");
+            setTimeout(() => {
+              setRetryCount((prev) => prev + 1); // Increment retry count
+            }, 6000);
+          }
         }
       } catch (error) {
         setErrorMessage('An error occurred while fetching data.');
@@ -227,9 +276,13 @@ const Dashboard = () => {
     };
 
     fetchOverallRating();
-  }, [activeButton, reviewId]); // Runs when activeButton (period) or reviewId changes
+  }, [activeButton, reviewId, retryCount]); // Runs when activeButton or reviewId changes or retryCount updates
 
 
+
+
+
+  
   // Fetch Positive and Negative Keywords with delay
   useEffect(() => {
     if (!reviewId) {
