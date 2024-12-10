@@ -45,7 +45,8 @@ const AdminPage = () => {
       'tableData',
       'milvusdb_loaded',
       'dateButtonStatus',
-      'table_loaded'
+      'table_loaded',
+      'dateButtonCustomExecute'
     ];
     
     itemsToRemove.forEach(item => {
