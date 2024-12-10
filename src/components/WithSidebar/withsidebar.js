@@ -52,6 +52,16 @@ const WithSidebar = ({ children }) => {
 
   const fetchReviewsFromFlask = async (placeId) => {
     try {
+
+      // Check if the "milvusdb_loaded" flag is set to "yes" in localStorage
+      const isMilvusdbLoaded = localStorage.getItem('milvusdb_loaded');
+
+      // If "milvusdb_loaded" is "yes", skip the API call
+      if (isMilvusdbLoaded === 'yes') {
+        console.log("API calls skipped, milvusdb already loaded.");
+        return; // Exit the function
+      }
+
       console.log(`load-review-by-id: ${placeId}`);
       const response = await fetch(`${API_URL}/load-review-by-id?review_id=${placeId}`, {
         method: 'POST',
@@ -65,6 +75,8 @@ const WithSidebar = ({ children }) => {
       if (data.error) {
         toast.error(data.error); // Show error message if any
       } else {
+        // Set the "milvusdb_loaded" flag to "yes" in localStorage
+        localStorage.setItem('milvusdb_loaded', 'yes');
         toast.success(data.message); // Show success message if reviews are successfully loaded
       }
     } catch (error) {
@@ -81,6 +93,15 @@ const WithSidebar = ({ children }) => {
           placename: placeName, // Ensure placeName is valid
         },
       ];
+
+      // Check if the "table_loaded" flag is set to "yes" in localStorage
+      const isTableLoaded = localStorage.getItem('table_loaded');
+
+      // If "table_loaded" is "yes", skip the API call
+      if (isTableLoaded === 'yes') {
+        console.log("API calls skipped, table already loaded.");
+        return; // Exit the function
+      }
   
       // Log the data to make sure it's in the correct format
       console.log('Data to send to Flask:', data);
@@ -106,6 +127,8 @@ const WithSidebar = ({ children }) => {
       if (responseData.error) {
         toast.error(responseData.error); // Show error if any
       } else {
+        // Set the "table_loaded" flag to "yes" in localStorage
+        localStorage.setItem('table_loaded', 'yes');
         // toast.success(responseData.message); // Show success message
         console.log(responseData.message);
       }
