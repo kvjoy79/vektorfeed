@@ -167,7 +167,7 @@ const Dashboard = () => {
             }
   
             // Define the date range for "Last Month" (you may need to calculate this dynamically)
-            const dateRange = 'last_month'; // Replace this with actual logic if needed
+            const dateRange = 'last-month'; // Replace this with actual logic if needed
   
             try {
               const response = await fetch(
