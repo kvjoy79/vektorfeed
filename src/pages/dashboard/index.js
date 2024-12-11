@@ -381,7 +381,7 @@ const Dashboard = () => {
                 const emptyList = ["-", "-", "-", "-"];
                 setKeywords(emptyList);
                 localStorage.setItem(storageKey, JSON.stringify(emptyList));
-                toast.error("Can't generate keywords, returned default values.");
+                toast.error("Can't generate keywords, please check the available review data.");
                 return;
               }
 
@@ -399,7 +399,7 @@ const Dashboard = () => {
               const emptyList = ["-", "-", "-", "-"];
               setKeywords(emptyList);
               localStorage.setItem(storageKey, JSON.stringify(emptyList));
-              toast.error("Can't generate keywords, returned default values.");
+              toast.error("Can't generate keywords, please check the available review data.");
             }
           } catch (apiError) {
             console.error('API Error:', apiError);
