@@ -214,7 +214,7 @@ const Dashboard = () => {
 
         if (dateButtonCustomExecute === 'yes') {
           // If "dateButtonCustomExecute" is "yes", set activeButton to "Custom Date Range"
-          setActiveButton('Custom Date Range');
+          console.log("dateButtonCustomExecute is yes");
         } 
         // Store the new date button status in localStorage
         localStorage.setItem('dateButtonStatus', 'last-month');
