@@ -81,7 +81,6 @@ const Dashboard = () => {
       const dateRange = `${startDate} to ${endDate}`;
       // Store the value in localStorage
       localStorage.setItem('dateButtonStatus', 'date-range');
-      setActiveButton('Custom Date Range');
       setShowCustomDateRange(false); // Close the modal
       localStorage.setItem('dateButtonCustom', dateRange);
       console.log(`Fetching data for date range: ${dateRange}`);
@@ -109,25 +108,25 @@ const Dashboard = () => {
 
 
         // Remove the specified items from localStorage
-        // const itemsToRemove = [
-        //   'googleRating',
-        //   'negativeKeywords',
-        //   'positiveKeywords',
-        //   'tableData',
-        //   'milvusdb_loaded',
-        //   'dateButtonStatus',
-        //   'table_loaded'
-        // ];
+        const itemsToRemove = [
+          'googleRating',
+          'negativeKeywords',
+          'positiveKeywords',
+          'tableData',
+          'milvusdb_loaded',
+          'dateButtonStatus',
+          'table_loaded'
+        ];
         
-        // itemsToRemove.forEach(item => {
-        //   localStorage.removeItem(item);
-        // });
+        itemsToRemove.forEach(item => {
+          localStorage.removeItem(item);
+        });
         
          // Store the dateButtonCustomExecute in localStorage
-         localStorage.setItem('dateButtonCustomExecute', 'yes');
+        //  localStorage.setItem('dateButtonCustomExecute', 'yes');
 
         // Reload the page
-        // window.location.reload();
+        window.location.reload();
     
       } catch (error) {
         console.error('Error:', error);
@@ -143,94 +142,28 @@ const Dashboard = () => {
     }
   };
 
-  // last month methods
+  //last month methods
   useEffect(() => {
-    const fetchLastMonthData = async () => {
-      if (activeButton === 'Last Month') {
-        console.log("Set to Last Month!");
   
-        try {
-          // Check if the "dateButtonStatus" flag is set to "date-range" in localStorage
-          const isDateButtonStatus = localStorage.getItem('dateButtonStatus');
-  
-          if (isDateButtonStatus === 'date-range') {
-            toast.success("Set to Last Month!");
-
-            localStorage.removeItem('dateButtonCustomExecute');
-  
-            // Fetch review details using the API
-            const placeIdFromLocalStorage = localStorage.getItem('orig_place_id');
-            if (!placeIdFromLocalStorage) {
-              console.error('Place ID is missing in localStorage.');
-              toast.error('Place ID is missing.');
-              return;
-            }
-  
-            // Define the date range for "Last Month" (you may need to calculate this dynamically)
-            const dateRange = 'last-month'; // Replace this with actual logic if needed
-  
-            try {
-              const response = await fetch(
-                `${API_URL}/serpapi/place-review-details-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`
-              );
-  
-              if (!response.ok) {
-                const errorData = await response.json();
-                console.error('Error fetching reviews:', errorData.error || 'Unknown error');
-                return;
-              }
-  
-              const reviewData = await response.json();
-              console.log('Review details fetched:', reviewData);
-  
-              // Remove the specified items from localStorage
-              const itemsToRemove = [
-                'googleRating',
-                'negativeKeywords',
-                'positiveKeywords',
-                'tableData',
-                'milvusdb_loaded',
-                'dateButtonStatus',
-                'table_loaded',
-              ];
-  
-              itemsToRemove.forEach((item) => {
-                localStorage.removeItem(item);
-              });
-  
-              // Reload the page
-              window.location.reload();
-            } catch (error) {
-              console.error('Error during API call:', error);
-            }
-          }
-        } catch (error) {
-          console.error('Error handling "Last Month" logic:', error);
-          toast.error("Failed to Set to Last Month!");
-        }
-
-        // Check the value of "dateButtonCustomExecute" in localStorage
-        const dateButtonCustomExecute = localStorage.getItem('dateButtonCustomExecute');
-
-        if (dateButtonCustomExecute === 'yes') {
-          // If "dateButtonCustomExecute" is "yes", set activeButton to "Custom Date Range"
-          console.log("dateButtonCustomExecute is yes");
-        } 
-        // Store the new date button status in localStorage
-        localStorage.setItem('dateButtonStatus', 'last-month');
-      }
-    };
-  
-    fetchLastMonthData();
-  }, [activeButton]);
-  
-  useEffect(() => {
-    if (activeButton === 'Custom Date Range') {
-      setShowCustomDateRange(true);
-    } else {
-      setShowCustomDateRange(false);
+    if (activeButton === 'Last Month') {
+      console.log("Set to Last Month!");
+      setActiveButton('Last Month');
     }
+
+    if (activeButton === 'Custom Date Range') {
+      console.log("Set to Custom Date Range!");
+      setActiveButton('Custom Date Range');
+    }
+
   }, [activeButton]);
+  
+  // useEffect(() => {
+  //   if (activeButton === 'Custom Date Range') {
+  //     setShowCustomDateRange(true);
+  //   } else {
+  //     setShowCustomDateRange(false);
+  //   }
+  // }, [activeButton]);
   
   // Fetch Google rating on mount
   useEffect(() => {
@@ -292,8 +225,6 @@ const Dashboard = () => {
     fetchGoogleRating();
   }, []); // Run only once on component mount
 
-
-  
 
   // fetch Overall Rating
   useEffect(() => {
@@ -527,8 +458,75 @@ const Dashboard = () => {
     return null;
   };
 
-  const handleButtonClick = (button) => {
+  const handleButtonClick = async (button) => {
     setActiveButton(button);
+
+    if (button === 'Last Month') {
+      console.log("Set to Last Month!");
+
+      try {
+          toast.success("Set to Last Month!");
+          
+          // Fetch review details using the API
+          const placeIdFromLocalStorage = localStorage.getItem('orig_place_id');
+          if (!placeIdFromLocalStorage) {
+            console.error('Place ID is missing in localStorage.');
+            toast.error('Place ID is missing.');
+            return;
+          }
+
+          // Define the date range for "Last Month" (you may need to calculate this dynamically)
+          const dateRange = 'last-month'; // Replace this with actual logic if needed
+
+          try {
+            const response = await fetch(
+              `${API_URL}/serpapi/place-review-details-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`
+            );
+
+            if (!response.ok) {
+              const errorData = await response.json();
+              console.error('Error fetching reviews:', errorData.error || 'Unknown error');
+              return;
+            }
+
+            const reviewData = await response.json();
+            console.log('Review details fetched:', reviewData);
+
+            // Remove the specified items from localStorage
+            const itemsToRemove = [
+              'googleRating',
+              'negativeKeywords',
+              'positiveKeywords',
+              'tableData',
+              'milvusdb_loaded',
+              'table_loaded'
+            ];
+
+            itemsToRemove.forEach((item) => {
+              localStorage.removeItem(item);
+            });
+
+            // Reload the page
+            window.location.reload();
+          } catch (error) {
+            console.error('Error during API call:', error);
+          }
+        }
+      catch (error) {
+        console.error('Error handling "Last Month" logic:', error);
+        toast.error("Failed to Set to Last Month!");
+      }
+
+      // Store the new date button status in localStorage
+      localStorage.setItem('dateButtonStatus', 'last-month');
+    }
+
+    if (button === 'Custom Date Range') {
+      setShowCustomDateRange(true);
+    } else {
+      setShowCustomDateRange(false);
+    }
+     
   };
 
   const [clickedButton, setClickedButton] = useState(null);
@@ -583,70 +581,7 @@ const Dashboard = () => {
   };
 
 
-
-  // const tableData = [
-  //   {
-  //     placename: "McDonald's, High Street, Watford, UK",
-  //     values: [
-  //       [5, 3],
-  //       [2, 1],
-  //       ['', 4],
-  //       [3, 2],
-  //       [4, 6],
-  //     ],
-  //   },
-  //   {
-  //     placename: "McDonald's, Strand, London, UK",
-  //     values: [
-  //       [2, 3],
-  //       [1, 4],
-  //       [3, 2],
-  //       [1, 1],
-  //       ['', 0],
-  //     ],
-  //   },
-  //   {
-  //     placename: "McDonald's, High Street, Watford, UK",
-  //     values: [
-  //       [0, 1],
-  //       [0, 2],
-  //       [1, 0],
-  //       [4, 3],
-  //       [2, 5],
-  //     ],
-  //   },
-  // ];
-
   const placenameFromLocalStorage = localStorage.getItem('place_name') || "Loading..."; // Fallback to the default value if not in localStorage
-
-
-  // const tableData = [
-  //   {
-  //     placename: placenameFromLocalStorage,
-  //     values: [
-  //       [5, 3],
-  //       [2, 1],
-  //       ['', 4],
-  //       [3, 2],
-  //       [4, 6],
-  //     ],
-  //     // Hardcoded dates
-  //     dates: ['2024-10-19', '2024-10-20', '2024-10-21', '2024-10-22', '2024-10-23'],
-  //   },
-  // ];
-
-
-  // const renderSentiment = (value) => {
-  //   if (value === 1) {
-  //     return <span className="emoji happy">😊</span>;
-  //   } else if (value === 2) {
-  //     return <span className="emoji neutral">😐</span>;
-  //   } else if (value === 3) {
-  //     return <span className="emoji sad">☹️</span>;
-  //   } else {
-  //     return null;
-  //   }
-  // };
 
 
   const renderSentiment = (value) => {
