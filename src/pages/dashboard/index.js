@@ -114,7 +114,6 @@ const Dashboard = () => {
           'positiveKeywords',
           'tableData',
           'milvusdb_loaded',
-          'dateButtonStatus',
           'table_loaded'
         ];
         
