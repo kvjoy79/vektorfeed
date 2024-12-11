@@ -73,7 +73,12 @@ const WithSidebar = ({ children }) => {
 
       const data = await response.json();
       if (data.error) {
-        toast.error(data.error); // Show error message if any
+        // Check if the specific error message exists
+        if (data.error === "No valid review text found.") {
+          toast.error("No valid review text found."); // Show this specific error message as a toast
+        } else {
+          toast.error(data.error); // Handle other errors as generic toast errors
+        }
       } else {
         // Set the "milvusdb_loaded" flag to "yes" in localStorage
         localStorage.setItem('milvusdb_loaded', 'yes');

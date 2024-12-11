@@ -273,7 +273,67 @@ const Dashboard = () => {
 
 
   
-  // Fetch Positive and Negative Keywords with delay
+  // // Fetch Positive and Negative Keywords with delay
+  // useEffect(() => {
+  //   if (!reviewId) {
+  //     setErrorMessage('No place_id found in localStorage');
+  //     return;
+  //   }
+
+  //   // Function to fetch the keywords
+  //   const fetchKeywords = async (query, setKeywords, storageKey) => {
+  //     try {
+  //       // Check if the keywords are already stored in localStorage
+  //       const storedKeywords = localStorage.getItem(storageKey);
+  //       if (storedKeywords) {
+  //         // If stored, use the stored data
+  //         setKeywords(JSON.parse(storedKeywords));
+  //         console.log(`Loaded ${storageKey} from localStorage.`);
+  //         return; // Exit if keywords are already in localStorage
+  //       }
+
+  //       // Delay the API call by 6 seconds if not stored
+  //       setTimeout(async () => {
+  //         // If not stored, make an API request
+  //         const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
+  //           method: 'POST',
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //           },
+  //           body: JSON.stringify({ query }),
+  //         });
+
+  //         const data = await response.json();
+  //         console.log('Response data:', data);  // Log the response for debugging
+
+  //         if (response.ok) {
+  //           // Clean up the response string before parsing it
+  //           const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
+  //           const keywords = JSON.parse(cleanedResponse);  // Parse the response safely
+
+  //           // Store the fetched keywords in localStorage
+  //           localStorage.setItem(storageKey, JSON.stringify(keywords));
+
+  //           // Update the state with the fetched keywords
+  //           setKeywords(keywords);
+  //         } else {
+  //           setErrorMessage(data.error || 'Error fetching keywords');
+  //         }
+  //       }, 6000); // 6000ms = 6 seconds
+
+  //     } catch (error) {
+  //       setErrorMessage('An error occurred while fetching data.');
+  //     }
+  //   };
+
+  //   // Fetch the positive and negative keywords
+  //   fetchKeywords("give the 4 positive keywords in format ['keyword1','keyword2','keyword3','keyword4']?", setPositiveKeywords, 'positiveKeywords');
+  //   fetchKeywords("give the 4 negative keywords in format ['keyword1','keyword2','keyword3','keyword4']?", setNegativeKeywords, 'negativeKeywords');
+
+  // }, [reviewId]);
+
+
+    // Fetch Positive and Negative Keywords with delay
   useEffect(() => {
     if (!reviewId) {
       setErrorMessage('No place_id found in localStorage');
@@ -294,43 +354,80 @@ const Dashboard = () => {
 
         // Delay the API call by 6 seconds if not stored
         setTimeout(async () => {
-          // If not stored, make an API request
-          const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ query }),
-          });
+          try {
+            // If not stored, make an API request
+            const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ query }),
+            });
 
-          const data = await response.json();
-          console.log('Response data:', data);  // Log the response for debugging
+            if (!response.ok) {
+              const errorData = await response.json();
+              setErrorMessage(errorData.error || 'Error fetching keywords');
+              toast.error(errorData.error || 'Error fetching keywords');
+              return;
+            }
 
-          if (response.ok) {
-            // Clean up the response string before parsing it
-            const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
-            const keywords = JSON.parse(cleanedResponse);  // Parse the response safely
+            const data = await response.json();
+            console.log('Response data:', data); // Log the response for debugging
 
-            // Store the fetched keywords in localStorage
-            localStorage.setItem(storageKey, JSON.stringify(keywords));
+            try {
+              // If LangChain says "I don't know", return a default empty list
+              if (data.response && data.response.toLowerCase().includes("i don't know")) {
+                console.warn('LangChain responded with "I don\'t know"');
+                const emptyList = ["-", "-", "-", "-"];
+                setKeywords(emptyList);
+                localStorage.setItem(storageKey, JSON.stringify(emptyList));
+                toast.error("Can't generate keywords, returned default values.");
+                return;
+              }
 
-            // Update the state with the fetched keywords
-            setKeywords(keywords);
-          } else {
-            setErrorMessage(data.error || 'Error fetching keywords');
+              // Clean up the response string before parsing it
+              const cleanedResponse = data.response.replace(/'/g, '"'); // Replace single quotes with double quotes
+              const keywords = JSON.parse(cleanedResponse); // Parse the response safely
+
+              // Store the fetched keywords in localStorage
+              localStorage.setItem(storageKey, JSON.stringify(keywords));
+
+              // Update the state with the fetched keywords
+              setKeywords(keywords);
+            } catch (jsonError) {
+              console.error('Invalid JSON:', data.response);
+              const emptyList = ["-", "-", "-", "-"];
+              setKeywords(emptyList);
+              localStorage.setItem(storageKey, JSON.stringify(emptyList));
+              toast.error("Can't generate keywords, returned default values.");
+            }
+          } catch (apiError) {
+            console.error('API Error:', apiError);
+            setErrorMessage('An error occurred while fetching data.');
+            toast.error('An error occurred while fetching data.');
           }
         }, 6000); // 6000ms = 6 seconds
-
-      } catch (error) {
-        setErrorMessage('An error occurred while fetching data.');
+      } catch (localError) {
+        console.error('Error fetching from localStorage or API:', localError);
+        setErrorMessage('An unexpected error occurred.');
+        toast.error('An unexpected error occurred.');
       }
     };
 
     // Fetch the positive and negative keywords
-    fetchKeywords("give the 4 positive keywords in format ['keyword1','keyword2','keyword3','keyword4']?", setPositiveKeywords, 'positiveKeywords');
-    fetchKeywords("give the 4 negative keywords in format ['keyword1','keyword2','keyword3','keyword4']?", setNegativeKeywords, 'negativeKeywords');
-
+    fetchKeywords(
+      "give the 4 positive keywords in format ['keyword1','keyword2','keyword3','keyword4']?",
+      setPositiveKeywords,
+      'positiveKeywords'
+    );
+    fetchKeywords(
+      "give the 4 negative keywords in format ['keyword1','keyword2','keyword3','keyword4']?",
+      setNegativeKeywords,
+      'negativeKeywords'
+    );
   }, [reviewId]);
+
+
 
   useEffect(() => {
     const fetchReviewProfileData = async () => {
