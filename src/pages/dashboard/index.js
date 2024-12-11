@@ -145,17 +145,19 @@ const Dashboard = () => {
   //last month methods
   useEffect(() => {
   
-    if (activeButton === 'Last Month') {
+    const status = localStorage.getItem('dateButtonStatus');
+
+    if (status === 'last-month') {
       console.log("Set to Last Month!");
       setActiveButton('Last Month');
     }
 
-    if (activeButton === 'Custom Date Range') {
+    if (status === 'date-range') {
       console.log("Set to Custom Date Range!");
       setActiveButton('Custom Date Range');
     }
 
-  }, [activeButton]);
+  }, []);
   
   // useEffect(() => {
   //   if (activeButton === 'Custom Date Range') {
@@ -522,6 +524,7 @@ const Dashboard = () => {
     }
 
     if (button === 'Custom Date Range') {
+      localStorage.setItem('dateButtonStatus', 'date-range');
       setShowCustomDateRange(true);
     } else {
       setShowCustomDateRange(false);
