@@ -109,25 +109,25 @@ const Dashboard = () => {
 
 
         // Remove the specified items from localStorage
-        const itemsToRemove = [
-          'googleRating',
-          'negativeKeywords',
-          'positiveKeywords',
-          'tableData',
-          'milvusdb_loaded',
-          'dateButtonStatus',
-          'table_loaded'
-        ];
+        // const itemsToRemove = [
+        //   'googleRating',
+        //   'negativeKeywords',
+        //   'positiveKeywords',
+        //   'tableData',
+        //   'milvusdb_loaded',
+        //   'dateButtonStatus',
+        //   'table_loaded'
+        // ];
         
-        itemsToRemove.forEach(item => {
-          localStorage.removeItem(item);
-        });
+        // itemsToRemove.forEach(item => {
+        //   localStorage.removeItem(item);
+        // });
         
          // Store the dateButtonCustomExecute in localStorage
          localStorage.setItem('dateButtonCustomExecute', 'yes');
 
         // Reload the page
-        window.location.reload();
+        // window.location.reload();
     
       } catch (error) {
         console.error('Error:', error);
