@@ -938,10 +938,7 @@ const Dashboard = () => {
           <table className="review-table">
             <thead>
               <tr>
-              <th colSpan={tableData[0]?.dates.length + 1}>
-                {"Review Profile for the Last 4 Weeks: Likes (Rating > 4) & Dislikes (Rating < 4)"}
-              </th>
-              
+                <th>{"Review Profile for the Last 4 Weeks: Likes (Rating > 4) & Dislikes (Rating < 4)"}</th>
                   {tableData.length > 0 && tableData[0].dates.map((date, index) => (
                     <th key={index}>{date}</th>
                   ))}
