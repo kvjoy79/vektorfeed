@@ -808,7 +808,7 @@ const Dashboard = () => {
       <div className="content-grid">
         {/* Reviews Card */}
         {/* <Card> */}
-        <Card title="Reviews">
+        <Card title="Overall Rating">
           <div className="rating-container">
             <div className="rating-left">
               {/* Use fetched overall rating */}
