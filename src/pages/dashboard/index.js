@@ -539,9 +539,9 @@ const Dashboard = () => {
     // Delay the fetch operation by 3 seconds
     setTimeout(() => {
       // Fetch Positive Keywords
-      fetchKeywords("give the 3 positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
+      fetchKeywords("givethe 3 exact positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
       // Fetch Negative Keywords
-      fetchKeywords("give the 3 negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
+      fetchKeywords("give the 3 exact negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
     }, 6000); // 3000ms = 3 seconds
 
   }, []);
@@ -940,7 +940,7 @@ const Dashboard = () => {
               <tr>
               <th>
                 {"Review Profile for the Last 4 Weeks:"} <br />
-                {"Likes (Rating > 4) & Dislikes (Rating < 4)"}
+                {"Likes (Rating > 3) & Dislikes (Rating < 3)"}
               </th>
                   {tableData.length > 0 && tableData[0].dates.map((date, index) => (
                     <th key={index}>{date}</th>
