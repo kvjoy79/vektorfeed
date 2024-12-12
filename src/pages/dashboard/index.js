@@ -416,12 +416,12 @@ const Dashboard = () => {
 
     // Fetch the positive and negative keywords
     fetchKeywords(
-      "give positive keywords in format ['keyword1','keyword2','keyword3']?",
+      "give the positive keywords in format ['keyword1','keyword2','keyword3']?",
       setPositiveKeywords,
       'positiveKeywords'
     );
     fetchKeywords(
-      "give negative keywords in format ['keyword1','keyword2','keyword3']?",
+      "give the negative keywords in format ['keyword1','keyword2','keyword3']?",
       setNegativeKeywords,
       'negativeKeywords'
     );
