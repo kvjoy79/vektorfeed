@@ -502,13 +502,57 @@ const Dashboard = () => {
   }, []);
 
 
-  
+  // keywords generation
+  // useEffect(() => {
+  //   if (!reviewId) {
+  //     setErrorMessage('No place_id found in localStorage');
+  //     return;
+  //   }
+
+  //   // Fetch Keywords function
+  //   const fetchKeywords = async (query, setKeywords) => {
+  //     try {
+  //       const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ query }),
+  //       });
+
+  //       const data = await response.json();
+  //       console.log('Response data:', data);  // Log the response for debugging
+
+  //       if (response.ok) {
+  //         // Clean up the response string before parsing it
+  //         const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
+  //         const keywords = JSON.parse(cleanedResponse);  // Parse the response safely
+  //         setKeywords(keywords);
+  //       } else {
+  //         setErrorMessage(data.error || 'Error fetching keywords');
+  //       }
+  //     } catch (error) {
+  //       setErrorMessage('An error occurred while fetching data.');
+  //     }
+  //   };
+
+  //   // Delay the fetch operation by 3 seconds
+  //   setTimeout(() => {
+  //     // Fetch Positive Keywords
+  //     fetchKeywords("give the 3 exact positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
+  //     // Fetch Negative Keywords
+  //     fetchKeywords("give the 3 exact negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
+  //   }, 6000); // 3000ms = 3 seconds
+
+  // }, []);
+
+
   useEffect(() => {
     if (!reviewId) {
       setErrorMessage('No place_id found in localStorage');
       return;
     }
-
+  
     // Fetch Keywords function
     const fetchKeywords = async (query, setKeywords) => {
       try {
@@ -519,32 +563,38 @@ const Dashboard = () => {
           },
           body: JSON.stringify({ query }),
         });
-
+  
         const data = await response.json();
         console.log('Response data:', data);  // Log the response for debugging
-
+  
         if (response.ok) {
           // Clean up the response string before parsing it
           const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
           const keywords = JSON.parse(cleanedResponse);  // Parse the response safely
           setKeywords(keywords);
         } else {
+          // If there's an error with the response, return ["-"]
+          setKeywords(["-"]);
           setErrorMessage(data.error || 'Error fetching keywords');
         }
       } catch (error) {
+        // In case of any fetch error, set the keywords to ["-"] and display an error message
+        setKeywords(["-"]);
         setErrorMessage('An error occurred while fetching data.');
       }
     };
-
+  
     // Delay the fetch operation by 3 seconds
     setTimeout(() => {
       // Fetch Positive Keywords
-      fetchKeywords("givethe 3 exact positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
+      fetchKeywords("give the 3 exact positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
       // Fetch Negative Keywords
       fetchKeywords("give the 3 exact negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
-    }, 6000); // 3000ms = 3 seconds
-
+    }, 6000); // 6000ms = 6 seconds
+  
   }, []);
+
+
 
   // Determine which arrow to show based on the state
   const renderArrow = (type) => {
