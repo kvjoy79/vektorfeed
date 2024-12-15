@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import './linegraph.css';
+import './bargraph.css';
 
-const LineGraph = ({ yValues, labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], width = "100%", height = "150px" }) => {
+
+const BarGraph = ({ yValues, labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], width = "100%", height = "150px" }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const LineGraph = ({ yValues, labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"
         // Ensure Chart.js is available globally
         if (window.Chart) {
           new window.Chart(ctx, {
-            type: "line",
+            type: "bar",
             data: {
               labels: labels, // Use dynamic X-axis labels passed as a prop
               datasets: [
@@ -80,11 +81,11 @@ const LineGraph = ({ yValues, labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"
   }, [yValues, labels]); // Re-run if either yValues or labels changes
 
   return (
-    <div className="line-graph-container" style={{ width: width, height: height }}>
+    <div className="bar-graph-container" style={{ width: width, height: height }}>
       {/* Use a ref to ensure the canvas is available */}
       <canvas ref={canvasRef}></canvas>
     </div>
   );
 };
 
-export default LineGraph;
+export default BarGraph;

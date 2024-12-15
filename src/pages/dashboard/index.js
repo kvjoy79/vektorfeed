@@ -9,6 +9,7 @@ import RedDownArrow from '../../assets/svgs/red-down-arrow.svg';
 import { API_URL } from '../../config/config';
 import dayjs from 'dayjs';
 import LineGraph from '../../components/LineGraph/linegraph';
+import BarGraph from '../../components/BarGraph/bargraph';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -919,9 +920,9 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="rating-right" style={{ width: "60%", height: "100px" }}>
-            <LineGraph yValues={yValues} labels={xLabels} />
-              {/* <LineGraph yValues={yValues} /> */}
-              {/* <LineGraph
+            <BarGraph yValues={yValues} labels={xLabels} />
+              {/* <BarGraph yValues={yValues} /> */}
+              {/* <BarGraph
                 yValues={[3, 4, 5, 6, 7, 8, 9]}
                 labels={["January", "February", "March", "April", "May", "June", "July"]}
               /> */}
