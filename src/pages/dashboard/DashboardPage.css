@@ -767,7 +767,7 @@
 .action-buttons button {
   flex: 1; /* Ensures buttons take equal space */
   padding: 12px 20px; /* Consistent padding */
-  border: none; /* No border */
+  border: 2px solid transparent; /* Transparent border to maintain button size */
   border-radius: 8px; /* Rounded corners */
   background-color: #007bff; /* Bootstrap-like blue */
   color: white; /* Text color */
@@ -782,20 +782,22 @@
 .action-buttons button:hover {
   background-color: #0056b3; /* Darker blue on hover */
   transform: scale(1.05); /* Slightly scale up the button */
+  border-color: #0056b3; /* Border color changes on hover */
 }
 
 /* Active/Clicked Button */
 .action-buttons button.clicked {
   background-color: #28a745; /* Green color when clicked */
   color: white;
+  border-color: #28a745; /* Border color changes when clicked */
 }
 
 /* Focus Effect */
 .action-buttons button:focus {
   outline: none; /* Remove default focus outline */
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Blue shadow for focus */
+  border-color: #007bff; /* Border color remains blue when focused */
 }
-
 
 
 
