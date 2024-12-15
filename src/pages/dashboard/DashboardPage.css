@@ -664,5 +664,12 @@
   border-top: 1px solid #ddd;
 }
 
+.highlighted-keyword {
+  background-color: yellow; /* Background color for the highlighted keyword */
+  font-weight: bold; /* Make the keyword bold */
+  color: black; /* Text color for the highlighted keyword */
+  padding: 0 2px; /* Add a small padding to the keyword */
+}
+
 
 

@@ -38,6 +38,7 @@ const Dashboard = () => {
 
   const [modalData, setModalData] = useState(null); // State for storing modal data
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [highlightedKeyword, setHighlightedKeyword] = useState(''); // Store highlighted keyword
 
   // const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
 
@@ -693,8 +694,17 @@ const Dashboard = () => {
     }, 500); // Reset after 1 second
   };
 
+
+  const highlightKeywordInText = (text, keyword) => {
+    if (!keyword) return text;
+    const regex = new RegExp(`(${keyword})`, 'gi'); // Create a case-insensitive regex
+    return text.replace(regex, '<span class="highlighted-keyword">$1</span>'); // Wrap the keyword in a span
+  };
+
   // Function to handle keyword click
   const handleKeywordClick = async (keyword) => {
+    setHighlightedKeyword(keyword); // Set the keyword for highlighting
+
     // Fetch place_id from localStorage
     const place_id = localStorage.getItem('place_id');
 
@@ -772,7 +782,13 @@ const Dashboard = () => {
                       <div className="relative-time">{review.relative_time_description}</div>
                     </div>
                   </div>
-                  <p className="review-modal-text">{review.text}</p>
+                  {/* <p className="review-modal-text">{review.text}</p> */}
+                  <p
+                  className="review-modal-text"
+                  dangerouslySetInnerHTML={{
+                    __html: highlightKeywordInText(review.text, highlightedKeyword),
+                  }}
+                />
                   <div className="separator-line"></div>
                 </div>
               ))
