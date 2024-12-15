@@ -720,35 +720,9 @@
 .date-buttons button:hover {
   background-color: #f1f1f1;
   border-color: #aaa;
+  color: rgb(90, 88, 88);
 }
 
-/* Action Buttons */
-.action-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.action-buttons button {
-  padding: 10px 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
-  color: #333;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.action-buttons button:hover {
-  background-color: #838080;
-  color: #333;
-}
-
-/* Styling for clicked action buttons */
-.action-buttons button.clicked {
-  background-color: #ff5733; /* Red background when clicked */
-  color: white;
-}
 
 
 
@@ -784,7 +758,7 @@
   background-color: #0056b3; /* Darker blue on hover */
   transform: scale(1.05); /* Slightly scale up the button */
   border-color: #0056b3; /* Border color changes on hover */
-  color: white;
+  color: white; /* Ensure text color remains white on hover */
 }
 
 /* Active/Clicked Button */
@@ -800,6 +774,7 @@
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Blue shadow for focus */
   border-color: #007bff; /* Border color remains blue when focused */
 }
+
 
 
 
