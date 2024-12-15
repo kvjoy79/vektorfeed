@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import './bargraph.css';
 
 
-const BarGraph = ({ yValues, labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], width = "100%", height = "150px" }) => {
+const BarGraph = ({ yValues, labels = ["W1", "W2", "W3", "W4", "W5", "W6", "W7"], width = "100%", height = "150px" }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
