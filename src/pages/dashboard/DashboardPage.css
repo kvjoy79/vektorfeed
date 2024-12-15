@@ -740,7 +740,8 @@
 }
 
 .action-buttons button:hover {
-  background-color: #f1f1f1;
+  background-color: #838080;
+  color: #333;
 }
 
 /* Styling for clicked action buttons */
@@ -783,6 +784,7 @@
   background-color: #0056b3; /* Darker blue on hover */
   transform: scale(1.05); /* Slightly scale up the button */
   border-color: #0056b3; /* Border color changes on hover */
+  color: white;
 }
 
 /* Active/Clicked Button */
