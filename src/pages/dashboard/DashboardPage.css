@@ -753,3 +753,49 @@
 
 
 
+
+
+
+/* Action Buttons Container */
+.action-buttons {
+  display: flex;
+  gap: 20px; /* Spacing between buttons */
+  width: 100%; /* Ensure it uses full available width */
+}
+
+/* Action Button Styles */
+.action-buttons button {
+  flex: 1; /* Ensures buttons take equal space */
+  padding: 12px 20px; /* Consistent padding */
+  border: none; /* No border */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #007bff; /* Bootstrap-like blue */
+  color: white; /* Text color */
+  font-size: 1.1rem; /* Slightly larger font size */
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+  text-align: center;
+}
+
+/* Hover Effect */
+.action-buttons button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly scale up the button */
+}
+
+/* Active/Clicked Button */
+.action-buttons button.clicked {
+  background-color: #28a745; /* Green color when clicked */
+  color: white;
+}
+
+/* Focus Effect */
+.action-buttons button:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Blue shadow for focus */
+}
+
+
+
+
