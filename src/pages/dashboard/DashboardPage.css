@@ -697,7 +697,9 @@
 }
 
 .date-buttons button:hover {
-  background-color: #f0f0f0;
+  background-color: #fff;
+  color: #007bff;
+  border-color: #0056b3;
 }
 
 .date-buttons button:focus {
