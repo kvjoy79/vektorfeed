@@ -677,17 +677,31 @@
 }
 
 /* Active Button State */
-.date-buttons button.active {
+/* .date-buttons button.active {
   background-color: #3c8dbc;
   color: white;
   border-color: #3c8dbc;
-}
+} */
 
 /* Button Hover Effect */
-.date-buttons button:hover {
+/* .date-buttons button:hover {
   background-color: #f1f1f1;
   border-color: #aaa;
   color: rgb(90, 88, 88);
+} */
+
+.date-buttons button.active {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #0056b3;
+}
+
+.date-buttons button:hover {
+  background-color: #f0f0f0;
+}
+
+.date-buttons button:focus {
+  outline: none;
 }
 
 
