@@ -825,6 +825,9 @@ const Dashboard = () => {
             Custom Date Range
           </button>
         </div>
+        {/* Blank div to consume space */}
+  
+        <div class="spacer"></div>
         <div className="action-buttons">
           <button
             className={`action-button ${clickedButton === 'send' ? 'clicked' : ''}`}
