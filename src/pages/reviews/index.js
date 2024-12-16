@@ -175,21 +175,18 @@ const Reviews = () => {
   };
 
   return (
-    <div className="reviews-page">
+    <div className="reviews-page-container">
       <ToastContainer />
       <h2>Reviews</h2>
-
-      {/* Date Filter Buttons */}
       <div className="button-group">
         <div className="date-buttons">
           <button
-            className={activeButton === 'Last Month' ? 'active' : ''}
+            className="active"  // Update this for dynamic active class toggling
             onClick={() => handleButtonClick('Last Month')}
           >
             Last Month
           </button>
           <button
-            className={activeButton === 'Custom Date Range' ? 'active' : ''}
             onClick={() => handleButtonClick('Custom Date Range')}
           >
             Custom Date Range
