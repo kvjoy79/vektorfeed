@@ -882,9 +882,9 @@ const Dashboard = () => {
               <div className="rating-value">{overallRating !== null ? overallRating : '-'}</div>
               <div className="rating-text">Overall Rating</div>
             
-              <div className="rating-description">
+              {/* <div className="rating-description">
                 {renderArrow(iconTypeOverallRating)} {starCountOverall} stars in a post week.
-              </div>
+              </div> */}
             </div>
 
             <div className="rating-right" style={{ width: "60%", height: "100px" }}>
@@ -915,9 +915,9 @@ const Dashboard = () => {
                     <img src={GoogleIcon} alt="Google Logo" className="google-icon" />
                   </div>
                 </div>
-                <div className="rating-description">
+                {/* <div className="rating-description">
                   {renderArrow(iconTypeGoogleRating)} {starCountGoogle} stars in a post week.
-                </div>
+                </div> */}
             </div>
             <div className="rating-right" style={{ width: "60%", height: "100px" }}>
             <BarGraph yValues={yValues} labels={xLabels} />
