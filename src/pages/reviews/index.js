@@ -11,6 +11,12 @@ const Reviews = () => {
   const reviewsPerPage = 5;
   const [placeId, setPlaceId] = useState(localStorage.getItem('place_id')); // Initialize from localStorage
 
+  const [activeButton, setActiveButton] = useState('Last Month');
+  const [showCustomDateRange, setShowCustomDateRange] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [dateError, setDateError] = useState('');
+
   // useEffect(() => {
   //   const placeId = localStorage.getItem('place_id');
 
@@ -101,10 +107,96 @@ const Reviews = () => {
     setCurrentPage(selected);
   };
 
+
+  // Handle button click for "Last Month" and "Custom Date Range"
+  const handleButtonClick = async (button) => {
+    setActiveButton(button);
+
+    if (button === 'Last Month') {
+      try {
+        toast.success("Set to Last Month!");
+
+        const placeIdFromLocalStorage = localStorage.getItem('orig_place_id');
+        if (!placeIdFromLocalStorage) {
+          console.error('Place ID is missing in localStorage.');
+          toast.error('Place ID is missing.');
+          return;
+        }
+
+        // Fetch review details for "Last Month"
+        const dateRange = 'last-month'; // Define the date range for "Last Month"
+        const response = await fetch(
+          `${API_URL}/serpapi/place-review-details-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Error fetching reviews:', errorData.error || 'Unknown error');
+          return;
+        }
+
+        const reviewData = await response.json();
+        console.log('Review details fetched:', reviewData);
+        setReviewsData(reviewData.reviews || []);
+
+        // Optionally remove items from localStorage if needed
+        const itemsToRemove = ['googleRating', 'negativeKeywords', 'positiveKeywords', 'tableData'];
+        itemsToRemove.forEach((item) => {
+          localStorage.removeItem(item);
+        });
+
+        window.location.reload();
+      } catch (error) {
+        toast.error("Failed to Set to Last Month!");
+      }
+
+      // Store the new date button status in localStorage
+      localStorage.setItem('dateButtonStatus', 'last-month');
+    }
+
+    if (button === 'Custom Date Range') {
+      setShowCustomDateRange(true);
+      localStorage.setItem('dateButtonStatus', 'date-range');
+    } else {
+      setShowCustomDateRange(false);
+    }
+  };
+
+  // Handle custom date range form submission
+  const handleDateSubmit = () => {
+    if (!startDate || !endDate) {
+      setDateError('Please select both start and end dates.');
+      return;
+    }
+    setDateError('');
+    // Call the API or perform the necessary action with the selected date range
+    console.log(`Fetching reviews from ${startDate} to ${endDate}`);
+    setShowCustomDateRange(false);
+  };
+
   return (
     <div className="reviews-page">
       <ToastContainer />
       <h2>Reviews</h2>
+
+      {/* Date Filter Buttons */}
+      <div className="button-group">
+        <div className="date-buttons">
+          <button
+            className={activeButton === 'Last Month' ? 'active' : ''}
+            onClick={() => handleButtonClick('Last Month')}
+          >
+            Last Month
+          </button>
+          <button
+            className={activeButton === 'Custom Date Range' ? 'active' : ''}
+            onClick={() => handleButtonClick('Custom Date Range')}
+          >
+            Custom Date Range
+          </button>
+        </div>
+      </div>
+
       <div className="filters">
         <input type="text" placeholder="Search reviews" />
         <button>Search</button>
@@ -127,6 +219,35 @@ const Reviews = () => {
           </div>
         ))}
       </div>
+
+      {/* Custom Date Range Picker Modal */}
+      {showCustomDateRange && (
+        <div className="modal-backdrop" onClick={() => setShowCustomDateRange(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="date-range-container">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="date-input"
+              />
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="date-input"
+              />
+              <div className="submit-container">
+                <button onClick={handleDateSubmit} className="submit-button">
+                  Submit
+                </button>
+                {dateError && <span className="error">{dateError}</span>}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
 
       {/* Pagination Component */}
       <ReactPaginate
