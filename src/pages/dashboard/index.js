@@ -473,23 +473,66 @@ const Dashboard = () => {
     fetchReviewProfileData();
   }, []); // Empty dependency array to run only once when the component mounts
 
-  useEffect(() => {
+  // useEffect(() => {
 
+  //   const placeIdFromStorage = localStorage.getItem('place_id');
+  //   if (!placeIdFromStorage) {
+  //     console.error('No place_id found during fetching weekly ratings');
+  //     return;
+  //   }
+
+  //   // Function to fetch weekly ratings data from the API
+  //   const fetchWeeklyRatings = async () => {
+  //     try {
+  //       let apiUrl = `${API_URL}/vektordata/linegraph_ratings?place_id=${placeIdFromStorage}`;
+        
+  //       // Only add current_date to the URL if needed
+  //       // If current_date is not passed, it will not be added to the URL.
+  //       const response = await fetch(apiUrl);
+        
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setXLabels(data['x-labels']);  // Set the days of the week
+  //         setYValues(data['y-labels']);  // Set the count of 4-5 star ratings
+  //       } else {
+  //         console.error('Failed to fetch weekly ratings data:', response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching weekly ratings:', error);
+  //     }
+  //   };
+
+  //   fetchWeeklyRatings();
+  // }, []);
+
+
+  useEffect(() => {
     const placeIdFromStorage = localStorage.getItem('place_id');
     if (!placeIdFromStorage) {
       console.error('No place_id found during fetching weekly ratings');
       return;
     }
-
+  
+    // Check if dateButtonStatus is 'date-range' and fetch the current_date value
+    const dateButtonStatus = localStorage.getItem('dateButtonStatus');
+    let currentDate = '';
+    if (dateButtonStatus === 'date-range') {
+      currentDate = localStorage.getItem('dateButtonCustom'); // Adjust the key as necessary
+    }
+  
     // Function to fetch weekly ratings data from the API
     const fetchWeeklyRatings = async () => {
       try {
         let apiUrl = `${API_URL}/vektordata/linegraph_ratings?place_id=${placeIdFromStorage}`;
-        
-        // Only add current_date to the URL if needed
-        // If current_date is not passed, it will not be added to the URL.
+  
+        // Add current_date to the URL if it exists and URL encode it
+        if (currentDate) {
+          const encodedDate = encodeURIComponent(currentDate); // URL encode the currentDate
+          apiUrl += `&current_date=${encodedDate}`;
+        }
+    
         const response = await fetch(apiUrl);
-        
+  
         if (response.ok) {
           const data = await response.json();
           setXLabels(data['x-labels']);  // Set the days of the week
@@ -501,11 +544,11 @@ const Dashboard = () => {
         console.error('Error fetching weekly ratings:', error);
       }
     };
-
+  
     fetchWeeklyRatings();
-  }, []);
+  }, []);  // Dependency array left empty to run only on mount
 
-
+  
   useEffect(() => {
 
     const placeIdFromStorage = localStorage.getItem('place_id');
@@ -514,11 +557,24 @@ const Dashboard = () => {
       return;
     }
 
+    // Check if dateButtonStatus is 'date-range' and fetch the current_date value
+    const dateButtonStatus = localStorage.getItem('dateButtonStatus');
+    let currentDate = '';
+    if (dateButtonStatus === 'date-range') {
+      currentDate = localStorage.getItem('dateButtonCustom'); // Adjust the key as necessary
+    }
+
     // Function to fetch weekly ratings data from the API
     const fetchBarWeeklyRatings = async () => {
       try {
         let apiUrl = `${API_URL}/vektordata/bargraph_ratings?place_id=${placeIdFromStorage}`;
         
+        // Add current_date to the URL if it exists and URL encode it
+        if (currentDate) {
+          const encodedDate = encodeURIComponent(currentDate); // URL encode the currentDate
+          apiUrl += `&current_date=${encodedDate}`;
+        }
+
         // Only add current_date to the URL if needed
         // If current_date is not passed, it will not be added to the URL.
         const response = await fetch(apiUrl);
