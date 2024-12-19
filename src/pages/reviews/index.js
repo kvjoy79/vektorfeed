@@ -41,6 +41,23 @@ const Reviews = () => {
   //   }
   // };
 
+  //last month methods
+  useEffect(() => {
+
+    const status = localStorage.getItem('dateButtonStatus');
+
+    if (status === 'last-month') {
+      console.log("Set to Last Month!");
+      setActiveButton('Last Month');
+    }
+
+    if (status === 'date-range') {
+      console.log("Set to Custom Date Range!");
+      setActiveButton('Custom Date Range');
+    }
+
+  }, []);
+
   useEffect(() => {
     // const requiredNumberOfReviews = 9; // You can adjust this based on your needs
 
@@ -179,7 +196,7 @@ const Reviews = () => {
       <ToastContainer />
       <h2>Reviews</h2>
       <div className="button-group">
-        <div className="date-buttons">
+        {/* <div className="date-buttons">
           <button
             className="active"  // Update this for dynamic active class toggling
             onClick={() => handleButtonClick('Last Month')}
@@ -191,7 +208,23 @@ const Reviews = () => {
           >
             Custom Date Range
           </button>
+        </div> */}
+
+        <div className="date-buttons">
+          <button
+            className={activeButton === 'Last Month' ? 'active' : ''}
+            onClick={() => handleButtonClick('Last Month')}
+          >
+            Last Month
+          </button>
+          <button
+            className={activeButton === 'Custom Date Range' ? 'active' : ''}
+            onClick={() => handleButtonClick('Custom Date Range')}
+          >
+            Custom Date Range
+          </button>
         </div>
+
       </div>
 
       <div className="filters">
