@@ -36,6 +36,8 @@ const Dashboard = () => {
   const [tableData, setTableData] = useState([]);
   const [xLabels, setXLabels] = useState([]);
   const [yValues, setYValues] = useState([]);
+  const [xBarLabels, setXBarLabels] = useState([]);
+  const [yBarValues, setYBarValues] = useState([]);
 
   const [modalData, setModalData] = useState(null); // State for storing modal data
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
@@ -504,6 +506,38 @@ const Dashboard = () => {
   }, []);
 
 
+  useEffect(() => {
+
+    const placeIdFromStorage = localStorage.getItem('place_id');
+    if (!placeIdFromStorage) {
+      console.error('No place_id found during fetching weekly ratings');
+      return;
+    }
+
+    // Function to fetch weekly ratings data from the API
+    const fetchBarWeeklyRatings = async () => {
+      try {
+        let apiUrl = `${API_URL}/vektordata/bargraph_ratings?place_id=${placeIdFromStorage}`;
+        
+        // Only add current_date to the URL if needed
+        // If current_date is not passed, it will not be added to the URL.
+        const response = await fetch(apiUrl);
+        
+        if (response.ok) {
+          const data = await response.json();
+          setXBarLabels(data['x-labels']);  // Set the days of the week
+          setYBarValues(data['y-labels']);  // Set the count of 4-5 star ratings
+        } else {
+          console.error('Failed to fetch weekly ratings data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching weekly ratings:', error);
+      }
+    };
+
+    fetchBarWeeklyRatings();
+  }, []);
+
   // keywords generation
   // useEffect(() => {
   //   if (!reviewId) {
@@ -923,7 +957,7 @@ const Dashboard = () => {
                 </div> */}
             </div>
             <div className="rating-right" style={{ width: "60%", height: "100px" }}>
-            <BarGraph yValues={yValues} labels={xLabels} />
+            <BarGraph yValues={yBarValues} labels={xBarLabels} />
               {/* <BarGraph yValues={yValues} /> */}
               {/* <BarGraph
                 yValues={[3, 4, 5, 6, 7, 8, 9]}
