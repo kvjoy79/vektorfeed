@@ -27,7 +27,7 @@ const LineGraph = ({ yValues, labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"
               labels: labels, // Use dynamic X-axis labels passed as a prop
               datasets: [
                 {
-                  label: "Total number of 4 to 5 rating",
+                  label: "total number of review: ",
                   fill: false,
                   lineTension: 0,
                   backgroundColor: "rgba(0,0,255,1.0)",
