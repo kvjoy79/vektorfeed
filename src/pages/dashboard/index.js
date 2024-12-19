@@ -482,7 +482,7 @@ const Dashboard = () => {
     // Function to fetch weekly ratings data from the API
     const fetchWeeklyRatings = async () => {
       try {
-        let apiUrl = `${API_URL}/vektordata/weekly_ratings?place_id=${placeIdFromStorage}`;
+        let apiUrl = `${API_URL}/vektordata/linegraph_ratings?place_id=${placeIdFromStorage}`;
         
         // Only add current_date to the URL if needed
         // If current_date is not passed, it will not be added to the URL.
