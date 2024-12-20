@@ -99,7 +99,7 @@ const Dashboard = () => {
 
       try {
         // Fetch review details from the API
-        const response = await fetch(`${API_URL}/serpapi/place-review-details-date-range?place_id=${origplaceIdFromLocalStorage}&date_range=${dateRange}`);
+        const response = await fetch(`${API_URL}/serpapi/place-review-details-by-date-range?place_id=${origplaceIdFromLocalStorage}&date_range=${dateRange}`);
     
         if (!response.ok) {
           const errorData = await response.json();
@@ -720,7 +720,7 @@ const Dashboard = () => {
 
           try {
             const response = await fetch(
-              `${API_URL}/serpapi/place-review-details-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`
+              `${API_URL}/serpapi/place-review-details-by-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`
             );
 
             if (!response.ok) {

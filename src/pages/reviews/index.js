@@ -143,7 +143,7 @@ const Reviews = () => {
         // Fetch review details for "Last Month"
         const dateRange = 'last-month'; // Define the date range for "Last Month"
         const response = await fetch(
-          `${API_URL}/serpapi/place-review-details-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`
+          `${API_URL}/serpapi/place-review-details-by-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`
         );
 
         if (!response.ok) {
