@@ -313,7 +313,7 @@ const Dashboard = () => {
   }, []); // Empty dependency array to run only once when the component mounts
 
  
-
+  // fetch linegraph
   useEffect(() => {
     const placeIdFromStorage = localStorage.getItem('place_id');
     if (!placeIdFromStorage) {
@@ -343,6 +343,7 @@ const Dashboard = () => {
   
         if (response.ok) {
           const data = await response.json();
+          console.log("line Graph data:", data);  // Debugging: log the response data
           setXLabels(data['x-labels']);  // Set the days of the week
           setYValues(data['y-labels']);  // Set the count of 4-5 star ratings
         } else {
@@ -389,6 +390,7 @@ const Dashboard = () => {
         
         if (response.ok) {
           const data = await response.json();
+          console.log("Bar Graph data:", data);  // Debugging: log the response data
           setXBarLabels(data['x-labels']);  // Set the days of the week
           setYBarValues(data['y-labels']);  // Set the count of 4-5 star ratings
         } else {
