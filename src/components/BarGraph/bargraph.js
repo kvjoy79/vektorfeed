@@ -28,7 +28,7 @@ const BarGraph = ({ yValues, labels = ["W1", "W2", "W3", "W4", "W5", "W6", "W7"]
               labels: labels, // Use dynamic X-axis labels passed as a prop
               datasets: [
                 {
-                  label: "value: ",
+                  label: "Avg=Calculated Average ",
                   fill: false,
                   lineTension: 0,
                   backgroundColor: "rgba(0,0,255,1.0)",
