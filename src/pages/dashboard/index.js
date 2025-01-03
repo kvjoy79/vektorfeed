@@ -36,12 +36,14 @@ const Dashboard = () => {
   const [tableData, setTableData] = useState([]);
   const [xLabels, setXLabels] = useState([]);
   const [yValues, setYValues] = useState([]);
+  
   const [xBarLabels, setXBarLabels] = useState([]);
   const [yBarValues, setYBarValues] = useState([]);
 
   const [modalData, setModalData] = useState(null); // State for storing modal data
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
   const [highlightedKeyword, setHighlightedKeyword] = useState(''); // Store highlighted keyword
+  
 
   // const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
 
@@ -162,14 +164,7 @@ const Dashboard = () => {
 
   }, []);
   
-  // useEffect(() => {
-  //   if (activeButton === 'Custom Date Range') {
-  //     setShowCustomDateRange(true);
-  //   } else {
-  //     setShowCustomDateRange(false);
-  //   }
-  // }, [activeButton]);
-  
+
   // Fetch Google rating on mount
   useEffect(() => {
     const fetchGoogleRating = async () => {
@@ -276,163 +271,6 @@ const Dashboard = () => {
   }, [activeButton, reviewId, retryCount]); // Runs when activeButton or reviewId changes or retryCount updates
 
 
-  
-  // // Fetch Positive and Negative Keywords with delay
-  // useEffect(() => {
-  //   if (!reviewId) {
-  //     setErrorMessage('No place_id found in localStorage');
-  //     return;
-  //   }
-
-  //   // Function to fetch the keywords
-  //   const fetchKeywords = async (query, setKeywords, storageKey) => {
-  //     try {
-  //       // Check if the keywords are already stored in localStorage
-  //       const storedKeywords = localStorage.getItem(storageKey);
-  //       if (storedKeywords) {
-  //         // If stored, use the stored data
-  //         setKeywords(JSON.parse(storedKeywords));
-  //         console.log(`Loaded ${storageKey} from localStorage.`);
-  //         return; // Exit if keywords are already in localStorage
-  //       }
-
-  //       // Delay the API call by 6 seconds if not stored
-  //       setTimeout(async () => {
-  //         // If not stored, make an API request
-  //         const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
-  //           method: 'POST',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //           },
-  //           body: JSON.stringify({ query }),
-  //         });
-
-  //         const data = await response.json();
-  //         console.log('Response data:', data);  // Log the response for debugging
-
-  //         if (response.ok) {
-  //           // Clean up the response string before parsing it
-  //           const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
-  //           const keywords = JSON.parse(cleanedResponse);  // Parse the response safely
-
-  //           // Store the fetched keywords in localStorage
-  //           localStorage.setItem(storageKey, JSON.stringify(keywords));
-
-  //           // Update the state with the fetched keywords
-  //           setKeywords(keywords);
-  //         } else {
-  //           setErrorMessage(data.error || 'Error fetching keywords');
-  //         }
-  //       }, 6000); // 6000ms = 6 seconds
-
-  //     } catch (error) {
-  //       setErrorMessage('An error occurred while fetching data.');
-  //     }
-  //   };
-
-  //   // Fetch the positive and negative keywords
-  //   fetchKeywords("give the 4 positive keywords in format ['keyword1','keyword2','keyword3','keyword4']?", setPositiveKeywords, 'positiveKeywords');
-  //   fetchKeywords("give the 4 negative keywords in format ['keyword1','keyword2','keyword3','keyword4']?", setNegativeKeywords, 'negativeKeywords');
-
-  // }, [reviewId]);
-
-
-  //   // Fetch Positive and Negative Keywords with delay
-  // useEffect(() => {
-  //   if (!reviewId) {
-  //     setErrorMessage('No place_id found in localStorage');
-  //     return;
-  //   }
-
-  //   // Function to fetch the keywords
-  //   const fetchKeywords = async (query, setKeywords, storageKey) => {
-  //     try {
-  //       // Check if the keywords are already stored in localStorage
-  //       const storedKeywords = localStorage.getItem(storageKey);
-  //       if (storedKeywords) {
-  //         // If stored, use the stored data
-  //         setKeywords(JSON.parse(storedKeywords));
-  //         console.log(`Loaded ${storageKey} from localStorage.`);
-  //         return; // Exit if keywords are already in localStorage
-  //       }
-
-  //       // Delay the API call by 6 seconds if not stored
-  //       setTimeout(async () => {
-  //         try {
-  //           // If not stored, make an API request
-  //           const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
-  //             method: 'POST',
-  //             headers: {
-  //               'Content-Type': 'application/json',
-  //             },
-  //             body: JSON.stringify({ query }),
-  //           });
-
-  //           if (!response.ok) {
-  //             const errorData = await response.json();
-  //             setErrorMessage(errorData.error || 'Error fetching keywords');
-  //             toast.error(errorData.error || 'Error fetching keywords');
-  //             return;
-  //           }
-
-  //           const data = await response.json();
-  //           console.log('Response data:', data); // Log the response for debugging
-
-  //           try {
-  //             // If LangChain says "I don't know", return a default empty list
-  //             if (data.response && data.response.toLowerCase().includes("i don't know")) {
-  //               console.warn('LangChain responded with "I don\'t know"');
-  //               const emptyList = ["-", "-", "-", "-"];
-  //               setKeywords(emptyList);
-  //               localStorage.setItem(storageKey, JSON.stringify(emptyList));
-  //               toast.error("Can't generate keywords, please check the available review data.");
-  //               return;
-  //             }
-
-  //             // Clean up the response string before parsing it
-  //             const cleanedResponse = data.response.replace(/'/g, '"'); // Replace single quotes with double quotes
-  //             const keywords = JSON.parse(cleanedResponse); // Parse the response safely
-
-  //             // Store the fetched keywords in localStorage
-  //             localStorage.setItem(storageKey, JSON.stringify(keywords));
-
-  //             // Update the state with the fetched keywords
-  //             setKeywords(keywords);
-  //           } catch (jsonError) {
-  //             console.error('Invalid JSON:', data.response);
-  //             const emptyList = ["-", "-", "-", "-"];
-  //             setKeywords(emptyList);
-  //             localStorage.setItem(storageKey, JSON.stringify(emptyList));
-  //             toast.error("Can't generate keywords, please check the available review data.");
-  //           }
-  //         } catch (apiError) {
-  //           console.error('API Error:', apiError);
-  //           setErrorMessage('An error occurred while fetching data.');
-  //           toast.error('An error occurred while fetching data.');
-  //         }
-  //       }, 6000); // 6000ms = 6 seconds
-  //     } catch (localError) {
-  //       console.error('Error fetching from localStorage or API:', localError);
-  //       setErrorMessage('An unexpected error occurred.');
-  //       toast.error('An unexpected error occurred.');
-  //     }
-  //   };
-
-  //   // Fetch the positive and negative keywords
-  //   fetchKeywords(
-  //     "give the positive keywords in format ['keyword1','keyword2','keyword3']?",
-  //     setPositiveKeywords,
-  //     'positiveKeywords'
-  //   );
-  //   fetchKeywords(
-  //     "give the negative keywords in format ['keyword1','keyword2','keyword3']?",
-  //     setNegativeKeywords,
-  //     'negativeKeywords'
-  //   );
-  // }, [reviewId]);
-
-
-
   useEffect(() => {
     const fetchReviewProfileData = async () => {
       const placeId = localStorage.getItem('place_id');
@@ -473,39 +311,8 @@ const Dashboard = () => {
     fetchReviewProfileData();
   }, []); // Empty dependency array to run only once when the component mounts
 
-  // useEffect(() => {
-
-  //   const placeIdFromStorage = localStorage.getItem('place_id');
-  //   if (!placeIdFromStorage) {
-  //     console.error('No place_id found during fetching weekly ratings');
-  //     return;
-  //   }
-
-  //   // Function to fetch weekly ratings data from the API
-  //   const fetchWeeklyRatings = async () => {
-  //     try {
-  //       let apiUrl = `${API_URL}/vektordata/linegraph_ratings?place_id=${placeIdFromStorage}`;
-        
-  //       // Only add current_date to the URL if needed
-  //       // If current_date is not passed, it will not be added to the URL.
-  //       const response = await fetch(apiUrl);
-        
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setXLabels(data['x-labels']);  // Set the days of the week
-  //         setYValues(data['y-labels']);  // Set the count of 4-5 star ratings
-  //       } else {
-  //         console.error('Failed to fetch weekly ratings data:', response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching weekly ratings:', error);
-  //     }
-  //   };
-
-  //   fetchWeeklyRatings();
-  // }, []);
-
-
+ 
+  // fetch linegraph
   useEffect(() => {
     const placeIdFromStorage = localStorage.getItem('place_id');
     if (!placeIdFromStorage) {
@@ -548,7 +355,7 @@ const Dashboard = () => {
     fetchWeeklyRatings();
   }, []);  // Dependency array left empty to run only on mount
 
-  
+  // fetch bargraph_ratings 
   useEffect(() => {
 
     const placeIdFromStorage = localStorage.getItem('place_id');
@@ -594,51 +401,7 @@ const Dashboard = () => {
     fetchBarWeeklyRatings();
   }, []);
 
-  // keywords generation
-  // useEffect(() => {
-  //   if (!reviewId) {
-  //     setErrorMessage('No place_id found in localStorage');
-  //     return;
-  //   }
-
-  //   // Fetch Keywords function
-  //   const fetchKeywords = async (query, setKeywords) => {
-  //     try {
-  //       const response = await fetch(`${API_URL}/langchain-query?vector_store_id=${reviewId}`, {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({ query }),
-  //       });
-
-  //       const data = await response.json();
-  //       console.log('Response data:', data);  // Log the response for debugging
-
-  //       if (response.ok) {
-  //         // Clean up the response string before parsing it
-  //         const cleanedResponse = data.response.replace(/'/g, '"');  // Replace single quotes with double quotes
-  //         const keywords = JSON.parse(cleanedResponse);  // Parse the response safely
-  //         setKeywords(keywords);
-  //       } else {
-  //         setErrorMessage(data.error || 'Error fetching keywords');
-  //       }
-  //     } catch (error) {
-  //       setErrorMessage('An error occurred while fetching data.');
-  //     }
-  //   };
-
-  //   // Delay the fetch operation by 3 seconds
-  //   setTimeout(() => {
-  //     // Fetch Positive Keywords
-  //     fetchKeywords("give the 3 exact positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
-  //     // Fetch Negative Keywords
-  //     fetchKeywords("give the 3 exact negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
-  //   }, 6000); // 3000ms = 3 seconds
-
-  // }, []);
-
-
+  // fetch keywords
   useEffect(() => {
     if (!reviewId) {
       setErrorMessage('No place_id found in localStorage');
@@ -675,6 +438,62 @@ const Dashboard = () => {
         setErrorMessage('An error occurred while fetching data.');
       }
     };
+
+    // Function to fetch LineGraph and BarGraph data
+    const fetchGraphData = async () => {
+      const placeIdFromStorage = localStorage.getItem('place_id');
+      if (!placeIdFromStorage) {
+        console.error('No place_id found during fetching weekly ratings');
+        return;
+      }
+
+      // Check for date range if exists
+      const dateButtonStatus = localStorage.getItem('dateButtonStatus');
+      let currentDate = '';
+      if (dateButtonStatus === 'date-range') {
+        currentDate = localStorage.getItem('dateButtonCustom'); // Adjust key as necessary
+      }
+
+      // Fetch LineGraph ratings data
+      try {
+        let apiUrl = `${API_URL}/vektordata/linegraph_ratings?place_id=${placeIdFromStorage}`;
+        if (currentDate) {
+          const encodedDate = encodeURIComponent(currentDate);  // URL encode currentDate
+          apiUrl += `&current_date=${encodedDate}`;
+        }
+
+        const response = await fetch(apiUrl);
+        if (response.ok) {
+          const data = await response.json();
+          setXLabels(data['x-labels']);
+          setYValues(data['y-labels']);
+        } else {
+          console.error('Failed to fetch weekly ratings data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching weekly ratings:', error);
+      }
+
+      // Fetch BarGraph ratings data
+      try {
+        let apiUrl = `${API_URL}/vektordata/bargraph_ratings?place_id=${placeIdFromStorage}`;
+        if (currentDate) {
+          const encodedDate = encodeURIComponent(currentDate);  // URL encode currentDate
+          apiUrl += `&current_date=${encodedDate}`;
+        }
+
+        const response = await fetch(apiUrl);
+        if (response.ok) {
+          const data = await response.json();
+          setXBarLabels(data['x-labels']);
+          setYBarValues(data['y-labels']);
+        } else {
+          console.error('Failed to fetch bargraph weekly ratings data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching bargraph weekly ratings:', error);
+      }
+    };
   
     // Delay the fetch operation by 3 seconds
     setTimeout(() => {
@@ -683,8 +502,16 @@ const Dashboard = () => {
       // Fetch Negative Keywords
       fetchKeywords("give the 3 exact negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
     }, 6000); // 6000ms = 6 seconds
+
+      // Update keywordsFetched when both keywords are set
+    if (positiveKeywords.length > 0 && negativeKeywords.length > 0) {
+      // setKeywordsFetched(true);
+      fetchGraphData();
+    }
   
   }, []);
+
+
 
 
 
