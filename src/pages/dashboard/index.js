@@ -98,11 +98,11 @@ const Dashboard = () => {
       // You can add your API call here with the custom date range.
 
       // Fetch review details using the API
-      const origplaceIdFromLocalStorage = localStorage.getItem('orig_place_id'); // Ensure placeId is stored in localStorage
+      const placeIdFromLocalStorage = localStorage.getItem('place_id'); // Ensure placeId is stored in localStorage
 
       try {
         // Fetch review details from the API
-        const response = await fetch(`${API_URL}/serpapi/place-review-details-by-date-range?place_id=${origplaceIdFromLocalStorage}&date_range=${dateRange}`);
+        const response = await fetch(`${API_URL}/serpapi/place-review-details-by-date-range?place_id=${placeIdFromLocalStorage}&date_range=${dateRange}`);
     
         if (!response.ok) {
           const errorData = await response.json();
