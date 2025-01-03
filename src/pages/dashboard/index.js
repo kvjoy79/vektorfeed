@@ -345,9 +345,18 @@ const Dashboard = () => {
           const data = await response.json();
           console.log("line Graph data:", data);  // Debugging: log the response data
 
-          // Check if x-labels or y-labels are empty or invalid, and provide default values if so
-          const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["W1", "W2", "W3", "W4"];
-          const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
+          // // Check if x-labels or y-labels are empty or invalid, and provide default values if so
+          // const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["W1", "W2", "W3", "W4"];
+          // const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
+
+          // Safe check for x-labels and y-labels
+          const xLabels = Array.isArray(data['x-labels']) && data['x-labels'].length > 0 ? data['x-labels'] : ["W1", "W2", "W3", "W4"];
+          const yLabels = Array.isArray(data['y-labels']) && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
+
+          // If both xLabels and yLabels have default values, show the toast
+          if (JSON.stringify(xLabels) === JSON.stringify(["0", "0", "0", "0"]) && JSON.stringify(yLabels) === JSON.stringify(["0", "0", "0", "0"])) {
+            toast.error("No overall rating graph data received! Try to use other date range!");
+          }
 
           setXLabels(xLabels);  // Set the days of the week
           setYValues(yLabels);  // Set the count of 4-5 star ratings
@@ -401,9 +410,19 @@ const Dashboard = () => {
           const data = await response.json();
           console.log("Bar Graph data:", data);  // Debugging: log the response data
 
-          // Check if x-labels or y-labels are empty or invalid, and provide default values if so
-          const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["W1", "W2", "W3", "W4"];
-          const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
+          // // Check if x-labels or y-labels are empty or invalid, and provide default values if so
+          // const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["W1", "W2", "W3", "W4"];
+          // const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
+
+
+          // Safe check for x-labels and y-labels
+          const xLabels = Array.isArray(data['x-labels']) && data['x-labels'].length > 0 ? data['x-labels'] : ["W1", "W2", "W3", "W4"];
+          const yLabels = Array.isArray(data['y-labels']) && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
+
+          // If both xLabels and yLabels have default values, show the toast
+          if (JSON.stringify(xLabels) === JSON.stringify(["0", "0", "0", "0"]) && JSON.stringify(yLabels) === JSON.stringify(["0", "0", "0", "0"])) {
+            toast.error("No google rating rating graph data received! Try to use other date range!");
+          }
 
           setXBarLabels(xLabels);  // Set the days of the week
           setYBarValues(yLabels);  // Set the count of 4-5 star ratings
