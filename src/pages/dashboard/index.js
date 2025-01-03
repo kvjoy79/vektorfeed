@@ -111,7 +111,7 @@ const Dashboard = () => {
         }
     
         const reviewData = await response.json();
-        console.log('Review details fetched:', reviewData);
+        console.log('Review details fetched during setting to custom date range:', reviewData);
 
 
         // Remove the specified items from localStorage
