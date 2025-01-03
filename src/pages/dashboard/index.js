@@ -459,73 +459,76 @@ const Dashboard = () => {
   }, [positiveKeywords, negativeKeywords]);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    // Function to fetch LineGraph and BarGraph data
-    const fetchGraphData = async () => {
-      const placeIdFromStorage = localStorage.getItem('place_id');
-      if (!placeIdFromStorage) {
-        console.error('No place_id found during fetching weekly ratings');
-        return;
-      }
+  //   // Function to fetch LineGraph and BarGraph data
+  //   const fetchGraphData = async () => {
+  //     const placeIdFromStorage = localStorage.getItem('place_id');
+  //     if (!placeIdFromStorage) {
+  //       console.error('No place_id found during fetching weekly ratings');
+  //       return;
+  //     }
 
-      // Check for date range if exists
-      const dateButtonStatus = localStorage.getItem('dateButtonStatus');
-      let currentDate = '';
-      if (dateButtonStatus === 'date-range') {
-        currentDate = localStorage.getItem('dateButtonCustom'); // Adjust key as necessary
-      }
+  //     // Check for date range if exists
+  //     const dateButtonStatus = localStorage.getItem('dateButtonStatus');
+  //     let currentDate = '';
+  //     if (dateButtonStatus === 'date-range') {
+  //       currentDate = localStorage.getItem('dateButtonCustom'); // Adjust key as necessary
+  //     }
 
-      // Fetch LineGraph ratings data
-      try {
-        let apiUrl = `${API_URL}/vektordata/linegraph_ratings?place_id=${placeIdFromStorage}`;
-        if (currentDate) {
-          const encodedDate = encodeURIComponent(currentDate);  // URL encode currentDate
-          apiUrl += `&current_date=${encodedDate}`;
-        }
+  //     // Fetch LineGraph ratings data
+  //     try {
+  //       let apiUrl = `${API_URL}/vektordata/linegraph_ratings?place_id=${placeIdFromStorage}`;
+  //       if (currentDate) {
+  //         const encodedDate = encodeURIComponent(currentDate);  // URL encode currentDate
+  //         apiUrl += `&current_date=${encodedDate}`;
+  //       }
 
-        const response = await fetch(apiUrl);
-        if (response.ok) {
-          const data = await response.json();
-          setXLabels(data['x-labels']);
-          setYValues(data['y-labels']);
-        } else {
-          console.error('Failed to fetch weekly ratings data:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error fetching weekly ratings:', error);
-      }
+  //       const response = await fetch(apiUrl);
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setXLabels(data['x-labels']);
+  //         setYValues(data['y-labels']);
+  //       } else {
+  //         console.error('Failed to fetch weekly ratings data:', response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching weekly ratings:', error);
+  //     }
 
-      // Fetch BarGraph ratings data
-      try {
-        let apiUrl = `${API_URL}/vektordata/bargraph_ratings?place_id=${placeIdFromStorage}`;
-        if (currentDate) {
-          const encodedDate = encodeURIComponent(currentDate);  // URL encode currentDate
-          apiUrl += `&current_date=${encodedDate}`;
-        }
+  //     // Fetch BarGraph ratings data
+  //     try {
+  //       let apiUrl = `${API_URL}/vektordata/bargraph_ratings?place_id=${placeIdFromStorage}`;
+  //       if (currentDate) {
+  //         const encodedDate = encodeURIComponent(currentDate);  // URL encode currentDate
+  //         apiUrl += `&current_date=${encodedDate}`;
+  //       }
 
-        const response = await fetch(apiUrl);
-        if (response.ok) {
-          const data = await response.json();
-          setXBarLabels(data['x-labels']);
-          setYBarValues(data['y-labels']);
-        } else {
-          console.error('Failed to fetch bargraph weekly ratings data:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error fetching bargraph weekly ratings:', error);
-      }
-    };
+  //       const response = await fetch(apiUrl);
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setXBarLabels(data['x-labels']);
+  //         setYBarValues(data['y-labels']);
+  //       } else {
+  //         console.error('Failed to fetch bargraph weekly ratings data:', response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching bargraph weekly ratings:', error);
+  //     }
+  //   };
 
-    // Fetch graph data only if keywords have been fetched
-    if (keywordsFetched) {
-      fetchGraphData();
-    }
-  }, [keywordsFetched]); // This will only run after keywordsFetched is true
+  //   // Fetch graph data only if keywords have been fetched
+  //   if (keywordsFetched) {
+  //     fetchGraphData();
+  //   }
+  // }, [keywordsFetched]); // This will only run after keywordsFetched is true
 
 
 
   // Determine which arrow to show based on the state
+ 
+ 
+ 
   const renderArrow = (type) => {
     if (type === 'green-up-arrow') {
       return <img src={GreenUpArrow} alt="Green Up Arrow" className="arrow-icon" />;
