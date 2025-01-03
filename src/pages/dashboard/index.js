@@ -354,7 +354,7 @@ const Dashboard = () => {
           const yLabels = Array.isArray(data['y-labels']) && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
 
           // If both xLabels and yLabels have default values, show the toast
-          if (JSON.stringify(xLabels) === JSON.stringify(["0", "0", "0", "0"]) && JSON.stringify(yLabels) === JSON.stringify(["0", "0", "0", "0"])) {
+          if (JSON.stringify(xLabels) === JSON.stringify(["W1", "W2", "W3", "W4"]) && JSON.stringify(yLabels) === JSON.stringify(["0", "0", "0", "0"])) {
             toast.error("No overall rating graph data received! Try to use other date range!");
           }
 
@@ -420,8 +420,8 @@ const Dashboard = () => {
           const yLabels = Array.isArray(data['y-labels']) && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
 
           // If both xLabels and yLabels have default values, show the toast
-          if (JSON.stringify(xLabels) === JSON.stringify(["0", "0", "0", "0"]) && JSON.stringify(yLabels) === JSON.stringify(["0", "0", "0", "0"])) {
-            toast.error("No google rating rating graph data received! Try to use other date range!");
+          if (JSON.stringify(xLabels) === JSON.stringify(["W1", "W2", "W3", "W4"]) && JSON.stringify(yLabels) === JSON.stringify(["0", "0", "0", "0"])) {
+            toast.error("No google rating graph data received! Try to use other date range!");
           }
 
           setXBarLabels(xLabels);  // Set the days of the week
