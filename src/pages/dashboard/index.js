@@ -347,7 +347,7 @@ const Dashboard = () => {
 
           // Check if x-labels or y-labels are empty or invalid, and provide default values if so
           const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["0", "0", "0", "0"];
-          const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
+          const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["W1", "W2", "W3", "W4"];
 
           setXLabels(xLabels);  // Set the days of the week
           setYValues(yLabels);  // Set the count of 4-5 star ratings
@@ -400,8 +400,16 @@ const Dashboard = () => {
         if (response.ok) {
           const data = await response.json();
           console.log("Bar Graph data:", data);  // Debugging: log the response data
-          setXBarLabels(data['x-labels']);  // Set the days of the week
-          setYBarValues(data['y-labels']);  // Set the count of 4-5 star ratings
+
+          // Check if x-labels or y-labels are empty or invalid, and provide default values if so
+          const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["0", "0", "0", "0"];
+          const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["W1", "W2", "W3", "W4"];
+
+          setXBarLabels(xLabels);  // Set the days of the week
+          setYBarValues(yLabels);  // Set the count of 4-5 star ratings
+
+          // setXBarLabels(data['x-labels']);  // Set the days of the week
+          // setYBarValues(data['y-labels']);  // Set the count of 4-5 star ratings
         } else {
           console.error('Failed to fetch weekly ratings data:', response.statusText);
         }
