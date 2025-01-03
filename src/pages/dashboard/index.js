@@ -43,7 +43,7 @@ const Dashboard = () => {
   const [modalData, setModalData] = useState(null); // State for storing modal data
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
   const [highlightedKeyword, setHighlightedKeyword] = useState(''); // Store highlighted keyword
-  const [keywordsFetched, setKeywordsFetched] = useState(false); // Track when both keywords are fetched
+  const [keywordsFetched, setKeywordsFetched] = useState(false); // Track completion of both fetch operations
 
 
   // const yValues = [1, 0, 3, 4, 5, 6, 10]; // Data for each day of the week (Sunday to Saturday)
@@ -313,7 +313,7 @@ const Dashboard = () => {
   }, []); // Empty dependency array to run only once when the component mounts
 
  
-  // fetch linegraph
+
   useEffect(() => {
     const placeIdFromStorage = localStorage.getItem('place_id');
     if (!placeIdFromStorage) {
@@ -439,96 +439,24 @@ const Dashboard = () => {
         setErrorMessage('An error occurred while fetching data.');
       }
     };
-
-
-    // Delay the fetch operation by x seconds
-    setTimeout(async () => {
+  
+    // Delay the fetch operation by 3 seconds
+    setTimeout(() => {
       // Fetch Positive Keywords
-      await fetchKeywords("give the 3 exact positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
+      fetchKeywords("give the 3 exact positive keywords in format ['keyword1','keyword2','keyword3']?", setPositiveKeywords);
       // Fetch Negative Keywords
-      await fetchKeywords("give the 3 exact negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
+      fetchKeywords("give the 3 exact negative keywords in format ['keyword1','keyword2','keyword3']?", setNegativeKeywords);
     }, 6000); // 6000ms = 6 seconds
+
+      // Update keywordsFetched when both keywords are set
+    if (positiveKeywords.length > 0 && negativeKeywords.length > 0) {
+      setKeywordsFetched(true);
+    }
   
   }, []);
 
-  useEffect(() => {
-    // Check if both keywords are fetched
-    if (positiveKeywords.length > 0 && negativeKeywords.length > 0) {
-      setKeywordsFetched(true);  // Set the flag to true after both keywords are fetched
-    }
-  }, [positiveKeywords, negativeKeywords]);
-
-
-  // useEffect(() => {
-
-  //   // Function to fetch LineGraph and BarGraph data
-  //   const fetchGraphData = async () => {
-  //     const placeIdFromStorage = localStorage.getItem('place_id');
-  //     if (!placeIdFromStorage) {
-  //       console.error('No place_id found during fetching weekly ratings');
-  //       return;
-  //     }
-
-  //     // Check for date range if exists
-  //     const dateButtonStatus = localStorage.getItem('dateButtonStatus');
-  //     let currentDate = '';
-  //     if (dateButtonStatus === 'date-range') {
-  //       currentDate = localStorage.getItem('dateButtonCustom'); // Adjust key as necessary
-  //     }
-
-  //     // Fetch LineGraph ratings data
-  //     try {
-  //       let apiUrl = `${API_URL}/vektordata/linegraph_ratings?place_id=${placeIdFromStorage}`;
-  //       if (currentDate) {
-  //         const encodedDate = encodeURIComponent(currentDate);  // URL encode currentDate
-  //         apiUrl += `&current_date=${encodedDate}`;
-  //       }
-
-  //       const response = await fetch(apiUrl);
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setXLabels(data['x-labels']);
-  //         setYValues(data['y-labels']);
-  //       } else {
-  //         console.error('Failed to fetch weekly ratings data:', response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching weekly ratings:', error);
-  //     }
-
-  //     // Fetch BarGraph ratings data
-  //     try {
-  //       let apiUrl = `${API_URL}/vektordata/bargraph_ratings?place_id=${placeIdFromStorage}`;
-  //       if (currentDate) {
-  //         const encodedDate = encodeURIComponent(currentDate);  // URL encode currentDate
-  //         apiUrl += `&current_date=${encodedDate}`;
-  //       }
-
-  //       const response = await fetch(apiUrl);
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setXBarLabels(data['x-labels']);
-  //         setYBarValues(data['y-labels']);
-  //       } else {
-  //         console.error('Failed to fetch bargraph weekly ratings data:', response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching bargraph weekly ratings:', error);
-  //     }
-  //   };
-
-  //   // Fetch graph data only if keywords have been fetched
-  //   if (keywordsFetched) {
-  //     fetchGraphData();
-  //   }
-  // }, [keywordsFetched]); // This will only run after keywordsFetched is true
-
-
 
   // Determine which arrow to show based on the state
- 
- 
- 
   const renderArrow = (type) => {
     if (type === 'green-up-arrow') {
       return <img src={GreenUpArrow} alt="Green Up Arrow" className="arrow-icon" />;
