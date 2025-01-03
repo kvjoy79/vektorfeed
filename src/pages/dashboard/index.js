@@ -333,9 +333,18 @@ const Dashboard = () => {
       try {
         let apiUrl = `${API_URL}/vektordata/linegraph_ratings?place_id=${placeIdFromStorage}`;
   
-        // Add current_date to the URL if it exists and URL encode it
+        // Swap the dates in the custom date range if currentDate exists
         if (currentDate) {
-          const encodedDate = encodeURIComponent(currentDate); // URL encode the currentDate
+          // Assume the format is "YYYY-MM-DD to YYYY-MM-DD"
+          const dates = currentDate.split(" to ");
+          if (dates.length === 2) {
+            // Swap the dates
+            const swappedDateRange = `${dates[1]} to ${dates[0]}`;
+            currentDate = swappedDateRange;
+          }
+
+          // URL encode the swapped currentDate before appending it to the API URL
+          const encodedDate = encodeURIComponent(currentDate);
           apiUrl += `&current_date=${encodedDate}`;
         }
     
@@ -374,6 +383,7 @@ const Dashboard = () => {
   
     fetchWeeklyRatings();
   }, []);  // Dependency array left empty to run only on mount
+
 
   // fetch bargraph_ratings 
   useEffect(() => {
