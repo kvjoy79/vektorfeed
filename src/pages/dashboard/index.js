@@ -346,8 +346,8 @@ const Dashboard = () => {
           console.log("line Graph data:", data);  // Debugging: log the response data
 
           // Check if x-labels or y-labels are empty or invalid, and provide default values if so
-          const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["0", "0", "0", "0"];
-          const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["W1", "W2", "W3", "W4"];
+          const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["W1", "W2", "W3", "W4"];
+          const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
 
           setXLabels(xLabels);  // Set the days of the week
           setYValues(yLabels);  // Set the count of 4-5 star ratings
@@ -402,8 +402,8 @@ const Dashboard = () => {
           console.log("Bar Graph data:", data);  // Debugging: log the response data
 
           // Check if x-labels or y-labels are empty or invalid, and provide default values if so
-          const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["0", "0", "0", "0"];
-          const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["W1", "W2", "W3", "W4"];
+          const xLabels = data['x-labels'] && data['x-labels'].length > 0 ? data['x-labels'] : ["W1", "W2", "W3", "W4"];
+          const yLabels = data['y-labels'] && data['y-labels'].length > 0 ? data['y-labels'] : ["0", "0", "0", "0"];
 
           setXBarLabels(xLabels);  // Set the days of the week
           setYBarValues(yLabels);  // Set the count of 4-5 star ratings
